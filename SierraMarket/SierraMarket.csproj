@@ -9,9 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Modelos\" />
-    <Folder Include="Estructuras\" />
-    <Folder Include="Recursos\" />
+    <Folder Include="Recursos\Fuentes\" />
   </ItemGroup>
 
 </Project>
