@@ -28,191 +28,158 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tableLayoutPanel1 = new TableLayoutPanel();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            panel2 = new Panel();
-            panel1 = new Panel();
+            TlpPrincipal = new TableLayoutPanel();
+            PHeader = new Panel();
+            brdHero = new Panel();
+            brdMenu = new Panel();
+            brdFooter = new Panel();
+            TlpVenta = new TableLayoutPanel();
+            brdVenta = new Panel();
+            PVentaActual = new Panel();
             label1 = new Label();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            button1 = new Button();
-            button2 = new Button();
-            BtnTurnos = new Button();
-            button4 = new Button();
-            tableLayoutPanel1.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
-            panel1.SuspendLayout();
-            flowLayoutPanel1.SuspendLayout();
+            TlpPrincipal.SuspendLayout();
+            PHeader.SuspendLayout();
+            TlpVenta.SuspendLayout();
             SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // TlpPrincipal
             // 
-            tableLayoutPanel1.BackColor = Color.White;
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 2);
-            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
-            tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 1);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
-            tableLayoutPanel1.Size = new Size(1008, 761);
-            tableLayoutPanel1.TabIndex = 0;
+            TlpPrincipal.BackColor = Color.White;
+            TlpPrincipal.ColumnCount = 1;
+            TlpPrincipal.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            TlpPrincipal.Controls.Add(PHeader, 0, 0);
+            TlpPrincipal.Controls.Add(brdHero, 0, 1);
+            TlpPrincipal.Controls.Add(brdMenu, 0, 3);
+            TlpPrincipal.Controls.Add(brdFooter, 0, 5);
+            TlpPrincipal.Controls.Add(TlpVenta, 0, 4);
+            TlpPrincipal.Dock = DockStyle.Fill;
+            TlpPrincipal.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
+            TlpPrincipal.Location = new Point(0, 0);
+            TlpPrincipal.Name = "TlpPrincipal";
+            TlpPrincipal.RowCount = 7;
+            TlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            TlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            TlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            TlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            TlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            TlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            TlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            TlpPrincipal.Size = new Size(1008, 761);
+            TlpPrincipal.TabIndex = 0;
             // 
-            // tableLayoutPanel2
+            // PHeader
             // 
-            tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
-            tableLayoutPanel2.Controls.Add(panel2, 1, 0);
-            tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 103);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 1;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(1002, 595);
-            tableLayoutPanel2.TabIndex = 0;
+            PHeader.BackColor = Color.FromArgb(250, 250, 250);
+            PHeader.Controls.Add(label1);
+            PHeader.Dock = DockStyle.Fill;
+            PHeader.Location = new Point(0, 0);
+            PHeader.Margin = new Padding(0);
+            PHeader.Name = "PHeader";
+            PHeader.Size = new Size(1008, 60);
+            PHeader.TabIndex = 5;
             // 
-            // panel2
+            // brdHero
             // 
-            panel2.BackColor = Color.FromArgb(250, 250, 250);
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(651, 0);
-            panel2.Margin = new Padding(0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(351, 595);
-            panel2.TabIndex = 0;
+            brdHero.BackColor = Color.FromArgb(228, 228, 231);
+            brdHero.Dock = DockStyle.Fill;
+            brdHero.Location = new Point(0, 60);
+            brdHero.Margin = new Padding(0);
+            brdHero.Name = "brdHero";
+            brdHero.Size = new Size(1008, 1);
+            brdHero.TabIndex = 0;
             // 
-            // panel1
+            // brdMenu
             // 
-            panel1.Controls.Add(label1);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(3, 3);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1002, 54);
-            panel1.TabIndex = 1;
+            brdMenu.BackColor = Color.FromArgb(228, 228, 231);
+            brdMenu.Dock = DockStyle.Fill;
+            brdMenu.Location = new Point(0, 101);
+            brdMenu.Margin = new Padding(0);
+            brdMenu.Name = "brdMenu";
+            brdMenu.Size = new Size(1008, 1);
+            brdMenu.TabIndex = 1;
+            // 
+            // brdFooter
+            // 
+            brdFooter.BackColor = Color.FromArgb(228, 228, 231);
+            brdFooter.Dock = DockStyle.Fill;
+            brdFooter.Location = new Point(0, 700);
+            brdFooter.Margin = new Padding(0);
+            brdFooter.Name = "brdFooter";
+            brdFooter.Size = new Size(1008, 1);
+            brdFooter.TabIndex = 2;
+            // 
+            // TlpVenta
+            // 
+            TlpVenta.ColumnCount = 3;
+            TlpVenta.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
+            TlpVenta.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 1F));
+            TlpVenta.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
+            TlpVenta.Controls.Add(brdVenta, 1, 0);
+            TlpVenta.Controls.Add(PVentaActual, 2, 0);
+            TlpVenta.Dock = DockStyle.Fill;
+            TlpVenta.Location = new Point(0, 102);
+            TlpVenta.Margin = new Padding(0);
+            TlpVenta.Name = "TlpVenta";
+            TlpVenta.RowCount = 1;
+            TlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            TlpVenta.Size = new Size(1008, 598);
+            TlpVenta.TabIndex = 3;
+            // 
+            // brdVenta
+            // 
+            brdVenta.BackColor = Color.FromArgb(228, 228, 231);
+            brdVenta.Dock = DockStyle.Fill;
+            brdVenta.Location = new Point(654, 0);
+            brdVenta.Margin = new Padding(0);
+            brdVenta.Name = "brdVenta";
+            brdVenta.Size = new Size(1, 598);
+            brdVenta.TabIndex = 3;
+            // 
+            // PVentaActual
+            // 
+            PVentaActual.BackColor = Color.FromArgb(250, 250, 250);
+            PVentaActual.Dock = DockStyle.Fill;
+            PVentaActual.Location = new Point(655, 0);
+            PVentaActual.Margin = new Padding(0);
+            PVentaActual.Name = "PVentaActual";
+            PVentaActual.Size = new Size(353, 598);
+            PVentaActual.TabIndex = 4;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Geist Mono Black", 17.9999981F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(3, 10);
+            label1.Location = new Point(23, 24);
             label1.Name = "label1";
-            label1.Size = new Size(197, 35);
+            label1.Size = new Size(76, 15);
             label1.TabIndex = 0;
             label1.Text = "Sierra Market";
-            // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.AutoSize = true;
-            flowLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel1.Controls.Add(button1);
-            flowLayoutPanel1.Controls.Add(button2);
-            flowLayoutPanel1.Controls.Add(BtnTurnos);
-            flowLayoutPanel1.Controls.Add(button4);
-            flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(6, 66);
-            flowLayoutPanel1.Margin = new Padding(6);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(996, 28);
-            flowLayoutPanel1.TabIndex = 2;
-            // 
-            // button1
-            // 
-            button1.AutoSize = true;
-            button1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Geist Mono", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(0, 0);
-            button1.Margin = new Padding(0);
-            button1.Name = "button1";
-            button1.Size = new Size(67, 29);
-            button1.TabIndex = 4;
-            button1.Text = "Ventas";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.AutoSize = true;
-            button2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Geist Mono", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(67, 0);
-            button2.Margin = new Padding(0);
-            button2.Name = "button2";
-            button2.Size = new Size(91, 29);
-            button2.TabIndex = 5;
-            button2.Text = "Productos";
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // BtnTurnos
-            // 
-            BtnTurnos.AutoSize = true;
-            BtnTurnos.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BtnTurnos.FlatAppearance.BorderSize = 0;
-            BtnTurnos.FlatStyle = FlatStyle.Flat;
-            BtnTurnos.Font = new Font("Geist Mono", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            BtnTurnos.Location = new Point(158, 0);
-            BtnTurnos.Margin = new Padding(0);
-            BtnTurnos.Name = "BtnTurnos";
-            BtnTurnos.Size = new Size(67, 29);
-            BtnTurnos.TabIndex = 6;
-            BtnTurnos.Text = "Turnos";
-            BtnTurnos.UseVisualStyleBackColor = true;
-            BtnTurnos.Click += BtnTurnos_Click;
-            // 
-            // button4
-            // 
-            button4.AutoSize = true;
-            button4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button4.FlatAppearance.BorderSize = 0;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Geist Mono", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.Location = new Point(225, 0);
-            button4.Margin = new Padding(0);
-            button4.Name = "button4";
-            button4.Size = new Size(91, 29);
-            button4.TabIndex = 7;
-            button4.Text = "Historial";
-            button4.UseVisualStyleBackColor = true;
             // 
             // FrmPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1008, 761);
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(TlpPrincipal);
             Name = "FrmPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Inicio | Sierra Market";
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
-            tableLayoutPanel2.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
+            TlpPrincipal.ResumeLayout(false);
+            PHeader.ResumeLayout(false);
+            PHeader.PerformLayout();
+            TlpVenta.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TableLayoutPanel tableLayoutPanel1;
-        private TableLayoutPanel tableLayoutPanel2;
-        private Panel panel1;
+        private TableLayoutPanel TlpPrincipal;
+        private Panel brdHero;
+        private Panel brdMenu;
+        private Panel brdFooter;
+        private TableLayoutPanel TlpVenta;
+        private Panel brdVenta;
+        private Panel PVentaActual;
+        private Panel PHeader;
         private Label label1;
-        private FlowLayoutPanel flowLayoutPanel1;
-        private Button BtnTurnos;
-        private Button button2;
-        private Button button1;
-        private Panel panel2;
-        private Button button4;
     }
 }
