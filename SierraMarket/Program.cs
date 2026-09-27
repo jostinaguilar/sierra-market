@@ -1,4 +1,6 @@
 using SierraMarket.UI;
+using SierraMarket.UI.Tema;
+using System.Drawing.Text;
 
 namespace SierraMarket
 {
@@ -13,6 +15,9 @@ namespace SierraMarket
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+
+            Fuentes.Inicializar(); // Inicializar la colección de fuentes
+
             Application.Run(new FrmPrincipal());
         }
     }
