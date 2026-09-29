@@ -28,7 +28,7 @@ namespace SierraMarket.UI
             flpTitulo.FlowDirection = FlowDirection.LeftToRight;
             flpTitulo.Padding = new Padding(20, 12, 0, 0);
 
-            pHeader.Controls.Add(flpTitulo);
+            pnlHeader.Controls.Add(flpTitulo);
 
             var flpCaja = new FlowLayoutPanel();
             var lblCaja = new Texto.SM("Caja", 0, 0, Fuentes.GeistLight(10));
@@ -62,11 +62,11 @@ namespace SierraMarket.UI
 
             var flpReloj = new FlowLayoutPanel();
 
-            var lblHora = new Texto.SM(DateTime.Now.ToString("hh:mm tt"));
+            var lblHora = new Texto.SM(DateTime.Now.ToString("hh:mm:ss tt"));
 
             var timer = new System.Windows.Forms.Timer();
-            timer.Interval = 30000;
-            timer.Tick += (sender, e) => lblHora.Text = DateTime.Now.ToString("hh:mm tt");
+            timer.Interval = 1000;
+            timer.Tick += (sender, e) => lblHora.Text = DateTime.Now.ToString("hh:mm:ss tt");
             timer.Start();
 
             flpReloj.Dock = DockStyle.Right;
@@ -77,7 +77,45 @@ namespace SierraMarket.UI
 
             flpReloj.Controls.Add(lblHora);
 
-            pHeader.Controls.AddRange(new Control[] {flpCaja, flpUsuario, flpReloj});
+            pnlHeader.Controls.AddRange(new Control[] { flpCaja, flpUsuario, flpReloj });
+
+            var flpMenu = new FlowLayoutPanel();
+            flpMenu.Dock = DockStyle.Fill;
+            flpMenu.Padding = new Padding(0);
+            flpMenu.WrapContents = false;
+            flpMenu.AutoSize = true;
+            flpMenu.FlowDirection = FlowDirection.LeftToRight;
+
+            var btnVentas = new Botones.Transparente("Ventas", 40);
+            var btnInventario = new Botones.Transparente("Inventario", 40);
+            var btnTurnos = new Botones.Transparente("Turnos", 40);
+            var btnHistorial = new Botones.Transparente("Historial", 40);
+
+            btnVentas.Click += BtnVentas_Click;
+            btnInventario.Click += BtnInventario_Click;
+
+            flpMenu.Controls.AddRange(new Control[] { btnVentas, btnInventario, btnTurnos, btnHistorial });
+
+            pnlMenu.Controls.Add(flpMenu);
+            
+            CargarVista(new UscVenta());
+        }
+
+        private void BtnVentas_Click(object sender, EventArgs e)
+        {
+            CargarVista(new UscVenta());
+        }
+
+        private void BtnInventario_Click(object sender, EventArgs e)
+        {
+            CargarVista(new UscInventario());
+        }
+
+        public void CargarVista(UserControl vista)
+        {
+            pnlCatalogo.Controls.Clear();
+            vista.Dock = DockStyle.Fill;
+            pnlCatalogo.Controls.Add(vista);
         }
 
         private void BtnTurnos_Click(object sender, EventArgs e)

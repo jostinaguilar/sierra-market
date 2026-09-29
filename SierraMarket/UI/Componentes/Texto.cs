@@ -31,7 +31,7 @@ namespace SierraMarket.UI.Componentes
         {
             public XL(string texto = "", int x = 0, int y = 0, Font? fuente = null) : base(texto, x, y)
             {
-                Font = fuente ?? Fuentes.GeistBold(16);
+                Font = fuente ?? Fuentes.GeistRegular(16, FontStyle.Bold);
             }
         }
 
@@ -47,7 +47,7 @@ namespace SierraMarket.UI.Componentes
         {
             public Base(string texto = "", int x = 0, int y = 0, Font? fuente = null) : base(texto, x, y)
             {
-                Font = fuente ?? Fuentes.GeistBold(12);
+                Font = fuente ?? Fuentes.GeistRegular(12, FontStyle.Bold);
             }
         }
 

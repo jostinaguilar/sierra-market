@@ -31,13 +31,15 @@ namespace SierraMarket.UI
         private void InitializeComponent()
         {
             tlpPrincipal = new TableLayoutPanel();
-            pHeader = new Panel();
+            pnlHeader = new Panel();
             brdHero = new Panel();
             brdMenu = new Panel();
             brdFooter = new Panel();
             tlpVenta = new TableLayoutPanel();
             brdVenta = new Panel();
-            pVentaActual = new Panel();
+            pnlVentaActual = new Panel();
+            pnlCatalogo = new Panel();
+            pnlMenu = new Panel();
             tlpPrincipal.SuspendLayout();
             tlpVenta.SuspendLayout();
             SuspendLayout();
@@ -47,11 +49,12 @@ namespace SierraMarket.UI
             tlpPrincipal.BackColor = Color.White;
             tlpPrincipal.ColumnCount = 1;
             tlpPrincipal.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tlpPrincipal.Controls.Add(pHeader, 0, 0);
+            tlpPrincipal.Controls.Add(pnlHeader, 0, 0);
             tlpPrincipal.Controls.Add(brdHero, 0, 1);
             tlpPrincipal.Controls.Add(brdMenu, 0, 3);
             tlpPrincipal.Controls.Add(brdFooter, 0, 5);
             tlpPrincipal.Controls.Add(tlpVenta, 0, 4);
+            tlpPrincipal.Controls.Add(pnlMenu, 0, 2);
             tlpPrincipal.Dock = DockStyle.Fill;
             tlpPrincipal.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
             tlpPrincipal.Location = new Point(0, 0);
@@ -67,15 +70,15 @@ namespace SierraMarket.UI
             tlpPrincipal.Size = new Size(1008, 761);
             tlpPrincipal.TabIndex = 0;
             // 
-            // pHeader
+            // pnlHeader
             // 
-            pHeader.BackColor = Color.FromArgb(250, 250, 250);
-            pHeader.Dock = DockStyle.Fill;
-            pHeader.Location = new Point(0, 0);
-            pHeader.Margin = new Padding(0);
-            pHeader.Name = "pHeader";
-            pHeader.Size = new Size(1008, 60);
-            pHeader.TabIndex = 5;
+            pnlHeader.BackColor = Color.FromArgb(250, 250, 250);
+            pnlHeader.Dock = DockStyle.Fill;
+            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Margin = new Padding(0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Size = new Size(1008, 60);
+            pnlHeader.TabIndex = 5;
             // 
             // brdHero
             // 
@@ -114,7 +117,8 @@ namespace SierraMarket.UI
             tlpVenta.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 1F));
             tlpVenta.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             tlpVenta.Controls.Add(brdVenta, 1, 0);
-            tlpVenta.Controls.Add(pVentaActual, 2, 0);
+            tlpVenta.Controls.Add(pnlVentaActual, 2, 0);
+            tlpVenta.Controls.Add(pnlCatalogo, 0, 0);
             tlpVenta.Dock = DockStyle.Fill;
             tlpVenta.Location = new Point(0, 102);
             tlpVenta.Margin = new Padding(0);
@@ -134,15 +138,35 @@ namespace SierraMarket.UI
             brdVenta.Size = new Size(1, 598);
             brdVenta.TabIndex = 3;
             // 
-            // pVentaActual
+            // pnlVentaActual
             // 
-            pVentaActual.BackColor = Color.FromArgb(250, 250, 250);
-            pVentaActual.Dock = DockStyle.Fill;
-            pVentaActual.Location = new Point(655, 0);
-            pVentaActual.Margin = new Padding(0);
-            pVentaActual.Name = "pVentaActual";
-            pVentaActual.Size = new Size(353, 598);
-            pVentaActual.TabIndex = 4;
+            pnlVentaActual.BackColor = Color.FromArgb(250, 250, 250);
+            pnlVentaActual.Dock = DockStyle.Fill;
+            pnlVentaActual.Location = new Point(655, 0);
+            pnlVentaActual.Margin = new Padding(0);
+            pnlVentaActual.Name = "pnlVentaActual";
+            pnlVentaActual.Size = new Size(353, 598);
+            pnlVentaActual.TabIndex = 4;
+            // 
+            // pnlCatalogo
+            // 
+            pnlCatalogo.BackColor = Color.Transparent;
+            pnlCatalogo.Dock = DockStyle.Fill;
+            pnlCatalogo.Location = new Point(0, 0);
+            pnlCatalogo.Margin = new Padding(0);
+            pnlCatalogo.Name = "pnlCatalogo";
+            pnlCatalogo.Size = new Size(654, 598);
+            pnlCatalogo.TabIndex = 5;
+            // 
+            // pnlMenu
+            // 
+            pnlMenu.BackColor = Color.Transparent;
+            pnlMenu.Dock = DockStyle.Fill;
+            pnlMenu.Location = new Point(0, 61);
+            pnlMenu.Margin = new Padding(0);
+            pnlMenu.Name = "pnlMenu";
+            pnlMenu.Size = new Size(1008, 40);
+            pnlMenu.TabIndex = 6;
             // 
             // FrmPrincipal
             // 
@@ -166,7 +190,9 @@ namespace SierraMarket.UI
         private Panel brdFooter;
         private TableLayoutPanel tlpVenta;
         private Panel brdVenta;
-        private Panel pVentaActual;
-        private Panel pHeader;
+        private Panel pnlVentaActual;
+        private Panel pnlHeader;
+        private Panel pnlMenu;
+        private Panel pnlCatalogo;
     }
 }
