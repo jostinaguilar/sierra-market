@@ -1,4 +1,6 @@
-﻿using SierraMarket.UI.Componentes;
+﻿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Modelos;
+using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
@@ -12,9 +14,13 @@ namespace SierraMarket.UI
 {
     public partial class UscVenta : UserControl
     {
-        public UscVenta()
+        private readonly ListaSimple<Producto> _listaProductos;
+
+        public UscVenta(ListaSimple<Producto> listaProductos)
         {
             InitializeComponent();
+
+            _listaProductos = listaProductos;
 
             var tlpVenta = new TableLayoutPanel();
             tlpVenta.Dock = DockStyle.Fill;

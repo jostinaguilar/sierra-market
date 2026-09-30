@@ -1,5 +1,8 @@
-﻿using SierraMarket.UI.Componentes;
+﻿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Modelos;
+using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Formularios.Inventario;
+using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,9 +15,15 @@ namespace SierraMarket.UI
 {
     public partial class UscInventario : UserControl
     {
-        public UscInventario()
+        private readonly ListaSimple<Producto> _listaProductos;
+        private DataGridView dgvInventario;
+
+        public UscInventario(ListaSimple<Producto> listaProductos)
         {
+
             InitializeComponent();
+
+            _listaProductos = listaProductos;
 
             var tlpInventario = new TableLayoutPanel();
             tlpInventario.Dock = DockStyle.Fill;
@@ -47,7 +56,7 @@ namespace SierraMarket.UI
 
             pnlTitulo.Controls.AddRange(new Control[] { lblTitulo, btnAgregarProducto });
 
-            var dgvInventario = new DataGridView();
+            dgvInventario = new DataGridView();
             dgvInventario.Dock = DockStyle.Fill;
             dgvInventario.Margin = new Padding(0);
             dgvInventario.AutoGenerateColumns = false;
@@ -56,8 +65,8 @@ namespace SierraMarket.UI
             dgvInventario.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvInventario.RowHeadersVisible = false;
 
-            dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", Width = 80 });
-            dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Nombre", Width = 250 });
+            dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Id", Width = 80 });
+            dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", Width = 250 });
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "Stock", Width = 80 });
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", Width = 80 });
             dgvInventario.Columns.Add(new DataGridViewButtonColumn { HeaderText = "", Text = "Editar", UseColumnTextForButtonValue = true, Width = 80 });
@@ -67,11 +76,13 @@ namespace SierraMarket.UI
             tlpInventario.Controls.Add(dgvInventario, 0, 4);
 
             this.Controls.Add(tlpInventario);
+
+            ActualizarInventario();
         }
 
-        public void BtnAgregarProducto_Click(object sender, EventArgs e)
+        private void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
-            var frmAgregar = new FrmAgregarProducto();
+            var frmAgregar = new FrmAgregarProducto(_listaProductos);
 
             if (frmAgregar.ShowDialog() == DialogResult.OK)
             {
@@ -79,9 +90,12 @@ namespace SierraMarket.UI
             }
         }
 
-        public void ActualizarInventario()
+        private void ActualizarInventario()
         {
-            
+            var productos = _listaProductos.ObtenerTodos();
+
+            dgvInventario.DataSource = null;
+            dgvInventario.DataSource = productos;
         }
     }
 }

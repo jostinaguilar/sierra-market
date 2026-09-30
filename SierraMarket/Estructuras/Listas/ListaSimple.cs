@@ -34,8 +34,9 @@ namespace SierraMarket.Estructuras.Listas
                 }
 
                 actual.Siguiente = nuevo;
-                count++;
             }
+
+            count++;
         }
 
         public List<T> ObtenerTodos()

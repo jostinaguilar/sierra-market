@@ -13,21 +13,29 @@ namespace SierraMarket.UI.Formularios.Inventario
 {
     public partial class FrmAgregarProducto : Form
     {
-        private ListaSimple<Producto> listProductos;
+        private readonly ListaSimple<Producto> _listaProductos;
 
-        public FrmAgregarProducto()
+        // TextBoxes para los campos del formulario
+        private CampoTexto.Campo txtDescripcion;
+        private CampoTexto.Campo txtStock;
+        private CampoTexto.Campo txtPrecio;
+
+        public FrmAgregarProducto(ListaSimple<Producto> listaProductos)
         {
             InitializeComponent();
 
-            listProductos = new ListaSimple<Producto>();
+            _listaProductos = listaProductos;
 
-            this.Width = 400;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.AutoSize = false;
 
             var tlpFormulario = new TableLayoutPanel();
             tlpFormulario.Margin = new Padding(0);
             tlpFormulario.Padding = new Padding(20);
             tlpFormulario.ColumnCount = 1;
+            tlpFormulario.ColumnStyles.Clear();
+            tlpFormulario.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tlpFormulario.RowCount = 16;
             tlpFormulario.Dock = DockStyle.Fill;
 
@@ -54,16 +62,17 @@ namespace SierraMarket.UI.Formularios.Inventario
             var lblTitulo = new Texto.Base("Agregar Producto");
 
             var lblDescripcion = new Texto.SM("Descripción");
-            var txtDescripcion = new CampoTexto.Campo("Ingrese una descripción");
+            txtDescripcion = new CampoTexto.Campo("Ingrese una descripción");
 
             var lblStock = new Texto.SM("Stock");
-            var txtStock = new CampoTexto.Campo("Ingrese el stock");
+            txtStock = new CampoTexto.Campo("Ingrese el stock");
 
             var lblPrecio = new Texto.SM("Precio");
-            var txtPrecio = new CampoTexto.Campo("Ingrese un precio");
+            txtPrecio = new CampoTexto.Campo("Ingrese un precio");
 
             var btnGuardar = new Botones.Primario("Guardar");
             btnGuardar.Dock = DockStyle.Fill;
+            btnGuardar.Click += BtnGuardar_Click;
 
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
             tlpFormulario.Controls.Add(lblDescripcion, 0, 2);
@@ -75,11 +84,53 @@ namespace SierraMarket.UI.Formularios.Inventario
             tlpFormulario.Controls.Add(btnGuardar, 0, 14);
 
             this.Controls.Add(tlpFormulario);
+
+            float altoTotalFilas = 0;
+            foreach (RowStyle fila in tlpFormulario.RowStyles)
+            {
+                altoTotalFilas += fila.Height;
+            }
+
+            int altoFinal = (int)altoTotalFilas + tlpFormulario.Padding.Vertical;
+
+            this.ClientSize = new Size(400, altoFinal);
         }
 
         public void BtnGuardar_Click(object sender, EventArgs e)
         {
+            int id;
+            string descripcion = txtDescripcion.Text.Trim();
+            int stock;
+            decimal precio;
 
+            if (string.IsNullOrEmpty(descripcion))
+            {
+                MessageBox.Show("Ingrese una descripción para continuar.", "Descripción requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!int.TryParse(txtStock.Text.Trim(), out stock))
+            {
+                MessageBox.Show("Ingrese un valor numérico válido para el stock.", "Stock inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!decimal.TryParse(txtPrecio.Text.Trim().Replace(',', '.'), out precio))
+            {
+                MessageBox.Show("Ingrese un valor numérico válido para el precio.", "Precio inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            id = _listaProductos.Count + 1;
+
+            var nuevoProducto = new Producto(id, descripcion, stock, precio);
+
+            _listaProductos.Agregar(nuevoProducto);
+
+            MessageBox.Show("El producto se registró correctamente.", "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

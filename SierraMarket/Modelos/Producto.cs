@@ -9,9 +9,9 @@ namespace SierraMarket.Modelos
         public int Id { get; set; }
         public string Descripcion { get; set; }
         public int Stock { get; set; }
-        public double Precio { get; set; }
+        public decimal Precio { get; set; }
 
-        public Producto(int id, string descripcion, int stock, double precio)
+        public Producto(int id, string descripcion, int stock, decimal precio)
         {
             Id = id;
             Descripcion = descripcion;

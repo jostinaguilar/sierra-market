@@ -1,4 +1,6 @@
-﻿using SierraMarket.UI.Componentes;
+﻿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Modelos;
+using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,10 @@ namespace SierraMarket.UI
 {
     public partial class FrmPrincipal : Form
     {
+        private readonly ListaSimple<Producto> _listaProductos = new ListaSimple<Producto>();
+        private UscInventario _uscInventario;
+        private UscVenta _uscVenta;
+
         public FrmPrincipal()
         {
             InitializeComponent();
@@ -93,22 +99,33 @@ namespace SierraMarket.UI
 
             btnVentas.Click += BtnVentas_Click;
             btnInventario.Click += BtnInventario_Click;
+            btnTurnos.Click += BtnTurnos_Click;
 
             flpMenu.Controls.AddRange(new Control[] { btnVentas, btnInventario, btnTurnos, btnHistorial });
 
             pnlMenu.Controls.Add(flpMenu);
             
-            CargarVista(new UscVenta());
+            CargarVista(new UscVenta(_listaProductos));
         }
 
         private void BtnVentas_Click(object sender, EventArgs e)
         {
-            CargarVista(new UscVenta());
+            if (_uscVenta == null)
+            {
+                _uscVenta = new UscVenta(_listaProductos);
+            }
+
+            CargarVista(_uscVenta);
         }
 
         private void BtnInventario_Click(object sender, EventArgs e)
         {
-            CargarVista(new UscInventario());
+            if (_uscInventario == null)
+            {
+                _uscInventario = new UscInventario(_listaProductos);
+            }
+
+            CargarVista(_uscInventario);
         }
 
         public void CargarVista(UserControl vista)
