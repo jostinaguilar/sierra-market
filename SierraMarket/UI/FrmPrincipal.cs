@@ -18,9 +18,67 @@ namespace SierraMarket.UI
         private UscInventario _uscInventario;
         private UscVenta _uscVenta;
 
+        private Panel pnlPrincipal;
+
         public FrmPrincipal()
         {
             InitializeComponent();
+
+            var tlpPrincipal = new TableLayoutPanel();
+            tlpPrincipal.Dock = DockStyle.Fill;
+            tlpPrincipal.ColumnCount = 1;
+            tlpPrincipal.RowCount = 5;
+            tlpPrincipal.Margin = new Padding(0);
+            tlpPrincipal.Padding = new Padding(0);
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+            var pnlHeader = new Panel();
+            pnlHeader.Dock = DockStyle.Fill;
+            pnlHeader.Margin = new Padding(0);
+            pnlHeader.Padding = new Padding(0);
+            pnlHeader.BackColor = Color.FromArgb(250, 250, 250);
+
+            var pnlSeparador1 = new Panel();
+            pnlSeparador1.Dock = DockStyle.Fill;
+            pnlSeparador1.Margin = new Padding(0);
+            pnlSeparador1.Padding = new Padding(0);
+            pnlSeparador1.BackColor = Color.FromArgb(228, 228, 231);
+
+            pnlPrincipal = new Panel();
+            pnlPrincipal.Dock = DockStyle.Fill;
+            pnlPrincipal.Padding = new Padding(0);
+            pnlPrincipal.Margin = new Padding(0);
+            pnlPrincipal.BackColor = Color.FromArgb(255, 255, 255);
+
+            var pnlSeparador2 = new Panel();
+            pnlSeparador2.Dock = DockStyle.Fill;
+            pnlSeparador2.Margin = new Padding(0);
+            pnlSeparador2.Padding = new Padding(0);
+            pnlSeparador2.BackColor = Color.FromArgb(228, 228, 231);
+
+            var pnlMenu = new Panel();
+            pnlMenu.Dock = DockStyle.Fill;
+            pnlMenu.Margin = new Padding(0);
+            pnlMenu.Padding = new Padding(0);
+            pnlMenu.BackColor = Color.FromArgb(255, 255, 255);
+
+            var pnlSeparador3 = new Panel();
+            pnlSeparador3.Dock = DockStyle.Fill;
+            pnlSeparador3.Margin = new Padding(0);
+            pnlSeparador3.Padding = new Padding(0);
+            pnlSeparador3.BackColor = Color.FromArgb(228, 228, 231);
+
+            tlpPrincipal.Controls.Add(pnlHeader, 0, 0);
+            tlpPrincipal.Controls.Add(pnlSeparador1, 0, 1);
+            tlpPrincipal.Controls.Add(pnlMenu, 0, 2);
+            tlpPrincipal.Controls.Add(pnlSeparador2, 0, 3);
+            tlpPrincipal.Controls.Add(pnlPrincipal, 0, 4);
+
+            this.Controls.Add(tlpPrincipal);
 
             var flpTitulo = new FlowLayoutPanel();
             var lblTitulo = new Texto.XXL("Sierra Market");
@@ -130,9 +188,9 @@ namespace SierraMarket.UI
 
         public void CargarVista(UserControl vista)
         {
-            pnlCatalogo.Controls.Clear();
+            pnlPrincipal.Controls.Clear();
             vista.Dock = DockStyle.Fill;
-            pnlCatalogo.Controls.Add(vista);
+            pnlPrincipal.Controls.Add(vista);
         }
 
         private void BtnTurnos_Click(object sender, EventArgs e)

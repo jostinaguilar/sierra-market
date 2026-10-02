@@ -56,7 +56,7 @@ namespace SierraMarket.UI.Formularios.Inventario
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 5F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
             var lblTitulo = new Texto.Base("Agregar Producto");
