@@ -20,6 +20,9 @@ namespace SierraMarket.UI.Formularios.Inventario
         private CampoEtiquetado Stock;
         private CampoEtiquetado Precio;
 
+        private Boton.Primario btnGuardar;
+        private Boton.Secundario btnCancelar;
+
         public FrmAgregarProducto(ListaSimple<Producto> listaProductos)
         {
             _listaProductos = listaProductos;
@@ -50,16 +53,11 @@ namespace SierraMarket.UI.Formularios.Inventario
 
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
-
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
-
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
-
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
             var lblTitulo = new Texto.Titulo("Agregar Producto");
@@ -70,15 +68,33 @@ namespace SierraMarket.UI.Formularios.Inventario
 
             Precio = new CampoEtiquetado("Precio", "Ingrese un precio");
 
-            var btnGuardar = new Boton.Primario("Guardar");
+            var tlpBotones = new TableLayoutPanel();
+
+            tlpBotones.Padding = new Padding(0);
+            tlpBotones.Margin = new Padding(0);
+            tlpBotones.Dock = DockStyle.Fill;
+            tlpBotones.RowCount = 1;
+            tlpBotones.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpBotones.ColumnCount = 3;
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+
+            btnCancelar = new Boton.Secundario("Cancelar");
+            btnCancelar.Dock = DockStyle.Fill;
+
+            btnGuardar = new Boton.Primario("Guardar");
             btnGuardar.Dock = DockStyle.Fill;
             btnGuardar.Click += BtnGuardar_Click;
 
+            tlpBotones.Controls.Add(btnCancelar, 0, 0);
+            tlpBotones.Controls.Add(btnGuardar, 2, 0);
+
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
             tlpFormulario.Controls.Add(Descripcion, 0, 2);
-            tlpFormulario.Controls.Add(Stock, 0, 4);
-            tlpFormulario.Controls.Add(Precio, 0, 6);
-            tlpFormulario.Controls.Add(btnGuardar, 0, 8);
+            tlpFormulario.Controls.Add(Stock, 0, 3);
+            tlpFormulario.Controls.Add(Precio, 0, 4);
+            tlpFormulario.Controls.Add(tlpBotones, 0, 6);
 
             this.Controls.Add(tlpFormulario);
 
@@ -91,6 +107,8 @@ namespace SierraMarket.UI.Formularios.Inventario
             int altoFinal = (int)altoTotalFilas + tlpFormulario.Padding.Vertical;
 
             this.ClientSize = new Size(400, altoFinal);
+            this.AcceptButton = btnGuardar;
+            this.CancelButton = btnCancelar;
         }
 
         public void BtnGuardar_Click(object sender, EventArgs e)

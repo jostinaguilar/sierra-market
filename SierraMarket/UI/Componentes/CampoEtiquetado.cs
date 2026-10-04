@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SierraMarket.UI.Componentes
 {
-    public class CampoEtiquetado : TableLayoutPanel
+    public class CampoEtiquetado: TableLayoutPanel
     {
         public CampoTexto.Campo Campo { get; }
         public string Valor => Campo.Text.Trim();
@@ -14,10 +14,10 @@ namespace SierraMarket.UI.Componentes
             Campo = new CampoTexto.Campo(placeholder);
 
             Dock = DockStyle.Fill;
-            Margin = new Padding(0);
             ColumnCount = 1;
             RowCount = 3;
             Height = 55;
+            Margin = new Padding(0, 0, 0, 10);
 
             ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));

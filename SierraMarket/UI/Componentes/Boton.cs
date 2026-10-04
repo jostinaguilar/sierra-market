@@ -35,5 +35,10 @@ namespace SierraMarket.UI.Componentes
         {
             public Primario(string texto):base(texto, Colores.Primario, Color.White) { }
         }
+
+        public class Secundario: Basico
+        {
+            public Secundario(string texto) : base(texto, Colores.Secundario, Color.Black) { }
+        }
     }
 }
