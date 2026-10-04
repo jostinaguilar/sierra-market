@@ -78,12 +78,12 @@ namespace SierraMarket.UI
             pnlVenta.Padding = new Padding(0);
             pnlVenta.BackColor = Color.FromArgb(250, 250, 250);
 
-            var lblCatalogo = new Texto.Base("Catálogo de Productos", 20, 20);
+            var lblCatalogo = new Texto.Subtitulo("Catálogo de Productos");
 
             lblCatalogo.Dock = DockStyle.Fill;
             lblCatalogo.Margin = new Padding(0);
 
-            var txtBuscarProducto = new CampoTexto.CampoBuscar("Buscar producto...");
+            var txtBuscarProducto = new CampoTexto.Campo("Buscar producto...");
             
             tlpVenta.Controls.Add(lblCatalogo, 0, 0);
             tlpVenta.Controls.Add(txtBuscarProducto.ConBorde(), 0, 2);

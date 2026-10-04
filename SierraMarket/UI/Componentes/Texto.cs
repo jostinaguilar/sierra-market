@@ -7,64 +7,38 @@ namespace SierraMarket.UI.Componentes
 {
     public static class Texto
     {
-        public abstract class TextoBase : Label
+        public abstract class Basico : Label
         {
-            protected TextoBase(string texto = "", int x = 0, int y = 0)
+            protected Basico(string texto, Font fuente)
             {
                 Text = texto;
-                Location = new Point(x, y);
+                Font = fuente;
                 AutoSize = true;
                 ForeColor = Color.Black;
                 BackColor = Color.Transparent;
+                Padding = new Padding(0);
+                Margin = new Padding(0);
             }
         }
 
-        public class XXL : TextoBase
+        public class Titulo : Basico
         {
-            public XXL(string texto = "", int x = 0, int y = 0, Font? fuente = null) : base(texto, x, y)
-            {
-                Font = fuente ?? Fuentes.GeistBlack(18);
-            }
+            public Titulo(string texto, Peso peso = Peso.Black) : base(texto, Fuentes.Geist(14, peso)) { }
         }
 
-        public class XL : TextoBase
+        public class Subtitulo : Basico
         {
-            public XL(string texto = "", int x = 0, int y = 0, Font? fuente = null) : base(texto, x, y)
-            {
-                Font = fuente ?? Fuentes.GeistRegular(16, FontStyle.Bold);
-            }
+            public Subtitulo(string texto, Peso peso = Peso.ExtraBold): base(texto, Fuentes.Geist(12, peso)) { }
         }
 
-        public class LG : TextoBase
+        public class Etiqueta : Basico
         {
-            public LG(string texto = "", int x = 0, int y = 0, Font? fuente = null) : base(texto, x, y)
-            {
-                Font = fuente ?? Fuentes.GeistBold(14);
-            }
+            public Etiqueta(string texto, Peso peso = Peso.Regular) : base(texto, Fuentes.Geist(10, peso)) { }
         }
 
-        public class Base : TextoBase
+        public class Pequeno : Basico
         {
-            public Base(string texto = "", int x = 0, int y = 0, Font? fuente = null) : base(texto, x, y)
-            {
-                Font = fuente ?? Fuentes.GeistRegular(12, FontStyle.Bold);
-            }
-        }
-
-        public class SM : TextoBase
-        {
-            public SM(string texto = "", int x = 0, int y = 0, Font? fuente = null) : base(texto, x, y)
-            {
-                Font = fuente ?? Fuentes.GeistMedium(10);
-            }
-        }
-
-        public class XS : TextoBase
-        {
-            public XS(string texto = "", int x = 0, int y = 0, Font? fuente = null) : base(texto, x, y)
-            {
-                Font = fuente ?? Fuentes.GeistLight(8);
-            }
+            public Pequeno(string texto, Peso peso = Peso.Regular) : base(texto, Fuentes.Geist(8, peso)) { }
         }
     }
 }

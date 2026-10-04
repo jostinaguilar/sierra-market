@@ -42,17 +42,17 @@ namespace SierraMarket.UI
             pnlTitulo.Dock = DockStyle.Fill;
             pnlTitulo.Margin = new Padding(0);
 
-            var lblTitulo = new Texto.Base("Gestión de Inventario", 20, 20);
+            var lblTitulo = new Texto.Subtitulo("Gestión de Inventario");
 
             lblTitulo.Dock = DockStyle.Left;
             lblTitulo.Margin = new Padding(0);
 
-            var btnAgregarProducto = new Botones.Primario("Agregar producto");
+            var btnAgregarProducto = new Boton.Primario("Agregar producto");
             btnAgregarProducto.Dock = DockStyle.Right;
             btnAgregarProducto.Margin = new Padding(0);
             btnAgregarProducto.Click += BtnAgregarProducto_Click;
 
-            var txtBuscarProducto = new CampoTexto.CampoBuscar("Buscar producto...");
+            var txtBuscarProducto = new CampoTexto.Campo("Buscar producto...");
 
             pnlTitulo.Controls.AddRange(new Control[] { lblTitulo, btnAgregarProducto });
 

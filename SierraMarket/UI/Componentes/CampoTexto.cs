@@ -7,39 +7,35 @@ namespace SierraMarket.UI.Componentes
 {
     public static class CampoTexto
     {
-        public abstract class Base : TextBox
+        public class Campo : TextBox
         {
-            protected Base(string placeholder = "", int x = 0, int y = 0)
+            public Campo(string placeholder = "")
             {
                 PlaceholderText = placeholder;
                 BorderStyle = BorderStyle.None;
-                BackColor = Color.FromArgb(250, 250, 250);
+                BackColor = Colores.Fondo;
                 Dock = DockStyle.Fill;
                 Font = Fuentes.GeistRegular(10F);
             }
         }
 
-        public class CampoBuscar : Base
-        {
-            public CampoBuscar(string placeholder = "", int x = 0, int y = 0, Font? fuente = null) : base(placeholder, x, y)
-            {
-                Font = fuente ?? Fuentes.GeistRegular(10F);
-            }
-        }
-
-        public class Campo : Base
-        {
-            public Campo(string placeholder = "", int x = 0, int y = 0, Font? fuente = null) : base(placeholder, x, y)
-            {
-                Font = fuente ?? Fuentes.GeistRegular(10F);
-            }
-        }
-
         public static Panel ConBorde(this TextBox txt)
         {
-            var pnlBorde = new Panel { Dock = DockStyle.Fill, Margin = new Padding(0), Padding = new Padding(1), BackColor = Color.FromArgb(228, 228, 231) };
+            var pnlBorde = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                Padding = new Padding(1),
+                BackColor = Colores.Borde
+            };
 
-            var pnlInterno = new Panel { Dock = DockStyle.Fill, Margin = new Padding(0), Padding = new Padding(10, 5, 10, 0), BackColor = txt.BackColor };
+            var pnlInterno = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                Padding = new Padding(10, 4, 10, 0),
+                BackColor = Colores.Fondo
+            };
 
             pnlInterno.Controls.Add(txt);
             pnlBorde.Controls.Add(pnlInterno);

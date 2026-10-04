@@ -81,7 +81,7 @@ namespace SierraMarket.UI
             this.Controls.Add(tlpPrincipal);
 
             var flpTitulo = new FlowLayoutPanel();
-            var lblTitulo = new Texto.XXL("Sierra Market");
+            var lblTitulo = new Texto.Titulo("Sierra Market");
 
             lblTitulo.Padding = new Padding(0);
 
@@ -90,13 +90,13 @@ namespace SierraMarket.UI
             flpTitulo.AutoSize = true;
             flpTitulo.WrapContents = false;
             flpTitulo.FlowDirection = FlowDirection.LeftToRight;
-            flpTitulo.Padding = new Padding(20, 12, 0, 0);
+            flpTitulo.Padding = new Padding(20, 15, 0, 0);
 
             pnlHeader.Controls.Add(flpTitulo);
 
             var flpCaja = new FlowLayoutPanel();
-            var lblCaja = new Texto.SM("Caja", 0, 0, Fuentes.GeistLight(10));
-            var lblNumeroCaja = new Texto.SM("01");
+            var lblCaja = new Texto.Etiqueta("Caja");
+            var lblNumeroCaja = new Texto.Etiqueta("01", Peso.Semibold);
 
             lblCaja.Margin = new Padding(0);
             lblNumeroCaja.Margin = new Padding(0);
@@ -110,8 +110,8 @@ namespace SierraMarket.UI
             flpCaja.Padding = new Padding(0, 20, 20, 0);
 
             var flpUsuario = new FlowLayoutPanel();
-            var lblUsuario = new Texto.SM("Usuario", 0, 0, Fuentes.GeistLight(10));
-            var lblNombreUsuario = new Texto.SM("Jhon Doe");
+            var lblUsuario = new Texto.Etiqueta("Usuario");
+            var lblNombreUsuario = new Texto.Etiqueta("Jhon Doe", Peso.Semibold);
 
             lblUsuario.Margin = new Padding(0);
             lblNombreUsuario.Margin = new Padding(0);
@@ -124,24 +124,7 @@ namespace SierraMarket.UI
             flpUsuario.FlowDirection = FlowDirection.LeftToRight;
             flpUsuario.Padding = new Padding(0, 20, 20, 0);
 
-            var flpReloj = new FlowLayoutPanel();
-
-            var lblHora = new Texto.SM(DateTime.Now.ToString("hh:mm:ss tt"));
-
-            var timer = new System.Windows.Forms.Timer();
-            timer.Interval = 1000;
-            timer.Tick += (sender, e) => lblHora.Text = DateTime.Now.ToString("hh:mm:ss tt");
-            timer.Start();
-
-            flpReloj.Dock = DockStyle.Right;
-            flpReloj.AutoSize = true;
-            flpReloj.WrapContents = false;
-            flpReloj.FlowDirection = FlowDirection.LeftToRight;
-            flpReloj.Padding = new Padding(0, 20, 20, 0);
-
-            flpReloj.Controls.Add(lblHora);
-
-            pnlHeader.Controls.AddRange(new Control[] { flpCaja, flpUsuario, flpReloj });
+            pnlHeader.Controls.AddRange(new Control[] { flpCaja, flpUsuario });
 
             var flpMenu = new FlowLayoutPanel();
             flpMenu.Dock = DockStyle.Fill;
@@ -150,10 +133,15 @@ namespace SierraMarket.UI
             flpMenu.AutoSize = true;
             flpMenu.FlowDirection = FlowDirection.LeftToRight;
 
-            var btnVentas = new Botones.Transparente("Ventas", 40);
-            var btnInventario = new Botones.Transparente("Inventario", 40);
-            var btnTurnos = new Botones.Transparente("Turnos", 40);
-            var btnHistorial = new Botones.Transparente("Historial", 40);
+            var btnVentas = new Boton.Transparente("Ventas");
+            var btnInventario = new Boton.Transparente("Inventario");
+            var btnTurnos = new Boton.Transparente("Turnos");
+            var btnHistorial = new Boton.Transparente("Historial");
+
+            btnVentas.Height = 40;
+            btnInventario.Height = 40;
+            btnTurnos.Height = 40;
+            btnHistorial.Height = 40;
 
             btnVentas.Click += BtnVentas_Click;
             btnInventario.Click += BtnInventario_Click;

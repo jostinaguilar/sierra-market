@@ -16,20 +16,29 @@ namespace SierraMarket.UI.Formularios.Inventario
         private readonly ListaSimple<Producto> _listaProductos;
 
         // TextBoxes para los campos del formulario
-        private CampoTexto.Campo txtDescripcion;
-        private CampoTexto.Campo txtStock;
-        private CampoTexto.Campo txtPrecio;
+        private CampoEtiquetado Descripcion;
+        private CampoEtiquetado Stock;
+        private CampoEtiquetado Precio;
 
         public FrmAgregarProducto(ListaSimple<Producto> listaProductos)
         {
-            InitializeComponent();
-
             _listaProductos = listaProductos;
 
+            ConfigurarVentana();
+            CrearFormulario();
+        }
+
+        private void ConfigurarVentana()
+        {
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.AutoSize = false;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.Text = "Inventario | Sierra Market";
+        }
 
+        private void CrearFormulario()
+        {
             var tlpFormulario = new TableLayoutPanel();
             tlpFormulario.Margin = new Padding(0);
             tlpFormulario.Padding = new Padding(20);
@@ -42,46 +51,34 @@ namespace SierraMarket.UI.Formularios.Inventario
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 5F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
 
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 5F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
 
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 5F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
 
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
-            var lblTitulo = new Texto.Base("Agregar Producto");
+            var lblTitulo = new Texto.Titulo("Agregar Producto");
 
-            var lblDescripcion = new Texto.SM("Descripción");
-            txtDescripcion = new CampoTexto.Campo("Ingrese una descripción");
+            Descripcion = new CampoEtiquetado("Descripción", "Ingrese una descripción");
 
-            var lblStock = new Texto.SM("Stock");
-            txtStock = new CampoTexto.Campo("Ingrese el stock");
+            Stock = new CampoEtiquetado("Stock", "Ingrese el stock");
 
-            var lblPrecio = new Texto.SM("Precio");
-            txtPrecio = new CampoTexto.Campo("Ingrese un precio");
+            Precio = new CampoEtiquetado("Precio", "Ingrese un precio");
 
-            var btnGuardar = new Botones.Primario("Guardar");
+            var btnGuardar = new Boton.Primario("Guardar");
             btnGuardar.Dock = DockStyle.Fill;
             btnGuardar.Click += BtnGuardar_Click;
 
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
-            tlpFormulario.Controls.Add(lblDescripcion, 0, 2);
-            tlpFormulario.Controls.Add(txtDescripcion.ConBorde(), 0, 4);
-            tlpFormulario.Controls.Add(lblStock, 0, 6);
-            tlpFormulario.Controls.Add(txtStock.ConBorde(), 0, 8);
-            tlpFormulario.Controls.Add(lblPrecio, 0, 10);
-            tlpFormulario.Controls.Add(txtPrecio.ConBorde(), 0, 12);
-            tlpFormulario.Controls.Add(btnGuardar, 0, 14);
+            tlpFormulario.Controls.Add(Descripcion, 0, 2);
+            tlpFormulario.Controls.Add(Stock, 0, 4);
+            tlpFormulario.Controls.Add(Precio, 0, 6);
+            tlpFormulario.Controls.Add(btnGuardar, 0, 8);
 
             this.Controls.Add(tlpFormulario);
 
@@ -98,8 +95,9 @@ namespace SierraMarket.UI.Formularios.Inventario
 
         public void BtnGuardar_Click(object sender, EventArgs e)
         {
+
             int id;
-            string descripcion = txtDescripcion.Text.Trim();
+            string descripcion = Descripcion.Valor;
             int stock;
             decimal precio;
 
@@ -109,13 +107,13 @@ namespace SierraMarket.UI.Formularios.Inventario
                 return;
             }
 
-            if (!int.TryParse(txtStock.Text.Trim(), out stock))
+            if (!int.TryParse(Stock.Valor, out stock))
             {
                 MessageBox.Show("Ingrese un valor numérico válido para el stock.", "Stock inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!decimal.TryParse(txtPrecio.Text.Trim().Replace(',', '.'), out precio))
+            if (!decimal.TryParse(Precio.Valor.Replace(',', '.'), out precio))
             {
                 MessageBox.Show("Ingrese un valor numérico válido para el precio.", "Precio inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
