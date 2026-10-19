@@ -4,14 +4,14 @@ using System.Text;
 
 namespace SierraMarket.Estructuras.Listas
 {
-    public class Nodo<T>
+    public class NodoSimple<T>
     {
-        public T Valor { get; set; }
-        public Nodo<T> Siguiente { get; set; }
+        public T Dato { get; set; }
+        public NodoSimple<T> Siguiente { get; set; }
 
-        public Nodo(T valor)
+        public NodoSimple(T dato)
         {
-            Valor = valor;
+            Dato = dato;
             Siguiente = null;
         }
     }
