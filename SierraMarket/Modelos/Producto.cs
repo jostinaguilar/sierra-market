@@ -6,17 +6,32 @@ namespace SierraMarket.Modelos
 {
     public class Producto
     {
-        public int Id { get; set; }
+        public int Codigo { get; set; }
         public string Descripcion { get; set; }
-        public int Stock { get; set; }
         public decimal Precio { get; set; }
+        public int Stock { get; set; }
 
-        public Producto(int id, string descripcion, int stock, decimal precio)
+        public Producto(int codigo, string descripcion, decimal precio, int stock)
         {
-            Id = id;
+            Codigo = codigo;
             Descripcion = descripcion;
-            Stock = stock;
             Precio = precio;
+            Stock = stock;
+        }
+
+        public bool Vender(int cantidad)
+        {
+            if (cantidad <= Stock)
+            {
+                Stock -= cantidad;
+                return true;
+            }
+            return false;
+        }
+
+        public void Reponer(int cantidad)
+        {
+            Stock += cantidad;
         }
     }
 }
