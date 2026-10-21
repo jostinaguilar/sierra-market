@@ -2,6 +2,7 @@
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Formularios.Turnos;
+using SierraMarket.UI.Formularios.Venta;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,18 @@ namespace SierraMarket.UI
     public partial class FrmPrincipal : Form
     {
         private readonly ListaSimple<Producto> _listaProductos = new ListaSimple<Producto>();
+
+        private readonly ListaCircular<Trabajador> _listaTrabajadores = new ListaCircular<Trabajador>();
+
         private UscInventario _uscInventario;
         private UscVenta _uscVenta;
         private UscTurnos _uscTurnos;
 
+        private UscHistorial _uscHistorial;
+
         private Panel pnlPrincipal;
+
+        private Texto.Etiqueta lblNombreUsuario;
 
         public FrmPrincipal()
         {
@@ -113,12 +121,12 @@ namespace SierraMarket.UI
 
             var flpUsuario = new FlowLayoutPanel();
             var lblUsuario = new Texto.Etiqueta("Usuario");
-            var lblNombreUsuario = new Texto.Etiqueta("Jhon Doe", Peso.Semibold);
+            lblNombreUsuario = new Texto.Etiqueta("-", Peso.Semibold);
 
             lblUsuario.Margin = new Padding(0);
             lblNombreUsuario.Margin = new Padding(0);
 
-            flpUsuario.Controls.AddRange(new Control[] { lblUsuario, lblNombreUsuario });
+            flpUsuario.Controls.AddRange(new Control[] { lblUsuario,lblNombreUsuario });
 
             flpUsuario.Dock = DockStyle.Right;
             flpUsuario.AutoSize = true;
@@ -148,12 +156,14 @@ namespace SierraMarket.UI
             btnVentas.Click += BtnVentas_Click;
             btnInventario.Click += BtnInventario_Click;
             btnTurnos.Click += BtnTurnos_Click;
+            btnHistorial.Click += BtnHistorial_Click;
 
             flpMenu.Controls.AddRange(new Control[] { btnVentas, btnInventario, btnTurnos, btnHistorial });
 
             pnlMenu.Controls.Add(flpMenu);
             
             CargarVista(new UscVenta(_listaProductos));
+            CargarTrabajadores();
         }
 
         private void BtnVentas_Click(object sender, EventArgs e)
@@ -180,17 +190,40 @@ namespace SierraMarket.UI
         {
             if (_uscTurnos == null)
             {
-                _uscTurnos = new UscTurnos();
+                _uscTurnos = new UscTurnos(_listaTrabajadores);
+                _uscTurnos.OnTrabajadorCambiado += (trabajador) =>
+                {
+                    lblNombreUsuario.Text = trabajador?.Nombres ?? "-";
+                };
             }
 
             CargarVista(_uscTurnos);
         }
 
-        public void CargarVista(UserControl vista)
+        private void BtnHistorial_Click(object sender, EventArgs e)
+        {
+            if (_uscHistorial == null)
+            {
+                _uscHistorial = new UscHistorial();
+            }
+
+            CargarVista(_uscHistorial);
+        }
+
+        private void CargarVista(UserControl vista)
         {
             pnlPrincipal.Controls.Clear();
             vista.Dock = DockStyle.Fill;
             pnlPrincipal.Controls.Add(vista);
+        }
+
+        private void CargarTrabajadores()
+        {
+            Trabajador trabajador1 = new Trabajador(1, "Jhonny Perez", TimeOnly.Parse("08:00"), TimeOnly.Parse("15:00"));
+            Trabajador trabajador2 = new Trabajador(2, "Diana Alcantara", TimeOnly.Parse("15:00"), TimeOnly.Parse("22:00"));
+            _listaTrabajadores.Agregar(trabajador1);
+            _listaTrabajadores.Agregar(trabajador2);
+            lblNombreUsuario.Text = _listaTrabajadores.ObtenerActual()?.Nombres ?? "-";
         }
     }
 }

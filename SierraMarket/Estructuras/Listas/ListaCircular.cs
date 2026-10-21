@@ -7,6 +7,8 @@ namespace SierraMarket.Estructuras.Listas
     public class ListaCircular<T>
     {
         public NodoDoble<T> cabeza;
+
+        private NodoDoble<T> nodoActual;
         private int count;
 
         public int Count => count;
@@ -16,6 +18,7 @@ namespace SierraMarket.Estructuras.Listas
         {
             cabeza = null;
             count = 0;
+            nodoActual = null;
         }
 
         public void Agregar(T dato)
@@ -27,6 +30,7 @@ namespace SierraMarket.Estructuras.Listas
                 nuevoNodo.Siguiente = nuevoNodo;
                 nuevoNodo.Anterior = nuevoNodo;
                 cabeza = nuevoNodo;
+                nodoActual = cabeza; // Inicializamos el trabajador actual al primer nodo
             }
             else
             {
@@ -95,6 +99,7 @@ namespace SierraMarket.Estructuras.Listas
             if (nodo == cabeza && count == 1)
             {
                 cabeza = null;
+                nodoActual = null;
             }
             else
             {
@@ -108,10 +113,26 @@ namespace SierraMarket.Estructuras.Listas
                 {
                     cabeza = siguienteNodo;
                 }
+
+                if (nodo == nodoActual)
+                {
+                    nodoActual = nodoActual.Siguiente;
+                }
             }
 
             count--;
             return true;
+        }
+
+        public bool EliminarPorDato(T dato)
+        {
+            NodoDoble<T> nodoAEliminar = Buscar(dato);
+            if (nodoAEliminar == null)
+            {
+                return false;
+            }
+
+            return Eliminar(nodoAEliminar);
         }
 
         public NodoDoble<T> Buscar(T dato)
@@ -158,7 +179,7 @@ namespace SierraMarket.Estructuras.Listas
         {
             List<T> lista = new List<T>();
 
-            if (cabeza != null)
+            if (cabeza == null)
             {
                 return lista;
             }
@@ -178,6 +199,7 @@ namespace SierraMarket.Estructuras.Listas
         {
             cabeza = null;
             count = 0;
+            nodoActual = null;
         }
 
         public NodoDoble<T> ObtenerCabeza() => cabeza;
@@ -186,24 +208,38 @@ namespace SierraMarket.Estructuras.Listas
         Metodos de navegación 
         */
 
-        public NodoDoble<T> ObtenerSiguiente(NodoDoble<T> nodo)
+        public T ObtenerActual()
         {
-            if (nodo == null)
+            if (nodoActual == null)
             {
-                return null;
+                return default(T);
             }
 
-            return nodo.Siguiente;
+            return nodoActual.Dato;
         }
 
-        public NodoDoble<T> ObtenerAnterior(NodoDoble<T> nodo)
+        public T Siguiente()
         {
-            if (nodo == null)
+            if (nodoActual == null)
             {
-                return null;
+                return default(T);
             }
 
-            return nodo.Anterior;
+            nodoActual = nodoActual.Siguiente;
+
+            return nodoActual.Dato;
+        }
+
+        public T Anterior()
+        {
+            if (nodoActual == null)
+            {
+                return default(T);
+            }
+            
+            nodoActual = nodoActual.Anterior;
+
+            return nodoActual.Dato;
         }
     }
 }

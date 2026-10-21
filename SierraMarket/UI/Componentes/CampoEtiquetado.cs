@@ -7,6 +7,7 @@ namespace SierraMarket.UI.Componentes
     public class CampoEtiquetado: TableLayoutPanel
     {
         public CampoTexto.Campo Campo { get; }
+
         public string Valor => Campo.Text.Trim();
 
         public CampoEtiquetado(string etiqueta, string placeholder = "")
