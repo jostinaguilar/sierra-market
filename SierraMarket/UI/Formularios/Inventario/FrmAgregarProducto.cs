@@ -19,7 +19,6 @@ namespace SierraMarket.UI.Formularios.Inventario
         private CampoEtiquetado Descripcion;
         private CampoEtiquetado Stock;
         private CampoEtiquetado Precio;
-
         private Boton.Primario btnGuardar;
         private Boton.Secundario btnCancelar;
 
@@ -63,10 +62,8 @@ namespace SierraMarket.UI.Formularios.Inventario
             var lblTitulo = new Texto.Titulo("Agregar Producto");
 
             Descripcion = new CampoEtiquetado("Descripción", "Ingrese una descripción");
-
-            Stock = new CampoEtiquetado("Stock", "Ingrese el stock");
-
             Precio = new CampoEtiquetado("Precio", "Ingrese un precio");
+            Stock = new CampoEtiquetado("Stock", "Ingrese el stock");
 
             var tlpBotones = new TableLayoutPanel();
 
@@ -92,8 +89,8 @@ namespace SierraMarket.UI.Formularios.Inventario
 
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
             tlpFormulario.Controls.Add(Descripcion, 0, 2);
-            tlpFormulario.Controls.Add(Stock, 0, 3);
-            tlpFormulario.Controls.Add(Precio, 0, 4);
+            tlpFormulario.Controls.Add(Precio, 0, 3);
+            tlpFormulario.Controls.Add(Stock, 0, 4);
             tlpFormulario.Controls.Add(tlpBotones, 0, 6);
 
             this.Controls.Add(tlpFormulario);
