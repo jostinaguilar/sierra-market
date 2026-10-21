@@ -1,6 +1,7 @@
 ﻿using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
+using SierraMarket.UI.Formularios.Turnos;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace SierraMarket.UI
         private readonly ListaSimple<Producto> _listaProductos = new ListaSimple<Producto>();
         private UscInventario _uscInventario;
         private UscVenta _uscVenta;
+        private UscTurnos _uscTurnos;
 
         private Panel pnlPrincipal;
 
@@ -174,16 +176,21 @@ namespace SierraMarket.UI
             CargarVista(_uscInventario);
         }
 
+        private void BtnTurnos_Click(object sender, EventArgs e)
+        {
+            if (_uscTurnos == null)
+            {
+                _uscTurnos = new UscTurnos();
+            }
+
+            CargarVista(_uscTurnos);
+        }
+
         public void CargarVista(UserControl vista)
         {
             pnlPrincipal.Controls.Clear();
             vista.Dock = DockStyle.Fill;
             pnlPrincipal.Controls.Add(vista);
-        }
-
-        private void BtnTurnos_Click(object sender, EventArgs e)
-        {
-            
         }
     }
 }
