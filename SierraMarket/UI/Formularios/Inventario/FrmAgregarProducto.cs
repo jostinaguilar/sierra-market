@@ -114,7 +114,7 @@ namespace SierraMarket.UI.Formularios.Inventario
         public void BtnGuardar_Click(object sender, EventArgs e)
         {
 
-            int id;
+            int codigo;
             string descripcion = Descripcion.Valor;
             int stock;
             decimal precio;
@@ -137,9 +137,9 @@ namespace SierraMarket.UI.Formularios.Inventario
                 return;
             }
 
-            id = _listaProductos.Count + 1;
+            codigo = _listaProductos.Count + 1;
 
-            var nuevoProducto = new Producto(id, descripcion, stock, precio);
+            var nuevoProducto = new Producto(codigo, descripcion, precio, stock);
 
             _listaProductos.Agregar(nuevoProducto);
 

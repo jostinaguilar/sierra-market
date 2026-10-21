@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Recursos\Fuentes\" />
+    <Folder Include="UI\Formularios\Turnos\" />
   </ItemGroup>
 
   <ItemGroup>

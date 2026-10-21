@@ -183,8 +183,7 @@ namespace SierraMarket.UI
 
         private void BtnTurnos_Click(object sender, EventArgs e)
         {
-            FrmTurnos frmTurnos = new FrmTurnos();
-            frmTurnos.ShowDialog();
+            
         }
     }
 }
