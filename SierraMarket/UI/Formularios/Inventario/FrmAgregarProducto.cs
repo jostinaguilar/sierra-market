@@ -14,6 +14,7 @@ namespace SierraMarket.UI.Formularios.Inventario
     public partial class FrmAgregarProducto : Form
     {
         private readonly ListaSimple<Producto> _listaProductos;
+        private readonly Producto _productoEditar;
 
         // TextBoxes para los campos del formulario
         private CampoEtiquetado Descripcion;
@@ -22,9 +23,10 @@ namespace SierraMarket.UI.Formularios.Inventario
         private Boton.Primario btnGuardar;
         private Boton.Secundario btnCancelar;
 
-        public FrmAgregarProducto(ListaSimple<Producto> listaProductos)
+        public FrmAgregarProducto(ListaSimple<Producto> listaProductos, Producto? productoEditar = null)
         {
             _listaProductos = listaProductos;
+            _productoEditar = productoEditar;
 
             ConfigurarVentana();
             CrearFormulario();
@@ -64,6 +66,14 @@ namespace SierraMarket.UI.Formularios.Inventario
             Descripcion = new CampoEtiquetado("Descripción", "Ingrese una descripción");
             Precio = new CampoEtiquetado("Precio", "Ingrese un precio");
             Stock = new CampoEtiquetado("Stock", "Ingrese el stock");
+
+            if (_productoEditar != null)
+            {
+                lblTitulo.Text = "Editar Producto";
+                Descripcion.Campo.Text = _productoEditar.Descripcion;
+                Precio.Campo.Text = _productoEditar.Precio.ToString();
+                Stock.Campo.Text = _productoEditar.Stock.ToString();
+            }
 
             var tlpBotones = new TableLayoutPanel();
 
@@ -134,13 +144,23 @@ namespace SierraMarket.UI.Formularios.Inventario
                 return;
             }
 
-            codigo = _listaProductos.Count + 1;
+            if (_productoEditar != null)
+            {
+                _productoEditar.Descripcion = descripcion;
+                _productoEditar.Stock = stock;
+                _productoEditar.Precio = precio;
+                MessageBox.Show("El producto se actualizó correctamente.", "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                codigo = _listaProductos.Count + 1;
 
-            var nuevoProducto = new Producto(codigo, descripcion, precio, stock);
+                var nuevoProducto = new Producto(codigo, descripcion, precio, stock);
 
-            _listaProductos.Agregar(nuevoProducto);
+                _listaProductos.Agregar(nuevoProducto);
 
-            MessageBox.Show("El producto se registró correctamente.", "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("El producto se registró correctamente.", "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
             this.DialogResult = DialogResult.OK;
             this.Close();

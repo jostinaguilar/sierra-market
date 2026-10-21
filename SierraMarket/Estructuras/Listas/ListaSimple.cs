@@ -102,6 +102,18 @@ namespace SierraMarket.Estructuras.Listas
             return true;
         }
 
+        public bool EliminarPorDato(T dato)
+        {
+            int indice = Buscar(dato);
+
+            if (indice == -1)
+            {
+                return false;
+            }
+
+            return Eliminar(indice);
+        }
+
         public int Buscar(T dato)
         {
             NodoSimple<T> actual = cabeza;

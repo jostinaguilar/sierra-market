@@ -164,6 +164,7 @@ namespace SierraMarket.UI
             
             CargarVista(new UscVenta(_listaProductos));
             CargarTrabajadores();
+            CargarProductos();
         }
 
         private void BtnVentas_Click(object sender, EventArgs e)
@@ -224,6 +225,30 @@ namespace SierraMarket.UI
             _listaTrabajadores.Agregar(trabajador1);
             _listaTrabajadores.Agregar(trabajador2);
             lblNombreUsuario.Text = _listaTrabajadores.ObtenerActual()?.Nombres ?? "-";
+        }
+
+        private void CargarProductos()
+        {
+            Producto producto1 = new Producto(1, "Arroz (1 kg)", 4.50m, 30);
+            Producto producto2 = new Producto(2, "Azúcar (1 kg)", 4.00m, 25);
+            Producto producto3 = new Producto(3, "Aceite vegetal (1 L)", 8.50m, 15);
+            Producto producto4 = new Producto(4, "Leche evaporada (lata)", 4.20m, 40);
+            Producto producto5 = new Producto(5, "Fideos (500 g)", 3.50m, 35);
+            Producto producto6 = new Producto(6, "Atún en conserva (lata)", 5.80m, 20);
+            Producto producto7 = new Producto(7, "Gaseosa (1.5 L)", 7.00m, 18);
+            Producto producto8 = new Producto(8, "Agua mineral (625 ml)", 2.00m, 50);
+            Producto producto9 = new Producto(9, "Galletas de chocolate (paquete)", 2.50m, 45);
+            Producto producto10 = new Producto(10, "Huevos (docena)", 8.00m, 12);
+            _listaProductos.Agregar(producto1);
+            _listaProductos.Agregar(producto2);
+            _listaProductos.Agregar(producto3);
+            _listaProductos.Agregar(producto4);
+            _listaProductos.Agregar(producto5);
+            _listaProductos.Agregar(producto6);
+            _listaProductos.Agregar(producto7);
+            _listaProductos.Agregar(producto8);
+            _listaProductos.Agregar(producto9);
+            _listaProductos.Agregar(producto10);
         }
     }
 }

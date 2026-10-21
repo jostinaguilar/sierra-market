@@ -2,6 +2,7 @@
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Formularios.Inventario;
+using SierraMarket.UI.Formularios.Turnos;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,9 @@ namespace SierraMarket.UI
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", Width = 250 });
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", Width = 80 });
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "Stock", Width = 80 });
-            dgvInventario.Columns.Add(new DataGridViewButtonColumn { HeaderText = "", Text = "Editar", UseColumnTextForButtonValue = true, Width = 80 });
+            dgvInventario.Columns.Add(new DataGridViewButtonColumn {Name = "btnEditar", HeaderText = "", Text = "Editar", UseColumnTextForButtonValue = true, Width = 80 });
+            dgvInventario.Columns.Add(new DataGridViewButtonColumn { Name = "btnEliminar", HeaderText = "", Text = "Eliminar", UseColumnTextForButtonValue = true, Width = 80 });
+            dgvInventario.CellContentClick += DgvInventario_CellContentClick;
 
             tlpInventario.Controls.Add(pnlTitulo, 0, 0);
             tlpInventario.Controls.Add(txtBuscarProducto.ConBorde(), 0, 2);
@@ -78,6 +81,34 @@ namespace SierraMarket.UI
             this.Controls.Add(tlpInventario);
 
             ActualizarInventario();
+        }
+
+        private void DgvInventario_CellContentClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvInventario.Columns[e.ColumnIndex].Name == "btnEliminar")
+            {
+                var producto = dgvInventario.Rows[e.RowIndex].DataBoundItem as Producto;
+
+                if (DialogResult.Yes == MessageBox.Show("¿Está seguro de que desea eliminar el producto de " + producto?.Descripcion + "?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
+                    _listaProductos.EliminarPorDato(producto);
+                    ActualizarInventario();
+                }
+            }
+            else if (e.RowIndex >= 0 && dgvInventario.Columns[e.ColumnIndex].Name == "btnEditar")
+            {
+                var producto = dgvInventario.Rows[e.RowIndex].DataBoundItem as Producto;
+
+                if (producto != null)
+                {
+                    var frmEditar = new FrmAgregarProducto(_listaProductos, producto);
+
+                    if (frmEditar.ShowDialog() == DialogResult.OK)
+                    {
+                        ActualizarInventario();
+                    }
+                }
+            }
         }
 
         private void BtnAgregarProducto_Click(object sender, EventArgs e)
