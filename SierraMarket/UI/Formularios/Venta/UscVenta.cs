@@ -2,6 +2,7 @@
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Formularios.Inventario;
+using SierraMarket.UI.Formularios.Venta;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
@@ -251,7 +252,12 @@ namespace SierraMarket.UI
 
         private void BtnCobrar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Holiiii");
+            var frmPagos = new FrmPagos();
+
+            if (frmPagos.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
         }
     }
 }
