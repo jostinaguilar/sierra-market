@@ -7,8 +7,16 @@ namespace SierraMarket.Modelos
     public class DetalleVenta
     {
         public Producto Producto { get; set; }
-        int Cantidad { get; set; }
+        public int Cantidad { get; set; }
 
-        decimal Subtotal => Producto.Precio * Cantidad;
+        public decimal Subtotal => Producto.Precio * Cantidad;
+        public string Descripcion => Producto.Descripcion;
+        public decimal Precio => Producto.Precio;
+
+        public DetalleVenta(Producto producto, int cantidad)
+        {
+            Producto = producto;
+            Cantidad = cantidad;
+        }
     }
 }

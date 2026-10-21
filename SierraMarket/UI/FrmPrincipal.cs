@@ -162,9 +162,10 @@ namespace SierraMarket.UI
 
             pnlMenu.Controls.Add(flpMenu);
             
-            CargarVista(new UscVenta(_listaProductos));
             CargarTrabajadores();
             CargarProductos();
+            _uscVenta = new UscVenta(_listaProductos);
+            CargarVista(_uscVenta);
         }
 
         private void BtnVentas_Click(object sender, EventArgs e)
