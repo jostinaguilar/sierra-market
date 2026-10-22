@@ -1,4 +1,6 @@
-﻿using SierraMarket.UI.Componentes;
+﻿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Modelos;
+using SierraMarket.UI.Componentes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +13,14 @@ namespace SierraMarket.UI.Formularios.Venta
 {
     public partial class UscHistorial : UserControl
     {
-        public UscHistorial()
+        private readonly ListaSimple<SierraMarket.Modelos.Venta> _listaVentas;
+        private DataGridView dgvHistorial;
+
+        public UscHistorial(ListaSimple<SierraMarket.Modelos.Venta> listaVentas)
         {
             InitializeComponent();
+
+            _listaVentas = listaVentas;
 
             var tlpHistorial = new TableLayoutPanel();
             tlpHistorial.Dock = DockStyle.Fill;
@@ -37,12 +44,35 @@ namespace SierraMarket.UI.Formularios.Venta
             lblTitulo.Dock = DockStyle.Left;
             lblTitulo.Margin = new Padding(0);
 
+            dgvHistorial = new DataGridView();
+            dgvHistorial.Dock = DockStyle.Fill;
+            dgvHistorial.Margin = new Padding(0);
+            dgvHistorial.AutoGenerateColumns = false;
+            dgvHistorial.AllowUserToAddRows = false;
+            dgvHistorial.ReadOnly = true;
+            dgvHistorial.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvHistorial.RowHeadersVisible = false;
+
+            dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "IdVenta", Width = 80 });
+            dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Fecha", DataPropertyName = "FechaHora", Width = 250 });
+            dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombre del Trabajador", DataPropertyName = "NombreTrabajador", Width = 80 });
+            dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Total", DataPropertyName = "Total", Width = 80 });
 
             pnlTitulo.Controls.Add(lblTitulo);
 
             tlpHistorial.Controls.Add(pnlTitulo, 0, 0);
+            tlpHistorial.Controls.Add(dgvHistorial, 0, 4);
 
             this.Controls.Add(tlpHistorial);
+            CargarVentas();
+        }
+
+        private void CargarVentas()
+        {
+            var ventas = _listaVentas.ObtenerTodos();
+
+            dgvHistorial.DataSource = null;
+            dgvHistorial.DataSource = ventas;
         }
     }
 }

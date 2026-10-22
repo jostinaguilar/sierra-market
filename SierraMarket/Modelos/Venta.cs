@@ -13,6 +13,8 @@ namespace SierraMarket.Modelos
 
         public Trabajador Trabajador { get; set; }
 
+        public string NombreTrabajador => Trabajador?.Nombres ?? "Desconocido";
+
         public ListaDoble<DetalleVenta> DetalleVenta { get; set; }
 
         public Pila<Pago> Pagos { get; set; }

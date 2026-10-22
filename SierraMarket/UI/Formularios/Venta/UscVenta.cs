@@ -17,6 +17,11 @@ namespace SierraMarket.UI
     public partial class UscVenta : UserControl
     {
         private readonly ListaSimple<Producto> _listaProductos;
+
+        private readonly ListaCircular<Trabajador> _listaTrabajadores;
+
+        private readonly ListaSimple<Venta> _listaVentas;
+
         private readonly ListaDoble<DetalleVenta> _carrito = new ListaDoble<DetalleVenta>();
 
         private DataGridView dgvCatalogo;
@@ -24,11 +29,13 @@ namespace SierraMarket.UI
         private Texto.Subtitulo lblTotal;
         private Boton.Primario btnCobrar;
 
-        public UscVenta(ListaSimple<Producto> listaProductos)
+        public UscVenta(ListaSimple<Producto> listaProductos, ListaCircular<Trabajador> listaTrabajadores, ListaSimple<Venta> listaVentas)
         {
             InitializeComponent();
 
             _listaProductos = listaProductos;
+            _listaTrabajadores = listaTrabajadores;
+            _listaVentas = listaVentas;
 
             var tlpPrincipal = new TableLayoutPanel();
             tlpPrincipal.Dock = DockStyle.Fill;
@@ -263,7 +270,34 @@ namespace SierraMarket.UI
 
             if (frmPagos.ShowDialog() == DialogResult.OK)
             {
-                
+                foreach (var detalle in _carrito.ObtenerTodos())
+                {
+                    detalle.Producto.Stock -= detalle.Cantidad;
+                }
+
+                int idVenta = _listaVentas.Count + 1;
+
+                Trabajador cajero = _listaTrabajadores.ObtenerActual();
+
+                var nuevaVenta = new Venta(
+                    idVenta,
+                    DateTime.Now,
+                    cajero,
+                    _carrito,
+                    frmPagos.PilaPagos,
+                    total,
+                    total,
+                    0,
+                    "Completada",
+                    1
+                );
+
+                _listaVentas.Agregar(nuevaVenta);
+
+                _carrito.Limpiar();
+                ActualizarCarrito();
+                CargarCatalogo();
+                MessageBox.Show($"¡Venta #{idVenta} registrada en el historial!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

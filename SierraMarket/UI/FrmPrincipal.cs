@@ -20,6 +20,8 @@ namespace SierraMarket.UI
 
         private readonly ListaCircular<Trabajador> _listaTrabajadores = new ListaCircular<Trabajador>();
 
+        private readonly ListaSimple<Venta> _listaVentas = new ListaSimple<Venta>();
+
         private UscInventario _uscInventario;
         private UscVenta _uscVenta;
         private UscTurnos _uscTurnos;
@@ -126,7 +128,7 @@ namespace SierraMarket.UI
             lblUsuario.Margin = new Padding(0);
             lblNombreUsuario.Margin = new Padding(0);
 
-            flpUsuario.Controls.AddRange(new Control[] { lblUsuario,lblNombreUsuario });
+            flpUsuario.Controls.AddRange(new Control[] { lblUsuario, lblNombreUsuario });
 
             flpUsuario.Dock = DockStyle.Right;
             flpUsuario.AutoSize = true;
@@ -161,10 +163,10 @@ namespace SierraMarket.UI
             flpMenu.Controls.AddRange(new Control[] { btnVentas, btnInventario, btnTurnos, btnHistorial });
 
             pnlMenu.Controls.Add(flpMenu);
-            
+
             CargarTrabajadores();
             CargarProductos();
-            _uscVenta = new UscVenta(_listaProductos);
+            _uscVenta = new UscVenta(_listaProductos, _listaTrabajadores, _listaVentas);
             CargarVista(_uscVenta);
         }
 
@@ -172,7 +174,7 @@ namespace SierraMarket.UI
         {
             if (_uscVenta == null)
             {
-                _uscVenta = new UscVenta(_listaProductos);
+                _uscVenta = new UscVenta(_listaProductos, _listaTrabajadores, _listaVentas);
             }
 
             CargarVista(_uscVenta);
@@ -206,7 +208,7 @@ namespace SierraMarket.UI
         {
             if (_uscHistorial == null)
             {
-                _uscHistorial = new UscHistorial();
+                _uscHistorial = new UscHistorial(_listaVentas);
             }
 
             CargarVista(_uscHistorial);

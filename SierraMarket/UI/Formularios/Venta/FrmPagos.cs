@@ -14,8 +14,10 @@ namespace SierraMarket.UI.Formularios.Venta
 {
     public partial class FrmPagos : Form
     {
-        private readonly Pila<Pago> _pilaPagos;
+        private readonly Pila<Pago> _pilaPagos = new Pila<Pago>();
         private decimal _total;
+
+        public Pila<Pago> PilaPagos => _pilaPagos;
 
         // TextBoxes para los campos del formulario
         private CampoEtiquetado txtMontoAPagar;
@@ -25,6 +27,10 @@ namespace SierraMarket.UI.Formularios.Venta
 
         private Boton.Secundario btnPop;
         private Boton.Primario btnPush;
+
+        private ListBox lstPagos;
+        private Texto.Etiqueta lblMontoAbonado;
+        private Texto.Etiqueta lblMontoRestante;
 
         public FrmPagos(decimal total)
         {
@@ -55,7 +61,6 @@ namespace SierraMarket.UI.Formularios.Venta
             tlpFormulario.Dock = DockStyle.Fill;
 
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
@@ -66,14 +71,20 @@ namespace SierraMarket.UI.Formularios.Venta
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
             var lblTitulo = new Texto.Titulo("Realizar Pago");
 
-            var lblTotalPagar = new Texto.Pequeno($"Total a pagar: S/ {_total:0.00}");
+            var lblTotalPagar = new Texto.Etiqueta($"Total a pagar: S/ {_total:0.00}");
 
             txtMontoAPagar = new CampoEtiquetado("Monto a Pagar", "Ingrese el monto a pagar");
-            
+
             var lblFormaPago = new Texto.Etiqueta("Forma de Pago");
             cmbFormaPago = new ComboBox();
             cmbFormaPago.Dock = DockStyle.Fill;
@@ -94,6 +105,11 @@ namespace SierraMarket.UI.Formularios.Venta
             tlpBotonesPila.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
             tlpBotonesPila.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 
+            lstPagos = new ListBox();
+            lstPagos.Dock = DockStyle.Fill;
+            lstPagos.Margin = new Padding(0);
+            lstPagos.Padding = new Padding(0);
+
             var tlpBotones = new TableLayoutPanel();
             tlpBotones.Padding = new Padding(0);
             tlpBotones.Margin = new Padding(0);
@@ -112,11 +128,16 @@ namespace SierraMarket.UI.Formularios.Venta
             btnGuardar.Dock = DockStyle.Fill;
             btnGuardar.Click += BtnGuardar_Click;
 
-            btnPop = new Boton.Secundario("Pop");
+            btnPop = new Boton.Secundario("Deshacer");
             btnPop.Dock = DockStyle.Fill;
+            btnPop.Click += BtnPop_Click;
 
-            btnPush = new Boton.Primario("Guardar");
+            btnPush = new Boton.Primario("Agregar");
             btnPush.Dock = DockStyle.Fill;
+            btnPush.Click += BtnPush_Click;
+
+            lblMontoAbonado = new Texto.Etiqueta("Monto Abonado: S/ 0.00");
+            lblMontoRestante = new Texto.Etiqueta($"Monto Restante: S/ {_total:0.00}");
 
             tlpBotonesPila.Controls.Add(btnPop, 0, 0);
             tlpBotonesPila.Controls.Add(btnPush, 2, 0);
@@ -129,9 +150,11 @@ namespace SierraMarket.UI.Formularios.Venta
             tlpFormulario.Controls.Add(lblFormaPago, 0, 4);
             tlpFormulario.Controls.Add(cmbFormaPago, 0, 6);
             tlpFormulario.Controls.Add(txtMontoAPagar, 0, 7);
-
             tlpFormulario.Controls.Add(tlpBotonesPila, 0, 9);
-            tlpFormulario.Controls.Add(tlpBotones, 0, 11);
+            tlpFormulario.Controls.Add(lstPagos, 0, 11);
+            tlpFormulario.Controls.Add(lblMontoAbonado, 0, 13);
+            tlpFormulario.Controls.Add(lblMontoRestante, 0, 15);
+            tlpFormulario.Controls.Add(tlpBotones, 0, 17);
 
             this.Controls.Add(tlpFormulario);
 
@@ -146,22 +169,97 @@ namespace SierraMarket.UI.Formularios.Venta
             this.ClientSize = new Size(400, altoFinal);
             this.AcceptButton = btnGuardar;
             this.CancelButton = btnCancelar;
+
+            ActualizarListaPagos();
+        }
+
+        public void BtnPush_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(cmbFormaPago.Text))
+            {
+                MessageBox.Show("Seleccione una forma de pago.", "Forma de pago requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!decimal.TryParse(txtMontoAPagar.Valor.Trim(), out decimal monto) || monto <= 0)
+            {
+                MessageBox.Show("Ingrese un monto válido mayor a 0.", "Monto inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            decimal montoAbonado = 0;
+            foreach (var pagoItem in _pilaPagos)
+            {
+                montoAbonado += pagoItem.Monto;
+            }
+
+            decimal montoRestante = _total - montoAbonado;
+
+            if (monto > montoRestante)
+            {
+                MessageBox.Show("El monto abonado no puede superar el total a pagar.", "Monto excedido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var pago = new Pago
+            {
+                Monto = monto,
+                MedioPago = cmbFormaPago.Text.Trim(),
+                FechaHora = DateTime.Now
+            };
+
+            _pilaPagos.Push(pago);
+            ActualizarListaPagos();
+
+            cmbFormaPago.SelectedIndex = -1;
+            //txtMontoAPagar.Campo.Clear();
+        }
+
+        public void BtnPop_Click(object sender, EventArgs e)
+        {
+            if (!_pilaPagos.EstaVacia)
+            {
+                _pilaPagos.Pop();
+                ActualizarListaPagos();
+            }
+        }
+
+        public void ActualizarListaPagos()
+        {
+            decimal montoAbonado = 0;
+
+            lstPagos.Items.Clear();
+            foreach (var pago in _pilaPagos)
+            {
+                montoAbonado += pago.Monto;
+                lstPagos.Items.Add($"Monto: S/ {pago.Monto:0.00} | Medio: {pago.MedioPago} | Fecha: {pago.FechaHora}");
+            }
+
+            decimal montoRestante = _total - montoAbonado;
+            txtMontoAPagar.Campo.Text = montoRestante.ToString("0.00");
+            lblMontoAbonado.Text = $"Monto Abonado: S/ {montoAbonado:0.00}";
+            lblMontoRestante.Text = $"Monto Restante: S/ {montoRestante:0.00}";
         }
 
         public void BtnGuardar_Click(object sender, EventArgs e)
         {
-            if(decimal.TryParse(txtMontoAPagar.Valor, out decimal montoPago) || string.IsNullOrEmpty(cmbFormaPago.Text))
+            decimal totalAbonado = 0;
+
+            foreach (var pago in _pilaPagos)
             {
-                MessageBox.Show("Complete el monto a pagar y forma de pago");
+                totalAbonado += pago.Monto;
+            }
+
+            if (totalAbonado < _total)
+            {
+                MessageBox.Show($"El monto abonado (S/ {totalAbonado:0.00}) debe ser S/ {_total:0.00}.", "Pago incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string medioPago = cmbFormaPago.Text;
+            MessageBox.Show("Venta completada exitosamente.", "Venta Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            if (montoPago < _total)
-            {
-                MessageBox.Show("El monto a pagar debe ser igual al total de la venta.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }
