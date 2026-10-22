@@ -67,7 +67,7 @@ namespace SierraMarket.UI.Formularios.Venta
             CargarVentas();
         }
 
-        private void CargarVentas()
+        public void CargarVentas()
         {
             var ventas = _listaVentas.ObtenerTodos();
 

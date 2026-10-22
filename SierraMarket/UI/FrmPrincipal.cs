@@ -197,7 +197,7 @@ namespace SierraMarket.UI
                 _uscTurnos = new UscTurnos(_listaTrabajadores);
                 _uscTurnos.OnTrabajadorCambiado += (trabajador) =>
                 {
-                    lblNombreUsuario.Text = trabajador?.Nombres ?? "-";
+                    lblNombreUsuario.Text = trabajador.Nombres;
                 };
             }
 
@@ -211,6 +211,7 @@ namespace SierraMarket.UI
                 _uscHistorial = new UscHistorial(_listaVentas);
             }
 
+            _uscHistorial.CargarVentas();
             CargarVista(_uscHistorial);
         }
 
@@ -227,7 +228,7 @@ namespace SierraMarket.UI
             Trabajador trabajador2 = new Trabajador(2, "Diana Alcantara", TimeOnly.Parse("15:00"), TimeOnly.Parse("22:00"));
             _listaTrabajadores.Agregar(trabajador1);
             _listaTrabajadores.Agregar(trabajador2);
-            lblNombreUsuario.Text = _listaTrabajadores.ObtenerActual()?.Nombres ?? "-";
+            lblNombreUsuario.Text = _listaTrabajadores.ObtenerActual().Nombres;
         }
 
         private void CargarProductos()

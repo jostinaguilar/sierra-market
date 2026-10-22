@@ -149,21 +149,21 @@ namespace SierraMarket.UI.Formularios.Turnos
             dgvTrabajadores.DataSource = trabajadores;
 
             Trabajador trabajadorActual = _listaTrabajadores.ObtenerActual();
-            lblTurnoActual.Text = trabajadorActual?.Nombres ?? "-";
+            lblTurnoActual.Text = trabajadorActual.Nombres;
             OnTrabajadorCambiado?.Invoke(trabajadorActual);
         }
 
         private void BtnSiguienteTurno_Click(object sender, EventArgs e)
         {
             Trabajador trabajadorActual = _listaTrabajadores.Siguiente();
-            lblTurnoActual.Text = trabajadorActual?.Nombres ?? "-";
+            lblTurnoActual.Text = trabajadorActual.Nombres;
             OnTrabajadorCambiado?.Invoke(trabajadorActual);
         }
 
         private void BtnAnteriorTurno_Click(object sender, EventArgs e)
         {
             Trabajador trabajadorActual = _listaTrabajadores.Anterior();
-            lblTurnoActual.Text = trabajadorActual?.Nombres ?? "-";
+            lblTurnoActual.Text = trabajadorActual.Nombres;
             OnTrabajadorCambiado?.Invoke(trabajadorActual);
         }
 

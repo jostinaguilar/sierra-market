@@ -8,7 +8,7 @@ namespace SierraMarket.Modelos
     {
         public string MedioPago { get; set; }
         public decimal Monto { get; set; }
-        public string? NumeroOperacion { get; set; }
+        public string NumeroOperacion { get; set; }
         public DateTime FechaHora { get; set; }
     }
 }

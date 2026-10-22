@@ -291,7 +291,7 @@ namespace SierraMarket.UI
                     "Completada"
                 );
 
-                _listaVentas.Agregar(nuevaVenta);
+                _listaVentas.InsertarAlInicio(nuevaVenta);
 
                 _carrito.Limpiar();
                 ActualizarCarrito();
