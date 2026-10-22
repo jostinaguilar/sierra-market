@@ -16,7 +16,7 @@ namespace SierraMarket.UI
 {
     public partial class UscInventario : UserControl
     {
-        private readonly ListaSimple<Producto> _listaProductos;
+        private ListaSimple<Producto> _listaProductos;
         private DataGridView dgvInventario;
 
         public UscInventario(ListaSimple<Producto> listaProductos)
@@ -65,6 +65,7 @@ namespace SierraMarket.UI
             dgvInventario.ReadOnly = true;
             dgvInventario.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvInventario.RowHeadersVisible = false;
+            dgvInventario.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", Width = 80 });
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", Width = 250 });

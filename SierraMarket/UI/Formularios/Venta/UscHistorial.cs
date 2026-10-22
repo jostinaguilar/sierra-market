@@ -13,7 +13,7 @@ namespace SierraMarket.UI.Formularios.Venta
 {
     public partial class UscHistorial : UserControl
     {
-        private readonly ListaSimple<SierraMarket.Modelos.Venta> _listaVentas;
+        private ListaSimple<SierraMarket.Modelos.Venta> _listaVentas;
         private DataGridView dgvHistorial;
 
         public UscHistorial(ListaSimple<SierraMarket.Modelos.Venta> listaVentas)
@@ -51,6 +51,7 @@ namespace SierraMarket.UI.Formularios.Venta
             dgvHistorial.AllowUserToAddRows = false;
             dgvHistorial.ReadOnly = true;
             dgvHistorial.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvHistorial.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvHistorial.RowHeadersVisible = false;
 
             dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "IdVenta", Width = 80 });

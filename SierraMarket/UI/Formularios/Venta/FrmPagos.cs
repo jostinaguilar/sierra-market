@@ -14,7 +14,7 @@ namespace SierraMarket.UI.Formularios.Venta
 {
     public partial class FrmPagos : Form
     {
-        private readonly Pila<Pago> _pilaPagos = new Pila<Pago>();
+        private Pila<Pago> _pilaPagos = new Pila<Pago>();
         private decimal _total;
 
         public Pila<Pago> PilaPagos => _pilaPagos;

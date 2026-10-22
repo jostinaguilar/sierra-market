@@ -14,9 +14,9 @@ namespace SierraMarket.UI.Formularios.Turnos
 {
     public partial class FrmAgregarTurno : Form
     {
-        private readonly ListaCircular<Trabajador> _listaTrabajadores;
+        private ListaCircular<Trabajador> _listaTrabajadores;
 
-        private readonly Trabajador? _trabajadorEditar;
+        private Trabajador _trabajadorEditar;
 
         // TextBoxes para los campos del formulario
         private CampoEtiquetado Nombres;

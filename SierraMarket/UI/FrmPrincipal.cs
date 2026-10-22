@@ -16,11 +16,11 @@ namespace SierraMarket.UI
 {
     public partial class FrmPrincipal : Form
     {
-        private readonly ListaSimple<Producto> _listaProductos = new ListaSimple<Producto>();
+        private ListaSimple<Producto> _listaProductos = new ListaSimple<Producto>();
 
-        private readonly ListaCircular<Trabajador> _listaTrabajadores = new ListaCircular<Trabajador>();
+        private ListaCircular<Trabajador> _listaTrabajadores = new ListaCircular<Trabajador>();
 
-        private readonly ListaSimple<Venta> _listaVentas = new ListaSimple<Venta>();
+        private ListaSimple<Venta> _listaVentas = new ListaSimple<Venta>();
 
         private UscInventario _uscInventario;
         private UscVenta _uscVenta;

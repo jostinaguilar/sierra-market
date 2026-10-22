@@ -15,7 +15,7 @@ namespace SierraMarket.UI.Formularios.Turnos
 {
     public partial class UscTurnos : UserControl
     {
-        private readonly ListaCircular<Trabajador> _listaTrabajadores;
+        private ListaCircular<Trabajador> _listaTrabajadores;
         private DataGridView dgvTrabajadores;
 
         private Texto.Etiqueta lblTurnoActual;
@@ -93,6 +93,7 @@ namespace SierraMarket.UI.Formularios.Turnos
             dgvTrabajadores.Columns.Add(new DataGridViewButtonColumn { Name = "btnEditar", HeaderText = "", Text = "Editar", UseColumnTextForButtonValue = true, Width = 80 });
             dgvTrabajadores.Columns.Add(new DataGridViewButtonColumn { Name = "btnEliminar", HeaderText = "", Text = "Eliminar", UseColumnTextForButtonValue = true, Width = 80 });
             dgvTrabajadores.CellContentClick += DgvTrabajadores_CellContentClick;
+            dgvTrabajadores.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             tlpTurno.Controls.Add(pnlTitulo, 0, 0);
             tlpTurno.Controls.Add(pnlTurnoActivo, 0, 2);

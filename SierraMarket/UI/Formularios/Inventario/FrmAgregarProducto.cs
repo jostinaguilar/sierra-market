@@ -13,8 +13,8 @@ namespace SierraMarket.UI.Formularios.Inventario
 {
     public partial class FrmAgregarProducto : Form
     {
-        private readonly ListaSimple<Producto> _listaProductos;
-        private readonly Producto _productoEditar;
+        private ListaSimple<Producto> _listaProductos;
+        private Producto _productoEditar;
 
         // TextBoxes para los campos del formulario
         private CampoEtiquetado Descripcion;

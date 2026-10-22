@@ -16,13 +16,13 @@ namespace SierraMarket.UI
 {
     public partial class UscVenta : UserControl
     {
-        private readonly ListaSimple<Producto> _listaProductos;
+        private ListaSimple<Producto> _listaProductos;
 
-        private readonly ListaCircular<Trabajador> _listaTrabajadores;
+        private ListaCircular<Trabajador> _listaTrabajadores;
 
-        private readonly ListaSimple<Venta> _listaVentas;
+        private ListaSimple<Venta> _listaVentas;
 
-        private readonly ListaDoble<DetalleVenta> _carrito = new ListaDoble<DetalleVenta>();
+        private ListaDoble<DetalleVenta> _carrito = new ListaDoble<DetalleVenta>();
 
         private DataGridView dgvCatalogo;
         private DataGridView dgvCarrito;
@@ -140,6 +140,7 @@ namespace SierraMarket.UI
             dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", Width = 80 });
             dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "Stock", Width = 80 });
             dgvCatalogo.Columns.Add(new DataGridViewButtonColumn { Name = "btnAgregar", HeaderText = "", Text = "Agregar", UseColumnTextForButtonValue = true, Width = 80 });
+            dgvCatalogo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCatalogo.CellContentClick += DgvCatalogo_CellContentClick;
 
             dgvCarrito = new DataGridView();
@@ -149,6 +150,7 @@ namespace SierraMarket.UI
             dgvCarrito.AllowUserToAddRows = false;
             dgvCarrito.ReadOnly = true;
             dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCarrito.RowHeadersVisible = false;
 
             dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", Width = 100 });
