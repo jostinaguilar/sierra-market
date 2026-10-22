@@ -288,8 +288,7 @@ namespace SierraMarket.UI
                     total,
                     total,
                     0,
-                    "Completada",
-                    1
+                    "Completada"
                 );
 
                 _listaVentas.Agregar(nuevaVenta);

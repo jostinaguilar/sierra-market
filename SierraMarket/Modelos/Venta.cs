@@ -24,9 +24,7 @@ namespace SierraMarket.Modelos
         public decimal Vuelto { get; set; }
         public string Estado { get; set; }
 
-        public int Intentos { get; set; }
-
-        public Venta(int idVenta, DateTime fechaHora, Trabajador trabajador, ListaDoble<DetalleVenta> detalleVenta, Pila<Pago> pagos, decimal total, decimal montoPagado, decimal vuelto, string estado, int intentos)
+        public Venta(int idVenta, DateTime fechaHora, Trabajador trabajador, ListaDoble<DetalleVenta> detalleVenta, Pila<Pago> pagos, decimal total, decimal montoPagado, decimal vuelto, string estado)
         {
             IdVenta = idVenta;
             FechaHora = fechaHora;
@@ -37,7 +35,6 @@ namespace SierraMarket.Modelos
             MontoPagado = montoPagado;
             Vuelto = vuelto;
             Estado = estado;
-            Intentos = intentos;
         }
     }
 }
