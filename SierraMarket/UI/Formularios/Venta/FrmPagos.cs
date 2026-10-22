@@ -1,4 +1,6 @@
-﻿using SierraMarket.UI.Componentes;
+﻿using SierraMarket.Estructuras.Pilas;
+using SierraMarket.Modelos;
+using SierraMarket.UI.Componentes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,14 +14,22 @@ namespace SierraMarket.UI.Formularios.Venta
 {
     public partial class FrmPagos : Form
     {
+        private readonly Pila<Pago> _pilaPagos;
+        private decimal _total;
+
         // TextBoxes para los campos del formulario
         private CampoEtiquetado txtMontoAPagar;
         private ComboBox cmbFormaPago;
         private Boton.Primario btnGuardar;
         private Boton.Secundario btnCancelar;
 
-        public FrmPagos()
+        private Boton.Secundario btnPop;
+        private Boton.Primario btnPush;
+
+        public FrmPagos(decimal total)
         {
+            _total = total;
+
             ConfigurarVentana();
             CrearFormulario();
         }
@@ -48,13 +58,19 @@ namespace SierraMarket.UI.Formularios.Venta
 
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 5F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
             var lblTitulo = new Texto.Titulo("Realizar Pago");
+
+            var lblTotalPagar = new Texto.Pequeno($"Total a pagar: S/ {_total:0.00}");
 
             txtMontoAPagar = new CampoEtiquetado("Monto a Pagar", "Ingrese el monto a pagar");
             
@@ -67,9 +83,18 @@ namespace SierraMarket.UI.Formularios.Venta
             cmbFormaPago.Items.Add("YAPE");
             cmbFormaPago.Items.Add("PLIN");
 
+            var tlpBotonesPila = new TableLayoutPanel();
+            tlpBotonesPila.Padding = new Padding(0);
+            tlpBotonesPila.Margin = new Padding(0);
+            tlpBotonesPila.Dock = DockStyle.Fill;
+            tlpBotonesPila.RowCount = 1;
+            tlpBotonesPila.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpBotonesPila.ColumnCount = 3;
+            tlpBotonesPila.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlpBotonesPila.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
+            tlpBotonesPila.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 
             var tlpBotones = new TableLayoutPanel();
-
             tlpBotones.Padding = new Padding(0);
             tlpBotones.Margin = new Padding(0);
             tlpBotones.Dock = DockStyle.Fill;
@@ -87,14 +112,26 @@ namespace SierraMarket.UI.Formularios.Venta
             btnGuardar.Dock = DockStyle.Fill;
             btnGuardar.Click += BtnGuardar_Click;
 
+            btnPop = new Boton.Secundario("Pop");
+            btnPop.Dock = DockStyle.Fill;
+
+            btnPush = new Boton.Primario("Guardar");
+            btnPush.Dock = DockStyle.Fill;
+
+            tlpBotonesPila.Controls.Add(btnPop, 0, 0);
+            tlpBotonesPila.Controls.Add(btnPush, 2, 0);
+
             tlpBotones.Controls.Add(btnCancelar, 0, 0);
             tlpBotones.Controls.Add(btnGuardar, 2, 0);
 
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
-            tlpFormulario.Controls.Add(lblFormaPago, 0, 2);
-            tlpFormulario.Controls.Add(cmbFormaPago, 0, 4);
-            tlpFormulario.Controls.Add(txtMontoAPagar, 0, 5);
-            tlpFormulario.Controls.Add(tlpBotones, 0, 7);
+            tlpFormulario.Controls.Add(lblTotalPagar, 0, 2);
+            tlpFormulario.Controls.Add(lblFormaPago, 0, 4);
+            tlpFormulario.Controls.Add(cmbFormaPago, 0, 6);
+            tlpFormulario.Controls.Add(txtMontoAPagar, 0, 7);
+
+            tlpFormulario.Controls.Add(tlpBotonesPila, 0, 9);
+            tlpFormulario.Controls.Add(tlpBotones, 0, 11);
 
             this.Controls.Add(tlpFormulario);
 
@@ -113,6 +150,18 @@ namespace SierraMarket.UI.Formularios.Venta
 
         public void BtnGuardar_Click(object sender, EventArgs e)
         {
+            if(decimal.TryParse(txtMontoAPagar.Valor, out decimal montoPago) || string.IsNullOrEmpty(cmbFormaPago.Text))
+            {
+                MessageBox.Show("Complete el monto a pagar y forma de pago");
+                return;
+            }
+
+            string medioPago = cmbFormaPago.Text;
+
+            if (montoPago < _total)
+            {
+                MessageBox.Show("El monto a pagar debe ser igual al total de la venta.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

@@ -252,7 +252,14 @@ namespace SierraMarket.UI
 
         private void BtnCobrar_Click(object sender, EventArgs e)
         {
-            var frmPagos = new FrmPagos();
+            var carrito = _carrito.ObtenerTodos();
+            decimal total = 0;
+            foreach (var item in carrito)
+            {
+                total += item.Subtotal;
+            }
+
+            var frmPagos = new FrmPagos(total);
 
             if (frmPagos.ShowDialog() == DialogResult.OK)
             {

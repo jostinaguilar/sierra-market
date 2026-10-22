@@ -142,7 +142,7 @@ namespace SierraMarket.Estructuras.Pilas
 
                 actual = actual.Siguiente;
             }
-            
+
             return total;
         }
 
@@ -181,14 +181,20 @@ namespace SierraMarket.Estructuras.Pilas
             count = 0;
         }
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            NodoPila<T> actual = tope;
+
+            while (actual != null)
+            {
+                yield return actual.Dato;
+                actual = actual.Siguiente;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }
