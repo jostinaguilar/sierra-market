@@ -1,4 +1,4 @@
-﻿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Formularios.Inventario;
@@ -18,6 +18,7 @@ namespace SierraMarket.UI
     {
         private ListaSimple<Producto> _listaProductos;
         private DataGridView dgvInventario;
+        private TextBox txtBuscarProducto;
 
         public UscInventario(ListaSimple<Producto> listaProductos)
         {
@@ -53,7 +54,13 @@ namespace SierraMarket.UI
             btnAgregarProducto.Margin = new Padding(0);
             btnAgregarProducto.Click += BtnAgregarProducto_Click;
 
-            var txtBuscarProducto = new CampoTexto.Campo("Buscar producto...");
+            txtBuscarProducto = new TextBox
+            {
+                Dock = DockStyle.Fill,
+                PlaceholderText = "Buscar producto...",
+                BorderStyle = BorderStyle.FixedSingle,
+                Font = Fuentes.GeistRegular(10F)
+            };
 
             pnlTitulo.Controls.AddRange(new Control[] { lblTitulo, btnAgregarProducto });
 
@@ -76,7 +83,7 @@ namespace SierraMarket.UI
             dgvInventario.CellContentClick += DgvInventario_CellContentClick;
 
             tlpInventario.Controls.Add(pnlTitulo, 0, 0);
-            tlpInventario.Controls.Add(txtBuscarProducto.ConBorde(), 0, 2);
+            tlpInventario.Controls.Add(txtBuscarProducto, 0, 2);
             tlpInventario.Controls.Add(dgvInventario, 0, 4);
 
             this.Controls.Add(tlpInventario);

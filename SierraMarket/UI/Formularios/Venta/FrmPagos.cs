@@ -1,6 +1,7 @@
-﻿using SierraMarket.Estructuras.Pilas;
+using SierraMarket.Estructuras.Pilas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
+using SierraMarket.UI.Tema;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,8 +20,8 @@ namespace SierraMarket.UI.Formularios.Venta
 
         public Pila<Pago> PilaPagos => _pilaPagos;
 
-        // TextBoxes para los campos del formulario
-        private CampoEtiquetado txtMontoAPagar;
+        // TextBox nativo para el monto
+        private TextBox txtMontoAPagar;
         private ComboBox cmbFormaPago;
         private Boton.Primario btnGuardar;
         private Boton.Secundario btnCancelar;
@@ -83,7 +84,18 @@ namespace SierraMarket.UI.Formularios.Venta
 
             var lblTotalPagar = new Texto.Etiqueta($"Total a pagar: S/ {_total:0.00}");
 
-            txtMontoAPagar = new CampoEtiquetado("Monto a Pagar", "Ingrese el monto a pagar");
+            var pnlMonto = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 10) };
+            pnlMonto.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            pnlMonto.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            pnlMonto.Controls.Add(new Texto.Etiqueta("Monto a Pagar"), 0, 0);
+            txtMontoAPagar = new TextBox
+            {
+                Dock = DockStyle.Fill,
+                PlaceholderText = "Ingrese el monto a pagar",
+                BorderStyle = BorderStyle.FixedSingle,
+                Font = Fuentes.GeistRegular(10F)
+            };
+            pnlMonto.Controls.Add(txtMontoAPagar, 0, 1);
 
             var lblFormaPago = new Texto.Etiqueta("Forma de Pago");
             cmbFormaPago = new ComboBox();
@@ -149,7 +161,7 @@ namespace SierraMarket.UI.Formularios.Venta
             tlpFormulario.Controls.Add(lblTotalPagar, 0, 2);
             tlpFormulario.Controls.Add(lblFormaPago, 0, 4);
             tlpFormulario.Controls.Add(cmbFormaPago, 0, 6);
-            tlpFormulario.Controls.Add(txtMontoAPagar, 0, 7);
+            tlpFormulario.Controls.Add(pnlMonto, 0, 7);
             tlpFormulario.Controls.Add(tlpBotonesPila, 0, 9);
             tlpFormulario.Controls.Add(lstPagos, 0, 11);
             tlpFormulario.Controls.Add(lblMontoAbonado, 0, 13);
@@ -181,7 +193,7 @@ namespace SierraMarket.UI.Formularios.Venta
                 return;
             }
 
-            if (!decimal.TryParse(txtMontoAPagar.Valor.Trim(), out decimal monto) || monto <= 0)
+            if (!decimal.TryParse(txtMontoAPagar.Text.Trim(), out decimal monto) || monto <= 0)
             {
                 MessageBox.Show("Ingrese un monto válido mayor a 0.", "Monto inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -212,7 +224,7 @@ namespace SierraMarket.UI.Formularios.Venta
             ActualizarListaPagos();
 
             cmbFormaPago.SelectedIndex = -1;
-            //txtMontoAPagar.Campo.Clear();
+            //txtMontoAPagar.Clear();
         }
 
         public void BtnPop_Click(object sender, EventArgs e)
@@ -236,7 +248,7 @@ namespace SierraMarket.UI.Formularios.Venta
             }
 
             decimal montoRestante = _total - montoAbonado;
-            txtMontoAPagar.Campo.Text = montoRestante.ToString("0.00");
+            txtMontoAPagar.Text = montoRestante.ToString("0.00");
             lblMontoAbonado.Text = $"Monto Abonado: S/ {montoAbonado:0.00}";
             lblMontoRestante.Text = $"Monto Restante: S/ {montoRestante:0.00}";
         }

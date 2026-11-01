@@ -1,6 +1,7 @@
-﻿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
+using SierraMarket.UI.Tema;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,8 +19,8 @@ namespace SierraMarket.UI.Formularios.Turnos
 
         private Trabajador _trabajadorEditar;
 
-        // TextBoxes para los campos del formulario
-        private CampoEtiquetado Nombres;
+        // TextBox nativo para el nombre y selectores
+        private TextBox txtNombres;
         private SelectorFechaHoraEtiquetado TurnoInicio;
         private SelectorFechaHoraEtiquetado TurnoFin;
         private Boton.Primario btnGuardar;
@@ -62,7 +63,19 @@ namespace SierraMarket.UI.Formularios.Turnos
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
 
-            Nombres = new CampoEtiquetado("Nombres", "Ingrese los nombres");
+            var pnlNombres = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 10) };
+            pnlNombres.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            pnlNombres.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            pnlNombres.Controls.Add(new Texto.Etiqueta("Nombres"), 0, 0);
+            txtNombres = new TextBox
+            {
+                Dock = DockStyle.Fill,
+                PlaceholderText = "Ingrese los nombres",
+                BorderStyle = BorderStyle.FixedSingle,
+                Font = Fuentes.GeistRegular(10F)
+            };
+            pnlNombres.Controls.Add(txtNombres, 0, 1);
+
             TurnoInicio = new SelectorFechaHoraEtiquetado("Turno Inicio");
             TurnoFin = new SelectorFechaHoraEtiquetado("Turno Fin");
 
@@ -71,7 +84,7 @@ namespace SierraMarket.UI.Formularios.Turnos
             if (_trabajadorEditar != null)
             {
                 titulo = "Editar Trabajador";
-                Nombres.Campo.Text = _trabajadorEditar.Nombres;
+                txtNombres.Text = _trabajadorEditar.Nombres;
                 TurnoInicio.Selector.Text = _trabajadorEditar.HoraInicioTurno.ToString();
                 TurnoFin.Selector.Text = _trabajadorEditar.HoraFinTurno.ToString();
             }
@@ -101,7 +114,7 @@ namespace SierraMarket.UI.Formularios.Turnos
             tlpBotones.Controls.Add(btnGuardar, 2, 0);
 
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
-            tlpFormulario.Controls.Add(Nombres, 0, 2);
+            tlpFormulario.Controls.Add(pnlNombres, 0, 2);
             tlpFormulario.Controls.Add(TurnoInicio, 0, 3);
             tlpFormulario.Controls.Add(TurnoFin, 0, 4);
             tlpFormulario.Controls.Add(tlpBotones, 0, 6);
@@ -125,7 +138,7 @@ namespace SierraMarket.UI.Formularios.Turnos
         {
 
             int id;
-            string nombres = Nombres.Valor;
+            string nombres = txtNombres.Text.Trim();
             TimeOnly turnoInicio = TimeOnly.Parse(TurnoInicio.Valor.ToString());
             TimeOnly turnoFin = TimeOnly.Parse(TurnoFin.Valor.ToString());
 

@@ -1,4 +1,4 @@
-ï»¿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Formularios.Inventario;
@@ -119,12 +119,12 @@ namespace SierraMarket.UI
             btnCobrar = new Boton.Primario("Cobrar");
             btnCobrar.Click += BtnCobrar_Click;
 
-            var lblCatalogo = new Texto.Subtitulo("CatÃ¡logo de Productos");
+            var lblCatalogo = new Texto.Subtitulo("Catálogo de Productos");
 
             lblCatalogo.Dock = DockStyle.Fill;
             lblCatalogo.Margin = new Padding(0);
 
-            var txtBuscarProducto = new CampoTexto.Campo("Buscar producto...");
+            var txtBuscarProducto = new TextBox { Dock = DockStyle.Fill, PlaceholderText = "Buscar producto...", BorderStyle = BorderStyle.FixedSingle, Font = Fuentes.GeistRegular(10F) };
 
             dgvCatalogo = new DataGridView();
             dgvCatalogo.Dock = DockStyle.Fill;
@@ -135,7 +135,7 @@ namespace SierraMarket.UI
             dgvCatalogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCatalogo.RowHeadersVisible = false;
 
-            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "CÃ³digo", DataPropertyName = "Codigo", Width = 80 });
+            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", Width = 80 });
             dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", Width = 250 });
             dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", Width = 80 });
             dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "Stock", Width = 80 });
@@ -167,7 +167,7 @@ namespace SierraMarket.UI
             pnlCarrito.Controls.Add(tlpCarrito);
 
             tlpVenta.Controls.Add(lblCatalogo, 0, 0);
-            tlpVenta.Controls.Add(txtBuscarProducto.ConBorde(), 0, 2);
+            tlpVenta.Controls.Add(txtBuscarProducto, 0, 2);
             tlpVenta.Controls.Add(dgvCatalogo, 0, 3);
 
             tlpContenededor.Controls.Add(tlpVenta, 0, 0);
@@ -205,7 +205,7 @@ namespace SierraMarket.UI
                 {
                     if (nodoExistente.Dato.Cantidad + 1 > producto.Stock)
                     {
-                        MessageBox.Show("No puedes agregar mÃ¡s unidades que el stock disponible.", "LÃ­mite de Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("No puedes agregar más unidades que el stock disponible.", "Límite de Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -298,7 +298,7 @@ namespace SierraMarket.UI
                 _carrito.Limpiar();
                 ActualizarCarrito();
                 CargarCatalogo();
-                MessageBox.Show($"Â¡Venta #{idVenta} registrada en el historial!", "Ã‰xito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"¡Venta #{idVenta} registrada en el historial!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

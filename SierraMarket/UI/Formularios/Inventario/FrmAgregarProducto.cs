@@ -1,6 +1,7 @@
-﻿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
+using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,10 +17,10 @@ namespace SierraMarket.UI.Formularios.Inventario
         private ListaSimple<Producto> _listaProductos;
         private Producto _productoEditar;
 
-        // TextBoxes para los campos del formulario
-        private CampoEtiquetado Descripcion;
-        private CampoEtiquetado Stock;
-        private CampoEtiquetado Precio;
+        // TextBoxes nativos para los campos del formulario
+        private TextBox txtDescripcion;
+        private TextBox txtStock;
+        private TextBox txtPrecio;
         private Boton.Primario btnGuardar;
         private Boton.Secundario btnCancelar;
 
@@ -63,16 +64,54 @@ namespace SierraMarket.UI.Formularios.Inventario
 
             var lblTitulo = new Texto.Titulo("Agregar Producto");
 
-            Descripcion = new CampoEtiquetado("Descripción", "Ingrese una descripción");
-            Precio = new CampoEtiquetado("Precio", "Ingrese un precio");
-            Stock = new CampoEtiquetado("Stock", "Ingrese el stock");
+            // Campo Descripción (Etiqueta + TextBox nativo)
+            var pnlDesc = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 10) };
+            pnlDesc.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            pnlDesc.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            pnlDesc.Controls.Add(new Texto.Etiqueta("Descripción"), 0, 0);
+            txtDescripcion = new TextBox
+            {
+                Dock = DockStyle.Fill,
+                PlaceholderText = "Ingrese una descripción",
+                BorderStyle = BorderStyle.FixedSingle,
+                Font = Fuentes.GeistRegular(10F)
+            };
+            pnlDesc.Controls.Add(txtDescripcion, 0, 1);
+
+            // Campo Precio (Etiqueta + TextBox nativo)
+            var pnlPrecio = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 10) };
+            pnlPrecio.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            pnlPrecio.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            pnlPrecio.Controls.Add(new Texto.Etiqueta("Precio"), 0, 0);
+            txtPrecio = new TextBox
+            {
+                Dock = DockStyle.Fill,
+                PlaceholderText = "Ingrese un precio",
+                BorderStyle = BorderStyle.FixedSingle,
+                Font = Fuentes.GeistRegular(10F)
+            };
+            pnlPrecio.Controls.Add(txtPrecio, 0, 1);
+
+            // Campo Stock (Etiqueta + TextBox nativo)
+            var pnlStock = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 10) };
+            pnlStock.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            pnlStock.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            pnlStock.Controls.Add(new Texto.Etiqueta("Stock"), 0, 0);
+            txtStock = new TextBox
+            {
+                Dock = DockStyle.Fill,
+                PlaceholderText = "Ingrese el stock",
+                BorderStyle = BorderStyle.FixedSingle,
+                Font = Fuentes.GeistRegular(10F)
+            };
+            pnlStock.Controls.Add(txtStock, 0, 1);
 
             if (_productoEditar != null)
             {
                 lblTitulo.Text = "Editar Producto";
-                Descripcion.Campo.Text = _productoEditar.Descripcion;
-                Precio.Campo.Text = _productoEditar.Precio.ToString();
-                Stock.Campo.Text = _productoEditar.Stock.ToString();
+                txtDescripcion.Text = _productoEditar.Descripcion;
+                txtPrecio.Text = _productoEditar.Precio.ToString();
+                txtStock.Text = _productoEditar.Stock.ToString();
             }
 
             var tlpBotones = new TableLayoutPanel();
@@ -98,9 +137,9 @@ namespace SierraMarket.UI.Formularios.Inventario
             tlpBotones.Controls.Add(btnGuardar, 2, 0);
 
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
-            tlpFormulario.Controls.Add(Descripcion, 0, 2);
-            tlpFormulario.Controls.Add(Precio, 0, 3);
-            tlpFormulario.Controls.Add(Stock, 0, 4);
+            tlpFormulario.Controls.Add(pnlDesc, 0, 2);
+            tlpFormulario.Controls.Add(pnlPrecio, 0, 3);
+            tlpFormulario.Controls.Add(pnlStock, 0, 4);
             tlpFormulario.Controls.Add(tlpBotones, 0, 6);
 
             this.Controls.Add(tlpFormulario);
@@ -120,9 +159,8 @@ namespace SierraMarket.UI.Formularios.Inventario
 
         public void BtnGuardar_Click(object sender, EventArgs e)
         {
-
             int codigo;
-            string descripcion = Descripcion.Valor;
+            string descripcion = txtDescripcion.Text.Trim();
             int stock;
             decimal precio;
 
@@ -132,13 +170,13 @@ namespace SierraMarket.UI.Formularios.Inventario
                 return;
             }
 
-            if (!int.TryParse(Stock.Valor, out stock))
+            if (!int.TryParse(txtStock.Text.Trim(), out stock))
             {
                 MessageBox.Show("Ingrese un valor numérico válido para el stock.", "Stock inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!decimal.TryParse(Precio.Valor.Replace(',', '.'), out precio))
+            if (!decimal.TryParse(txtPrecio.Text.Trim().Replace(',', '.'), out precio))
             {
                 MessageBox.Show("Ingrese un valor numérico válido para el precio.", "Precio inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
