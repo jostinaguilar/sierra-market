@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SierraMarket.UI.Formularios.Turnos
+namespace SierraMarket.UI.Vistas.Turnos
 {
     public partial class FrmAgregarTurno : Form
     {

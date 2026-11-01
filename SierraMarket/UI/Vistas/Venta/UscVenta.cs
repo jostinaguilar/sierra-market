@@ -1,8 +1,8 @@
 using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
-using SierraMarket.UI.Formularios.Inventario;
-using SierraMarket.UI.Formularios.Venta;
+using SierraMarket.UI.Vistas.Inventario;
+using SierraMarket.UI.Vistas.Venta;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;

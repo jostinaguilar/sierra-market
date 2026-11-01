@@ -1,7 +1,7 @@
-ï»¿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
-using SierraMarket.UI.Formularios.Inventario;
+using SierraMarket.UI.Vistas.Inventario;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SierraMarket.UI.Formularios.Turnos
+namespace SierraMarket.UI.Vistas.Turnos
 {
     public partial class UscTurnos : UserControl
     {
@@ -45,7 +45,7 @@ namespace SierraMarket.UI.Formularios.Turnos
             pnlTitulo.Dock = DockStyle.Fill;
             pnlTitulo.Margin = new Padding(0);
 
-            var lblTitulo = new Texto.Subtitulo("GestiÃ³n de Turnos");
+            var lblTitulo = new Texto.Subtitulo("Gestión de Turnos");
 
             lblTitulo.Dock = DockStyle.Left;
             lblTitulo.Margin = new Padding(0);
@@ -86,7 +86,7 @@ namespace SierraMarket.UI.Formularios.Turnos
             dgvTrabajadores.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvTrabajadores.RowHeadersVisible = false;
 
-            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "CÃ³digo", DataPropertyName = "IdTrabajador", Width = 80 });
+            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "IdTrabajador", Width = 80 });
             dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombres Completos", DataPropertyName = "Nombres", Width = 250 });
             dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Hora Inicio", DataPropertyName = "HoraInicioTurno", Width = 80 });
             dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Hora Fin", DataPropertyName = "HoraFinTurno", Width = 80 });
@@ -110,7 +110,7 @@ namespace SierraMarket.UI.Formularios.Turnos
             {
                 var trabajador = dgvTrabajadores.Rows[e.RowIndex].DataBoundItem as Trabajador;
 
-                if (DialogResult.Yes == MessageBox.Show("Â¿EstÃ¡ seguro de que desea eliminar el turno de " + trabajador?.Nombres + "?", "Confirmar eliminaciÃ³n", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                if (DialogResult.Yes == MessageBox.Show("¿Está seguro de que desea eliminar el turno de " + trabajador?.Nombres + "?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                 {
                     _listaTrabajadores.EliminarPorDato(trabajador);
                     ActualizarTrabajadores();

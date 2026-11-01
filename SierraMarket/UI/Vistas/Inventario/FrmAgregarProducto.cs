@@ -10,7 +10,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SierraMarket.UI.Formularios.Inventario
+namespace SierraMarket.UI.Vistas.Inventario
 {
     public partial class FrmAgregarProducto : Form
     {

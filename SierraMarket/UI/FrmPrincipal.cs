@@ -1,8 +1,8 @@
-ï»¿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
-using SierraMarket.UI.Formularios.Turnos;
-using SierraMarket.UI.Formularios.Venta;
+using SierraMarket.UI.Vistas.Turnos;
+using SierraMarket.UI.Vistas.Venta;
 using SierraMarket.UI.Tema;
 using System;
 using System.Collections.Generic;
@@ -234,11 +234,11 @@ namespace SierraMarket.UI
         private void CargarProductos()
         {
             Producto producto1 = new Producto(1, "Arroz (1 kg)", 4.50m, 30);
-            Producto producto2 = new Producto(2, "AzÃºcar (1 kg)", 4.00m, 25);
+            Producto producto2 = new Producto(2, "Azúcar (1 kg)", 4.00m, 25);
             Producto producto3 = new Producto(3, "Aceite vegetal (1 L)", 8.50m, 15);
             Producto producto4 = new Producto(4, "Leche evaporada (lata)", 4.20m, 40);
             Producto producto5 = new Producto(5, "Fideos (500 g)", 3.50m, 35);
-            Producto producto6 = new Producto(6, "AtÃºn en conserva (lata)", 5.80m, 20);
+            Producto producto6 = new Producto(6, "Atún en conserva (lata)", 5.80m, 20);
             Producto producto7 = new Producto(7, "Gaseosa (1.5 L)", 7.00m, 18);
             Producto producto8 = new Producto(8, "Agua mineral (625 ml)", 2.00m, 50);
             Producto producto9 = new Producto(9, "Galletas de chocolate (paquete)", 2.50m, 45);

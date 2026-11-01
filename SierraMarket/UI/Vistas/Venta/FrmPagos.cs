@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SierraMarket.UI.Formularios.Venta
+namespace SierraMarket.UI.Vistas.Venta
 {
     public partial class FrmPagos : Form
     {

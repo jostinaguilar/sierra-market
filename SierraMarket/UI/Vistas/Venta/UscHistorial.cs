@@ -1,4 +1,4 @@
-﻿using SierraMarket.Estructuras.Listas;
+using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Componentes;
 using System;
@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SierraMarket.UI.Formularios.Venta
+namespace SierraMarket.UI.Vistas.Venta
 {
     public partial class UscHistorial : UserControl
     {
@@ -54,7 +54,7 @@ namespace SierraMarket.UI.Formularios.Venta
             dgvHistorial.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvHistorial.RowHeadersVisible = false;
 
-            dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "IdVenta", Width = 80 });
+            dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "C�digo", DataPropertyName = "IdVenta", Width = 80 });
             dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Fecha", DataPropertyName = "FechaHora", Width = 250 });
             dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombre del Trabajador", DataPropertyName = "NombreTrabajador", Width = 80 });
             dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Total", DataPropertyName = "Total", Width = 80 });
