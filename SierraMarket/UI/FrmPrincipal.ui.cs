@@ -1,0 +1,144 @@
+﻿using SierraMarket.UI.Componentes;
+using SierraMarket.UI.Tema;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace SierraMarket.UI
+{
+    public partial class FrmPrincipal : Form
+    {
+        private Panel pnlPrincipal;
+        private Texto.Etiqueta lblNombreUsuario;
+
+        private void ConstruirInterfaz()
+        {
+            var tlpPrincipal = new TableLayoutPanel();
+            tlpPrincipal.Dock = DockStyle.Fill;
+            tlpPrincipal.ColumnCount = 1;
+            tlpPrincipal.RowCount = 5;
+            tlpPrincipal.Margin = new Padding(0);
+            tlpPrincipal.Padding = new Padding(0);
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpPrincipal.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+            var pnlHeader = new Panel();
+            pnlHeader.Dock = DockStyle.Fill;
+            pnlHeader.Margin = new Padding(0);
+            pnlHeader.Padding = new Padding(0);
+            pnlHeader.BackColor = Color.FromArgb(250, 250, 250);
+
+            var pnlSeparador1 = new Panel();
+            pnlSeparador1.Dock = DockStyle.Fill;
+            pnlSeparador1.Margin = new Padding(0);
+            pnlSeparador1.Padding = new Padding(0);
+            pnlSeparador1.BackColor = Color.FromArgb(228, 228, 231);
+
+            pnlPrincipal = new Panel();
+            pnlPrincipal.Dock = DockStyle.Fill;
+            pnlPrincipal.Padding = new Padding(0);
+            pnlPrincipal.Margin = new Padding(0);
+            pnlPrincipal.BackColor = Color.FromArgb(255, 255, 255);
+
+            var pnlSeparador2 = new Panel();
+            pnlSeparador2.Dock = DockStyle.Fill;
+            pnlSeparador2.Margin = new Padding(0);
+            pnlSeparador2.Padding = new Padding(0);
+            pnlSeparador2.BackColor = Color.FromArgb(228, 228, 231);
+
+            var pnlMenu = new Panel();
+            pnlMenu.Dock = DockStyle.Fill;
+            pnlMenu.Margin = new Padding(0);
+            pnlMenu.Padding = new Padding(0);
+            pnlMenu.BackColor = Color.FromArgb(255, 255, 255);
+
+            var pnlSeparador3 = new Panel();
+            pnlSeparador3.Dock = DockStyle.Fill;
+            pnlSeparador3.Margin = new Padding(0);
+            pnlSeparador3.Padding = new Padding(0);
+            pnlSeparador3.BackColor = Color.FromArgb(228, 228, 231);
+
+            tlpPrincipal.Controls.Add(pnlHeader, 0, 0);
+            tlpPrincipal.Controls.Add(pnlSeparador1, 0, 1);
+            tlpPrincipal.Controls.Add(pnlMenu, 0, 2);
+            tlpPrincipal.Controls.Add(pnlSeparador2, 0, 3);
+            tlpPrincipal.Controls.Add(pnlPrincipal, 0, 4);
+
+            this.Controls.Add(tlpPrincipal);
+
+            var flpTitulo = new FlowLayoutPanel();
+            var lblTitulo = new Texto.Titulo("Sierra Market");
+
+            lblTitulo.Padding = new Padding(0);
+
+            flpTitulo.Controls.Add(lblTitulo);
+            flpTitulo.Dock = DockStyle.Left;
+            flpTitulo.AutoSize = true;
+            flpTitulo.WrapContents = false;
+            flpTitulo.FlowDirection = FlowDirection.LeftToRight;
+            flpTitulo.Padding = new Padding(20, 15, 0, 0);
+
+            pnlHeader.Controls.Add(flpTitulo);
+
+            var flpCaja = new FlowLayoutPanel();
+            var lblCaja = new Texto.Etiqueta("Caja");
+            var lblNumeroCaja = new Texto.Etiqueta("01", Peso.Semibold);
+
+            lblCaja.Margin = new Padding(0);
+            lblNumeroCaja.Margin = new Padding(0);
+
+            flpCaja.Controls.AddRange(new Control[] { lblCaja, lblNumeroCaja });
+
+            flpCaja.Dock = DockStyle.Right;
+            flpCaja.AutoSize = true;
+            flpCaja.WrapContents = false;
+            flpCaja.FlowDirection = FlowDirection.LeftToRight;
+            flpCaja.Padding = new Padding(0, 20, 20, 0);
+
+            var flpUsuario = new FlowLayoutPanel();
+            var lblUsuario = new Texto.Etiqueta("Usuario");
+            lblNombreUsuario = new Texto.Etiqueta("-", Peso.Semibold);
+
+            lblUsuario.Margin = new Padding(0);
+            lblNombreUsuario.Margin = new Padding(0);
+
+            flpUsuario.Controls.AddRange(new Control[] { lblUsuario, lblNombreUsuario });
+
+            flpUsuario.Dock = DockStyle.Right;
+            flpUsuario.AutoSize = true;
+            flpUsuario.WrapContents = false;
+            flpUsuario.FlowDirection = FlowDirection.LeftToRight;
+            flpUsuario.Padding = new Padding(0, 20, 20, 0);
+
+            pnlHeader.Controls.AddRange(new Control[] { flpCaja, flpUsuario });
+
+            var flpMenu = new FlowLayoutPanel();
+            flpMenu.Dock = DockStyle.Fill;
+            flpMenu.Padding = new Padding(0);
+            flpMenu.WrapContents = false;
+            flpMenu.AutoSize = true;
+            flpMenu.FlowDirection = FlowDirection.LeftToRight;
+
+            var btnVentas = new Boton.Transparente("Ventas");
+            var btnInventario = new Boton.Transparente("Inventario");
+            var btnTurnos = new Boton.Transparente("Turnos");
+            var btnHistorial = new Boton.Transparente("Historial");
+
+            btnVentas.Height = 40;
+            btnInventario.Height = 40;
+            btnTurnos.Height = 40;
+            btnHistorial.Height = 40;
+
+            btnVentas.Click += BtnVentas_Click;
+            btnInventario.Click += BtnInventario_Click;
+            btnTurnos.Click += BtnTurnos_Click;
+            btnHistorial.Click += BtnHistorial_Click;
+
+            flpMenu.Controls.AddRange(new Control[] { btnVentas, btnInventario, btnTurnos, btnHistorial });
+
+            pnlMenu.Controls.Add(flpMenu);
+        }
+    }
+}

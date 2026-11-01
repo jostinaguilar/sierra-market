@@ -1,4 +1,4 @@
-﻿namespace SierraMarket.UI
+namespace SierraMarket.UI.Vistas.Inventario
 {
     partial class UscInventario
     {
