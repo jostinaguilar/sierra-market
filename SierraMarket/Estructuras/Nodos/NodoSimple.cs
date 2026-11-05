@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SierraMarket.Estructuras.Pilas
+namespace SierraMarket.Estructuras.Nodos
 {
-    public class NodoPila<T>
+    public class NodoSimple<T>
     {
         public T Dato { get; set; }
+        public NodoSimple<T> Siguiente { get; set; }
 
-        public NodoPila<T> Siguiente { get; set; }
-
-        public NodoPila(T dato)
+        public NodoSimple(T dato)
         {
             Dato = dato;
             Siguiente = null;

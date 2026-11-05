@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SierraMarket.Estructuras.Listas
+namespace SierraMarket.Estructuras.Nodos
 {
     public class NodoDoble<T>
     {

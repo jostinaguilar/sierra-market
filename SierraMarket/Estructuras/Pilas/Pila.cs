@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using SierraMarket.Estructuras.Nodos;
 
 namespace SierraMarket.Estructuras.Pilas
 {
     public class Pila<T> : IEnumerable<T>
     {
-        private NodoPila<T> tope;
+        private NodoSimple<T> tope;
         private int count;
 
         public int Count => count;
@@ -21,7 +22,7 @@ namespace SierraMarket.Estructuras.Pilas
 
         public void Push(T dato)
         {
-            NodoPila<T> nuevoNodo = new NodoPila<T>(dato);
+            NodoSimple<T> nuevoNodo = new NodoSimple<T>(dato);
 
             nuevoNodo.Siguiente = tope;
             tope = nuevoNodo;
@@ -78,7 +79,7 @@ namespace SierraMarket.Estructuras.Pilas
 
         public bool Contains(T dato)
         {
-            NodoPila<T> actual = tope;
+            NodoSimple<T> actual = tope;
 
             while (actual != null)
             {
@@ -95,7 +96,7 @@ namespace SierraMarket.Estructuras.Pilas
 
         public int Search(T dato)
         {
-            NodoPila<T> actual = tope;
+            NodoSimple<T> actual = tope;
             int posicion = 1;
 
             while (actual != null)
@@ -131,7 +132,7 @@ namespace SierraMarket.Estructuras.Pilas
         public int ContarOcurrencias(T dato)
         {
             int total = 0;
-            NodoPila<T> actual = tope;
+            NodoSimple<T> actual = tope;
 
             while (actual != null)
             {
@@ -163,7 +164,7 @@ namespace SierraMarket.Estructuras.Pilas
         {
             T[] array = new T[count];
 
-            NodoPila<T> actual = tope;
+            NodoSimple<T> actual = tope;
             int index = 0;
 
             while (actual != null)
@@ -183,7 +184,7 @@ namespace SierraMarket.Estructuras.Pilas
 
         public IEnumerator<T> GetEnumerator()
         {
-            NodoPila<T> actual = tope;
+            NodoSimple<T> actual = tope;
 
             while (actual != null)
             {
