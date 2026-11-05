@@ -1,4 +1,4 @@
-﻿using SierraMarket.UI.Componentes;
+using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Tema;
 using System.Drawing;
 using System.Windows.Forms;
@@ -111,13 +111,14 @@ namespace SierraMarket.UI.Vistas.Venta
             dgvCatalogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCatalogo.RowHeadersVisible = false;
 
-            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", Width = 80 });
-            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", Width = 250 });
-            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", Width = 80 });
-            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "Stock", Width = 80 });
-            dgvCatalogo.Columns.Add(new DataGridViewButtonColumn { Name = "btnAgregar", HeaderText = "", Text = "Agregar", UseColumnTextForButtonValue = true, Width = 80 });
+            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "Stock", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvCatalogo.Columns.Add(new DataGridViewButtonColumn { Name = "btnAgregar", HeaderText = "", Text = "Agregar", UseColumnTextForButtonValue = true, AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
             dgvCatalogo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCatalogo.CellContentClick += DgvCatalogo_CellContentClick;
+            EstiloGrid.Aplicar(dgvCatalogo);
 
             dgvCarrito = new DataGridView();
             dgvCarrito.Dock = DockStyle.Fill;
@@ -128,13 +129,15 @@ namespace SierraMarket.UI.Vistas.Venta
             dgvCarrito.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCarrito.RowHeadersVisible = false;
+            dgvCarrito.RowTemplate.Height = 48;
 
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", Width = 100 });
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", Width = 50 });
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Cantidad", DataPropertyName = "Cantidad", Width = 50 });
-            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Subtotal", DataPropertyName = "Subtotal", Width = 50 });
-            dgvCarrito.Columns.Add(new DataGridViewButtonColumn { Name = "btnQuitar", HeaderText = "", Text = "Quitar", UseColumnTextForButtonValue = true, Width = 50 });
+            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { Name = "colProducto", HeaderText = "Producto", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+            dgvCarrito.Columns.Add(new DataGridViewTextBoxColumn { Name = "colSubtotal", HeaderText = "Subtotal", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvCarrito.Columns.Add(new DataGridViewButtonColumn { Name = "btnQuitar", HeaderText = "", Text = "Quitar", UseColumnTextForButtonValue = true, AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvCarrito.CellFormatting += DgvCarrito_CellFormatting;
+            dgvCarrito.CellPainting += DgvCarrito_CellPainting;
             dgvCarrito.CellContentClick += DgvCarrito_CellContentClick;
+            EstiloGrid.Aplicar(dgvCarrito);
 
             tlpCarrito.Controls.Add(lblCarrito, 0, 0);
             tlpCarrito.Controls.Add(dgvCarrito, 0, 2);

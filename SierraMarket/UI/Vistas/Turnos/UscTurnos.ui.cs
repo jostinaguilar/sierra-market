@@ -72,14 +72,15 @@ namespace SierraMarket.UI.Vistas.Turnos
             dgvTrabajadores.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvTrabajadores.RowHeadersVisible = false;
 
-            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "IdTrabajador", Width = 80 });
-            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombres Completos", DataPropertyName = "Nombres", Width = 250 });
-            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Hora Inicio", DataPropertyName = "HoraInicioTurno", Width = 80 });
-            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Hora Fin", DataPropertyName = "HoraFinTurno", Width = 80 });
-            dgvTrabajadores.Columns.Add(new DataGridViewButtonColumn { Name = "btnEditar", HeaderText = "", Text = "Editar", UseColumnTextForButtonValue = true, Width = 80 });
-            dgvTrabajadores.Columns.Add(new DataGridViewButtonColumn { Name = "btnEliminar", HeaderText = "", Text = "Eliminar", UseColumnTextForButtonValue = true, Width = 80 });
+            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "IdTrabajador", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombres Completos", DataPropertyName = "Nombres", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Hora Inicio", DataPropertyName = "HoraInicioTurno", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Hora Fin", DataPropertyName = "HoraFinTurno", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvTrabajadores.Columns.Add(new DataGridViewButtonColumn { Name = "btnEditar", HeaderText = "", Text = "Editar", UseColumnTextForButtonValue = true, AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvTrabajadores.Columns.Add(new DataGridViewButtonColumn { Name = "btnEliminar", HeaderText = "", Text = "Eliminar", UseColumnTextForButtonValue = true, AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
             dgvTrabajadores.CellContentClick += DgvTrabajadores_CellContentClick;
             dgvTrabajadores.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            EstiloGrid.Aplicar(dgvTrabajadores);
 
             tlpTurno.Controls.Add(pnlTitulo, 0, 0);
             tlpTurno.Controls.Add(pnlTurnoActivo, 0, 2);
