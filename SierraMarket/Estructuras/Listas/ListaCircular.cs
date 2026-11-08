@@ -1,17 +1,12 @@
 ﻿using SierraMarket.Estructuras.Nodos;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SierraMarket.Estructuras.Listas
 {
     public class ListaCircular<T>
     {
         public NodoDoble<T> cabeza;
-
         private NodoDoble<T> nodoActual;
         private int count;
-
         public int Count => count;
         public bool EstaVacia => count == 0;
 
@@ -26,7 +21,7 @@ namespace SierraMarket.Estructuras.Listas
         {
             NodoDoble<T> nuevoNodo = new NodoDoble<T>(dato);
 
-            if (cabeza == null)
+            if (EstaVacia)
             {
                 nuevoNodo.Siguiente = nuevoNodo;
                 nuevoNodo.Anterior = nuevoNodo;
@@ -50,7 +45,7 @@ namespace SierraMarket.Estructuras.Listas
         {
             NodoDoble<T> nuevoNodo = new NodoDoble<T>(dato);
 
-            if (cabeza == null)
+            if (EstaVacia)
             {
                 nuevoNodo.Siguiente = nuevoNodo;
                 nuevoNodo.Anterior = nuevoNodo;
@@ -92,7 +87,7 @@ namespace SierraMarket.Estructuras.Listas
 
         public bool Eliminar(NodoDoble<T> nodo)
         {
-            if (nodo == null || cabeza == null)
+            if (nodo == null || EstaVacia)
             {
                 return false;
             }
@@ -138,7 +133,7 @@ namespace SierraMarket.Estructuras.Listas
 
         public NodoDoble<T> Buscar(T dato)
         {
-            if (cabeza == null)
+            if (EstaVacia)
             {
                 return null;
             }

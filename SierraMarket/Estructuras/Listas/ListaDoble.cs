@@ -1,7 +1,4 @@
 ﻿using SierraMarket.Estructuras.Nodos;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SierraMarket.Estructuras.Listas
 {
@@ -10,7 +7,6 @@ namespace SierraMarket.Estructuras.Listas
         private NodoDoble<T> cabeza;
         private NodoDoble<T> cola;
         private int count;
-
         public int Count => count;
         public bool EstaVacia => count == 0;
 
@@ -25,7 +21,7 @@ namespace SierraMarket.Estructuras.Listas
         {
             NodoDoble<T> nuevo = new NodoDoble<T>(dato);
 
-            if (cabeza == null)
+            if (EstaVacia)
             {
                 cabeza = nuevo;
                 cola = nuevo;
@@ -43,7 +39,7 @@ namespace SierraMarket.Estructuras.Listas
         public void Agregar(T dato)
         {
             NodoDoble<T> nuevo = new NodoDoble<T>(dato);
-            if (cola == null)
+            if (EstaVacia)
             {
                 cabeza = nuevo;
                 cola = nuevo;

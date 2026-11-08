@@ -10,6 +10,7 @@ namespace SierraMarket.Estructuras.Listas
         private NodoSimple<T> cabeza;
         private int count;
         public int Count => count;
+        public bool EstaVacia => count == 0;
 
         public ListaSimple()
         {
@@ -21,7 +22,7 @@ namespace SierraMarket.Estructuras.Listas
         {
             NodoSimple<T> nuevo = new NodoSimple<T>(dato);
 
-            if (cabeza == null)
+            if (EstaVacia)
             {
                 cabeza = nuevo;
             }
@@ -78,7 +79,7 @@ namespace SierraMarket.Estructuras.Listas
 
         public bool Eliminar(int indice)
         {
-            if (indice < 0 || indice >= count || cabeza == null)
+            if (indice < 0 || indice >= count || EstaVacia)
             {
                 return false;
             }
