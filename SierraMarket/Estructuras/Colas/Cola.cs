@@ -1,7 +1,4 @@
 ﻿using SierraMarket.Estructuras.Nodos;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SierraMarket.Estructuras.Colas
 {
@@ -10,8 +7,15 @@ namespace SierraMarket.Estructuras.Colas
         private NodoSimple<T> frente;
         private NodoSimple<T> final;
         private int count;
-        public int Count => count;
+        public int Longitud => count;
         public bool EstaVacia => count == 0;
+
+        public Cola()
+        {
+            frente = null;
+            final = null;
+            count = 0;
+        }
 
         public void Encolar(T dato)
         {
@@ -50,8 +54,8 @@ namespace SierraMarket.Estructuras.Colas
             return dato;
         }
 
-        /* Peek: obtiene el elemento que está en la frente de la cola */
-        public T Peek()
+        /* Front: obtiene el elemento que está en la frente de la cola */
+        public T Front()
         {
             if (EstaVacia)
             {
