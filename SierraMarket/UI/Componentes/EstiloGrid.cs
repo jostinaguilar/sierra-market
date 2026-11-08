@@ -20,10 +20,10 @@ namespace SierraMarket.UI.Componentes
             dgv.ColumnHeadersDefaultCellStyle.SelectionBackColor = Colores.Fondo;
             dgv.ColumnHeadersDefaultCellStyle.SelectionForeColor = Colores.Primario;
             dgv.ColumnHeadersDefaultCellStyle.Font = Fuentes.Geist(9.5f, Peso.Semibold);
-            dgv.ColumnHeadersDefaultCellStyle.Padding = new Padding(12, 10, 12, 10);
+            dgv.ColumnHeadersDefaultCellStyle.Padding = new Padding(20, 10, 10, 10);
             dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgv.ColumnHeadersHeight = 42;
+            dgv.ColumnHeadersHeight = 50;
 
             dgv.DefaultCellStyle.BackColor = Color.White;
             dgv.DefaultCellStyle.ForeColor = Color.FromArgb(24, 24, 27);

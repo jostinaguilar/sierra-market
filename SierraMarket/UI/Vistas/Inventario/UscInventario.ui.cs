@@ -26,18 +26,6 @@ namespace SierraMarket.UI.Vistas.Inventario
             tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));  // 4: Separador
             tlpInventario.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // 5: Grilla
 
-            var pnlSeparador1 = new Panel();
-            pnlSeparador1.Dock = DockStyle.Fill;
-            pnlSeparador1.Margin = new Padding(0);
-            pnlSeparador1.Padding = new Padding(0);
-            pnlSeparador1.BackColor = Color.FromArgb(228, 228, 231);
-
-            var pnlSeparador2 = new Panel();
-            pnlSeparador2.Dock = DockStyle.Fill;
-            pnlSeparador2.Margin = new Padding(0);
-            pnlSeparador2.Padding = new Padding(0);
-            pnlSeparador2.BackColor = Color.FromArgb(228, 228, 231);
-
             var pnlTitulo = new Panel();
             pnlTitulo.Dock = DockStyle.Fill;
             pnlTitulo.Margin = new Padding(20, 0, 20, 0);
@@ -82,15 +70,10 @@ namespace SierraMarket.UI.Vistas.Inventario
             dgvInventario.CellContentClick += DgvInventario_CellContentClick;
             EstiloGrid.Aplicar(dgvInventario);
 
-            dgvInventario.EnableHeadersVisualStyles = false;
-            dgvInventario.ColumnHeadersDefaultCellStyle.Padding = new Padding(20, 10, 10, 10);
-            dgvInventario.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvInventario.ColumnHeadersHeight = 50;
-
             tlpInventario.Controls.Add(pnlTitulo, 0, 0);
-            tlpInventario.Controls.Add(pnlSeparador1, 0, 2);
+            tlpInventario.Controls.Add(new SeparadorHorizontal(), 0, 2);
             tlpInventario.Controls.Add(txtBuscarProducto, 0, 3);
-            tlpInventario.Controls.Add(pnlSeparador2, 0, 4);
+            tlpInventario.Controls.Add(new SeparadorHorizontal(), 0, 4);
             tlpInventario.Controls.Add(dgvInventario, 0, 5);
 
             this.Controls.Add(tlpInventario);

@@ -21,71 +21,81 @@ namespace SierraMarket.UI.Vistas.Inventario
             this.AutoSize = false;
             this.StartPosition = FormStartPosition.CenterParent;
             this.Text = "Inventario | Sierra Market";
+            this.BackColor = Color.FromArgb(255, 255, 255);
         }
 
         private void CrearFormulario()
         {
             var tlpFormulario = new TableLayoutPanel();
             tlpFormulario.Margin = new Padding(0);
-            tlpFormulario.Padding = new Padding(20);
+            tlpFormulario.Padding = new Padding(0);
             tlpFormulario.ColumnCount = 1;
-            tlpFormulario.ColumnStyles.Clear();
-            tlpFormulario.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tlpFormulario.RowCount = 16;
             tlpFormulario.Dock = DockStyle.Fill;
 
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 5F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
             tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 5F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 5F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));
+            tlpFormulario.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
 
             var lblTitulo = new Texto.Titulo("Agregar Producto");
+            lblTitulo.BackColor = Colores.Fondo;
+            lblTitulo.Dock = DockStyle.Fill;
+            lblTitulo.Padding = new Padding(20, 18, 20, 15);
 
             // Campo Descripción (Etiqueta + TextBox nativo)
-            var pnlDesc = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 10) };
-            pnlDesc.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            pnlDesc.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            pnlDesc.Controls.Add(new Texto.Etiqueta("Descripción"), 0, 0);
+            var lblDescripcion = new Texto.Etiqueta("Descripción", Peso.Semibold);
+            lblDescripcion.Padding = new Padding(20, 8, 20, 0);
+
             txtDescripcion = new TextBox
             {
                 Dock = DockStyle.Fill,
                 PlaceholderText = "Ingrese una descripción",
-                BorderStyle = BorderStyle.FixedSingle,
-                Font = Fuentes.GeistRegular(10F)
+                BorderStyle = BorderStyle.None,
+                Font = Fuentes.GeistRegular(10F),
+                Margin = new Padding(20, 10, 20, 10)
             };
-            pnlDesc.Controls.Add(txtDescripcion, 0, 1);
+
 
             // Campo Precio (Etiqueta + TextBox nativo)
-            var pnlPrecio = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 10) };
-            pnlPrecio.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            pnlPrecio.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            pnlPrecio.Controls.Add(new Texto.Etiqueta("Precio"), 0, 0);
+            var lblPrecio = new Texto.Etiqueta("Precio", Peso.Semibold);
+            lblPrecio.Padding = new Padding(20, 8, 20, 0);
             txtPrecio = new TextBox
             {
                 Dock = DockStyle.Fill,
                 PlaceholderText = "Ingrese un precio",
-                BorderStyle = BorderStyle.FixedSingle,
-                Font = Fuentes.GeistRegular(10F)
+                BorderStyle = BorderStyle.None,
+                Font = Fuentes.GeistRegular(10F),
+                Margin = new Padding(20, 10, 20, 10)
             };
-            pnlPrecio.Controls.Add(txtPrecio, 0, 1);
+
 
             // Campo Stock (Etiqueta + TextBox nativo)
-            var pnlStock = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 10) };
-            pnlStock.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            pnlStock.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            pnlStock.Controls.Add(new Texto.Etiqueta("Stock"), 0, 0);
+            var lblStock = new Texto.Etiqueta("Stock", Peso.Semibold);
+            lblStock.Padding = new Padding(20, 8, 20, 0);
             txtStock = new TextBox
             {
                 Dock = DockStyle.Fill,
                 PlaceholderText = "Ingrese el stock",
-                BorderStyle = BorderStyle.FixedSingle,
-                Font = Fuentes.GeistRegular(10F)
+                BorderStyle = BorderStyle.None,
+                Font = Fuentes.GeistRegular(10F),
+                Margin = new Padding(20, 10, 20, 10)
             };
-            pnlStock.Controls.Add(txtStock, 0, 1);
+            
 
             if (_productoEditar != null)
             {
@@ -97,8 +107,8 @@ namespace SierraMarket.UI.Vistas.Inventario
 
             var tlpBotones = new TableLayoutPanel();
 
-            tlpBotones.Padding = new Padding(0);
             tlpBotones.Margin = new Padding(0);
+            tlpBotones.Padding = new Padding(20);
             tlpBotones.Dock = DockStyle.Fill;
             tlpBotones.RowCount = 1;
             tlpBotones.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -106,6 +116,7 @@ namespace SierraMarket.UI.Vistas.Inventario
             tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
             tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlpBotones.BackColor = Colores.Fondo;
 
             btnCancelar = new Boton.Secundario("Cancelar");
             btnCancelar.Dock = DockStyle.Fill;
@@ -118,10 +129,20 @@ namespace SierraMarket.UI.Vistas.Inventario
             tlpBotones.Controls.Add(btnGuardar, 2, 0);
 
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
-            tlpFormulario.Controls.Add(pnlDesc, 0, 2);
-            tlpFormulario.Controls.Add(pnlPrecio, 0, 3);
-            tlpFormulario.Controls.Add(pnlStock, 0, 4);
-            tlpFormulario.Controls.Add(tlpBotones, 0, 6);
+            tlpFormulario.Controls.Add(new SeparadorHorizontal(), 0, 1);
+            tlpFormulario.Controls.Add(lblDescripcion, 0, 2);
+            tlpFormulario.Controls.Add(new SeparadorHorizontal(), 0, 4);
+            tlpFormulario.Controls.Add(txtDescripcion, 0, 5);
+            tlpFormulario.Controls.Add(new SeparadorHorizontal(), 0, 6);
+            tlpFormulario.Controls.Add(lblPrecio, 0, 7);
+            tlpFormulario.Controls.Add(new SeparadorHorizontal(), 0, 9);
+            tlpFormulario.Controls.Add(txtPrecio, 0, 10);
+            tlpFormulario.Controls.Add(new SeparadorHorizontal(), 0, 11);
+            tlpFormulario.Controls.Add(lblStock, 0, 12);
+            tlpFormulario.Controls.Add(new SeparadorHorizontal(), 0, 14);
+            tlpFormulario.Controls.Add(txtStock, 0, 15);
+            tlpFormulario.Controls.Add(new SeparadorHorizontal(), 0, 16);
+            tlpFormulario.Controls.Add(tlpBotones, 0, 17);
 
             this.Controls.Add(tlpFormulario);
 

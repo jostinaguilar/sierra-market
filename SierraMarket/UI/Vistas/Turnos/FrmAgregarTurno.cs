@@ -23,12 +23,33 @@ namespace SierraMarket.UI.Vistas.Turnos
         {
             int id;
             string nombres = txtNombres.Text.Trim();
-            TimeOnly turnoInicio = TimeOnly.Parse(TurnoInicio.Valor.ToString());
-            TimeOnly turnoFin = TimeOnly.Parse(TurnoFin.Valor.ToString());
+            string strInicio = txtTurnoInicio.Text.Trim();
+            string strFin = txtTurnoFin.Text.Trim();
 
             if (string.IsNullOrEmpty(nombres))
             {
                 MessageBox.Show("Ingrese un nombre para continuar.", "Nombre requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNombres.Focus();
+                return;
+            }
+
+            if (!TimeOnly.TryParse(strInicio, out TimeOnly turnoInicio))
+            {
+                MessageBox.Show("El formato de la hora de inicio es inválido. Use el formato HH:mm (ej. 08:30).", "Hora inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTurnoInicio.Focus();
+                return;
+            }
+
+            if (!TimeOnly.TryParse(strFin, out TimeOnly turnoFin))
+            {
+                MessageBox.Show("El formato de la hora de fin es inválido. Use el formato HH:mm (ej. 17:00).", "Hora inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTurnoFin.Focus();
+                return;
+            }
+
+            if (turnoInicio == turnoFin)
+            {
+                MessageBox.Show("La hora de inicio y fin del turno no pueden ser iguales.", "Horas iguales", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

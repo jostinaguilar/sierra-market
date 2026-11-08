@@ -1,4 +1,4 @@
-using SierraMarket.UI.Componentes;
+﻿using SierraMarket.UI.Componentes;
 using SierraMarket.UI.Tema;
 using System.Drawing;
 using System.Windows.Forms;
@@ -65,18 +65,6 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F)); //3
             tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F)); //4
             tlpVenta.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); //5
-
-            var pnlSeparador3 = new Panel();
-            pnlSeparador3.Dock = DockStyle.Fill;
-            pnlSeparador3.Margin = new Padding(0);
-            pnlSeparador3.Padding = new Padding(0);
-            pnlSeparador3.BackColor = Color.FromArgb(228, 228, 231);
-
-            var pnlSeparador4 = new Panel();
-            pnlSeparador4.Dock = DockStyle.Fill;
-            pnlSeparador4.Margin = new Padding(0);
-            pnlSeparador4.Padding = new Padding(0);
-            pnlSeparador4.BackColor = Color.FromArgb(228, 228, 231);
 
             var pnlCarrito = new Panel();
             pnlCarrito.Dock = DockStyle.Fill;
@@ -169,9 +157,9 @@ namespace SierraMarket.UI.Vistas.Venta
             pnlCarrito.Controls.Add(tlpCarrito);
 
             tlpVenta.Controls.Add(lblCatalogo, 0, 0);
-            tlpVenta.Controls.Add(pnlSeparador3, 0, 2);
+            tlpVenta.Controls.Add(new SeparadorHorizontal(), 0, 2);
             tlpVenta.Controls.Add(txtBuscarProducto, 0, 3);
-            tlpVenta.Controls.Add(pnlSeparador4, 0, 4);
+            tlpVenta.Controls.Add(new SeparadorHorizontal(), 0, 4);
             tlpVenta.Controls.Add(dgvCatalogo, 0, 5);
 
             tlpContenededor.Controls.Add(tlpVenta, 0, 0);
@@ -186,3 +174,4 @@ namespace SierraMarket.UI.Vistas.Venta
         }
     }
 }
+

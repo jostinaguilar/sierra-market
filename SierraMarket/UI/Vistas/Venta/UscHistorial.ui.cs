@@ -22,12 +22,6 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpHistorial.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));  // 2: Separador
             tlpHistorial.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // 3: Grilla
 
-            var pnlSeparador1 = new Panel();
-            pnlSeparador1.Dock = DockStyle.Fill;
-            pnlSeparador1.Margin = new Padding(0);
-            pnlSeparador1.Padding = new Padding(0);
-            pnlSeparador1.BackColor = Color.FromArgb(228, 228, 231);
-
             var pnlTitulo = new Panel();
             pnlTitulo.Dock = DockStyle.Fill;
             pnlTitulo.Margin = new Padding(20, 0, 20, 0);
@@ -53,15 +47,10 @@ namespace SierraMarket.UI.Vistas.Venta
             dgvHistorial.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Total", DataPropertyName = "Total", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
             EstiloGrid.Aplicar(dgvHistorial);
 
-            dgvHistorial.EnableHeadersVisualStyles = false;
-            dgvHistorial.ColumnHeadersDefaultCellStyle.Padding = new Padding(20, 10, 10, 10);
-            dgvHistorial.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvHistorial.ColumnHeadersHeight = 50;
-
             pnlTitulo.Controls.Add(lblTitulo);
 
             tlpHistorial.Controls.Add(pnlTitulo, 0, 0);
-            tlpHistorial.Controls.Add(pnlSeparador1, 0, 2);
+            tlpHistorial.Controls.Add(new SeparadorHorizontal(), 0, 2);
             tlpHistorial.Controls.Add(dgvHistorial, 0, 3);
 
             this.Controls.Add(tlpHistorial);
