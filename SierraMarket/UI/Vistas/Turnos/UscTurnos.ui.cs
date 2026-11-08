@@ -16,20 +16,33 @@ namespace SierraMarket.UI.Vistas.Turnos
         {
             var tlpTurno = new TableLayoutPanel();
             tlpTurno.Dock = DockStyle.Fill;
-            tlpTurno.RowCount = 5;
+            tlpTurno.RowCount = 6;
             tlpTurno.ColumnCount = 1;
             tlpTurno.Margin = new Padding(0);
-            tlpTurno.Padding = new Padding(20);
+            tlpTurno.Padding = new Padding(0, 20, 0, 20);
 
-            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
-            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // 0: Titulo
+            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); // 1: Espacio
+            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));  // 2: Separador
+            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F)); // 3: Turno activo
+            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));  // 4: Separador
+            tlpTurno.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // 5: Grilla
+
+            var pnlSeparador1 = new Panel();
+            pnlSeparador1.Dock = DockStyle.Fill;
+            pnlSeparador1.Margin = new Padding(0);
+            pnlSeparador1.Padding = new Padding(0);
+            pnlSeparador1.BackColor = Color.FromArgb(228, 228, 231);
+
+            var pnlSeparador2 = new Panel();
+            pnlSeparador2.Dock = DockStyle.Fill;
+            pnlSeparador2.Margin = new Padding(0);
+            pnlSeparador2.Padding = new Padding(0);
+            pnlSeparador2.BackColor = Color.FromArgb(228, 228, 231);
 
             var pnlTitulo = new Panel();
             pnlTitulo.Dock = DockStyle.Fill;
-            pnlTitulo.Margin = new Padding(0);
+            pnlTitulo.Margin = new Padding(20, 0, 20, 0);
 
             var lblTitulo = new Texto.Subtitulo("Gestión de Turnos");
 
@@ -45,7 +58,7 @@ namespace SierraMarket.UI.Vistas.Turnos
 
             var pnlTurnoActivo = new FlowLayoutPanel();
             pnlTurnoActivo.Dock = DockStyle.Fill;
-            pnlTurnoActivo.Margin = new Padding(0);
+            pnlTurnoActivo.Margin = new Padding(20, 0, 20, 0);
             pnlTurnoActivo.FlowDirection = FlowDirection.LeftToRight;
             pnlTurnoActivo.WrapContents = false;
             pnlTurnoActivo.Padding = new Padding(0);
@@ -72,7 +85,7 @@ namespace SierraMarket.UI.Vistas.Turnos
             dgvTrabajadores.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvTrabajadores.RowHeadersVisible = false;
 
-            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "IdTrabajador", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "IdTrabajador", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(20, 0, 20, 0) } });
             dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nombres Completos", DataPropertyName = "Nombres", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
             dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Hora Inicio", DataPropertyName = "HoraInicioTurno", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
             dgvTrabajadores.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Hora Fin", DataPropertyName = "HoraFinTurno", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
@@ -82,9 +95,16 @@ namespace SierraMarket.UI.Vistas.Turnos
             dgvTrabajadores.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             EstiloGrid.Aplicar(dgvTrabajadores);
 
+            dgvTrabajadores.EnableHeadersVisualStyles = false;
+            dgvTrabajadores.ColumnHeadersDefaultCellStyle.Padding = new Padding(20, 10, 10, 10);
+            dgvTrabajadores.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvTrabajadores.ColumnHeadersHeight = 50;
+
             tlpTurno.Controls.Add(pnlTitulo, 0, 0);
-            tlpTurno.Controls.Add(pnlTurnoActivo, 0, 2);
-            tlpTurno.Controls.Add(dgvTrabajadores, 0, 4);
+            tlpTurno.Controls.Add(pnlSeparador1, 0, 2);
+            tlpTurno.Controls.Add(pnlTurnoActivo, 0, 3);
+            tlpTurno.Controls.Add(pnlSeparador2, 0, 4);
+            tlpTurno.Controls.Add(dgvTrabajadores, 0, 5);
 
             this.Controls.Add(tlpTurno);
         }

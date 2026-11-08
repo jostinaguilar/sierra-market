@@ -14,20 +14,33 @@ namespace SierraMarket.UI.Vistas.Inventario
         {
             var tlpInventario = new TableLayoutPanel();
             tlpInventario.Dock = DockStyle.Fill;
-            tlpInventario.RowCount = 5;
+            tlpInventario.RowCount = 6;
             tlpInventario.ColumnCount = 1;
             tlpInventario.Margin = new Padding(0);
-            tlpInventario.Padding = new Padding(20);
+            tlpInventario.Padding = new Padding(0, 20, 0, 20);
 
-            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
-            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // 0: Titulo
+            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); // 1: Espacio
+            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));  // 2: Separador
+            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F)); // 3: Buscador
+            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));  // 4: Separador
+            tlpInventario.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // 5: Grilla
+
+            var pnlSeparador1 = new Panel();
+            pnlSeparador1.Dock = DockStyle.Fill;
+            pnlSeparador1.Margin = new Padding(0);
+            pnlSeparador1.Padding = new Padding(0);
+            pnlSeparador1.BackColor = Color.FromArgb(228, 228, 231);
+
+            var pnlSeparador2 = new Panel();
+            pnlSeparador2.Dock = DockStyle.Fill;
+            pnlSeparador2.Margin = new Padding(0);
+            pnlSeparador2.Padding = new Padding(0);
+            pnlSeparador2.BackColor = Color.FromArgb(228, 228, 231);
 
             var pnlTitulo = new Panel();
             pnlTitulo.Dock = DockStyle.Fill;
-            pnlTitulo.Margin = new Padding(0);
+            pnlTitulo.Margin = new Padding(20, 0, 20, 0);
 
             var lblTitulo = new Texto.Subtitulo("Gestión de Inventario");
 
@@ -43,8 +56,9 @@ namespace SierraMarket.UI.Vistas.Inventario
             {
                 Dock = DockStyle.Fill,
                 PlaceholderText = "Buscar producto...",
-                BorderStyle = BorderStyle.FixedSingle,
-                Font = Fuentes.GeistRegular(10F)
+                BorderStyle = BorderStyle.None,
+                Font = Fuentes.GeistRegular(10F),
+                Margin = new Padding(25, 9, 25, 10)
             };
 
             pnlTitulo.Controls.AddRange(new Control[] { lblTitulo, btnAgregarProducto });
@@ -59,7 +73,7 @@ namespace SierraMarket.UI.Vistas.Inventario
             dgvInventario.RowHeadersVisible = false;
             dgvInventario.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(20, 0, 20, 0) } });
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
             dgvInventario.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "Stock", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
@@ -68,9 +82,16 @@ namespace SierraMarket.UI.Vistas.Inventario
             dgvInventario.CellContentClick += DgvInventario_CellContentClick;
             EstiloGrid.Aplicar(dgvInventario);
 
+            dgvInventario.EnableHeadersVisualStyles = false;
+            dgvInventario.ColumnHeadersDefaultCellStyle.Padding = new Padding(20, 10, 10, 10);
+            dgvInventario.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvInventario.ColumnHeadersHeight = 50;
+
             tlpInventario.Controls.Add(pnlTitulo, 0, 0);
-            tlpInventario.Controls.Add(txtBuscarProducto, 0, 2);
-            tlpInventario.Controls.Add(dgvInventario, 0, 4);
+            tlpInventario.Controls.Add(pnlSeparador1, 0, 2);
+            tlpInventario.Controls.Add(txtBuscarProducto, 0, 3);
+            tlpInventario.Controls.Add(pnlSeparador2, 0, 4);
+            tlpInventario.Controls.Add(dgvInventario, 0, 5);
 
             this.Controls.Add(tlpInventario);
         }
