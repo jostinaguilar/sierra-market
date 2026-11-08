@@ -16,7 +16,6 @@ namespace SierraMarket.UI.Vistas.Venta
 
         public UscVenta(ListaSimple<Producto> listaProductos, ListaCircular<Trabajador> listaTrabajadores, ListaSimple<Modelos.Venta> listaVentas)
         {
-            InitializeComponent();
 
             _listaProductos = listaProductos;
             _listaTrabajadores = listaTrabajadores;

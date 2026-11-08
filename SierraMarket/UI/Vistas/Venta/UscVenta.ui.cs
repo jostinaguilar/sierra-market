@@ -57,12 +57,26 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpVenta.RowCount = 4;
             tlpVenta.ColumnCount = 1;
             tlpVenta.Margin = new Padding(0);
-            tlpVenta.Padding = new Padding(20);
+            tlpVenta.Padding = new Padding(0, 20, 0, 20);
 
-            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 6F));
-            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
-            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); //0
+            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); //1
+            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F)); //2
+            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F)); //3
+            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F)); //4
+            tlpVenta.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); //5
+
+            var pnlSeparador3 = new Panel();
+            pnlSeparador3.Dock = DockStyle.Fill;
+            pnlSeparador3.Margin = new Padding(0);
+            pnlSeparador3.Padding = new Padding(0);
+            pnlSeparador3.BackColor = Color.FromArgb(228, 228, 231);
+
+            var pnlSeparador4 = new Panel();
+            pnlSeparador4.Dock = DockStyle.Fill;
+            pnlSeparador4.Margin = new Padding(0);
+            pnlSeparador4.Padding = new Padding(0);
+            pnlSeparador4.BackColor = Color.FromArgb(228, 228, 231);
 
             var pnlCarrito = new Panel();
             pnlCarrito.Dock = DockStyle.Fill;
@@ -77,13 +91,13 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpCarrito.Margin = new Padding(0);
             tlpCarrito.Padding = new Padding(0);
 
-            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); //0
+            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); //1
+            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); //2
+            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); //3
+            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); //4
+            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); //5
+            tlpCarrito.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F)); //6
 
             var lblCarrito = new Texto.Subtitulo("Carrito de Compras");
             lblCarrito.Dock = DockStyle.Fill;
@@ -98,9 +112,9 @@ namespace SierraMarket.UI.Vistas.Venta
 
             var lblCatalogo = new Texto.Subtitulo("Catálogo de Productos");
             lblCatalogo.Dock = DockStyle.Fill;
-            lblCatalogo.Margin = new Padding(0);
+            lblCatalogo.Margin = new Padding(20, 0, 20, 0);
 
-            var txtBuscarProducto = new TextBox { Dock = DockStyle.Fill, PlaceholderText = "Buscar producto...", BorderStyle = BorderStyle.FixedSingle, Font = Fuentes.GeistRegular(10F) };
+            var txtBuscarProducto = new TextBox { Dock = DockStyle.Fill, PlaceholderText = "Buscar producto...", BorderStyle = BorderStyle.None, Font = Fuentes.GeistRegular(10F), Margin = new Padding(25, 9, 25, 10) };
 
             dgvCatalogo = new DataGridView();
             dgvCatalogo.Dock = DockStyle.Fill;
@@ -111,7 +125,7 @@ namespace SierraMarket.UI.Vistas.Venta
             dgvCatalogo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCatalogo.RowHeadersVisible = false;
 
-            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
+            dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Código", DataPropertyName = "Codigo", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(20, 0, 20, 0) } });
             dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Producto", DataPropertyName = "Descripcion", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
             dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Precio", DataPropertyName = "Precio", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
             dgvCatalogo.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Stock", DataPropertyName = "Stock", AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells });
@@ -119,6 +133,15 @@ namespace SierraMarket.UI.Vistas.Venta
             dgvCatalogo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCatalogo.CellContentClick += DgvCatalogo_CellContentClick;
             EstiloGrid.Aplicar(dgvCatalogo);
+
+            dgvCatalogo.EnableHeadersVisualStyles = false;
+
+            dgvCatalogo.ColumnHeadersDefaultCellStyle.Padding = new Padding(20, 10, 10, 10);
+
+            dgvCatalogo.ColumnHeadersHeightSizeMode =
+                DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+            dgvCatalogo.ColumnHeadersHeight = 50;
 
             dgvCarrito = new DataGridView();
             dgvCarrito.Dock = DockStyle.Fill;
@@ -146,8 +169,10 @@ namespace SierraMarket.UI.Vistas.Venta
             pnlCarrito.Controls.Add(tlpCarrito);
 
             tlpVenta.Controls.Add(lblCatalogo, 0, 0);
-            tlpVenta.Controls.Add(txtBuscarProducto, 0, 2);
-            tlpVenta.Controls.Add(dgvCatalogo, 0, 3);
+            tlpVenta.Controls.Add(pnlSeparador3, 0, 2);
+            tlpVenta.Controls.Add(txtBuscarProducto, 0, 3);
+            tlpVenta.Controls.Add(pnlSeparador4, 0, 4);
+            tlpVenta.Controls.Add(dgvCatalogo, 0, 5);
 
             tlpContenededor.Controls.Add(tlpVenta, 0, 0);
             tlpContenededor.Controls.Add(pnlSeparador2, 1, 0);
