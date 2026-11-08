@@ -24,8 +24,8 @@ namespace SierraMarket.UI
 
         public FrmPrincipal()
         {
-            InitializeComponent();
-
+            this.WindowState = FormWindowState.Maximized;
+            this.MaximizeBox = false;
             ConstruirInterfaz();
 
             CargarTrabajadores();
