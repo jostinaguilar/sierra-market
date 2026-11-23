@@ -4,9 +4,7 @@ using System.Collections.Generic;
 
 namespace SierraMarket.Estructuras.Arboles
 {
-    /// <summary>
-    /// Árbol Binario de Búsqueda (BST) balanceado y canónico.
-    /// </summary>
+    /// Árbol Binario de Búsqueda (BST) balanceado.
     public class ArbolBinario<T> where T : IComparable<T>
     {
         private NodoArbol<T>? raiz;
@@ -19,10 +17,8 @@ namespace SierraMarket.Estructuras.Arboles
             Count = 0;
         }
 
-        /// <summary>
         /// Construye un Árbol Binario de Búsqueda balanceado a partir de una lista ordenada
-        /// aplicando divide y vencerás: punto medio como raíz y ramas simétricas O(log n).
-        /// </summary>
+        /// punto medio como raíz y ramas simétricas O(log n).
         public void CargarBalanceado(List<T> elementos)
         {
             raiz = null;
@@ -37,7 +33,7 @@ namespace SierraMarket.Estructuras.Arboles
             Count = elementos.Count;
         }
 
-        private NodoArbol<T>? ConstruirBalanceadoRecursivo(List<T> elementos, int inicio, int fin)
+        private NodoArbol<T> ConstruirBalanceadoRecursivo(List<T> elementos, int inicio, int fin)
         {
             if (inicio > fin)
             {
@@ -53,9 +49,7 @@ namespace SierraMarket.Estructuras.Arboles
             return nuevoNodo;
         }
 
-        /// <summary>
-        /// Inserción canónica de un elemento en el BST en O(log n).
-        /// </summary>
+        /// Inserción de un elemento en el BST en O(log n).
         public bool Insertar(T dato)
         {
             bool insertado = false;
@@ -93,12 +87,10 @@ namespace SierraMarket.Estructuras.Arboles
             return nodo;
         }
 
-        /// <summary>
         /// Búsqueda binaria en O(log n). Retorna el nodo encontrado o null.
-        /// </summary>
-        public NodoArbol<T>? Buscar(T dato)
+        public NodoArbol<T> Buscar(T dato)
         {
-            NodoArbol<T>? actual = raiz;
+            NodoArbol<T> actual = raiz;
 
             while (actual != null)
             {
@@ -125,9 +117,7 @@ namespace SierraMarket.Estructuras.Arboles
             return Buscar(dato) != null;
         }
 
-        /// <summary>
-        /// Eliminación canónica en un BST con reemplazo por sucesor in-orden.
-        /// </summary>
+        /// Eliminación en un BST con reemplazo por sucesor in-orden.
         public bool Eliminar(T dato)
         {
             bool eliminado = false;
@@ -139,7 +129,7 @@ namespace SierraMarket.Estructuras.Arboles
             return eliminado;
         }
 
-        private NodoArbol<T>? EliminarRecursivo(NodoArbol<T>? nodo, T dato, ref bool eliminado)
+        private NodoArbol<T> EliminarRecursivo(NodoArbol<T> nodo, T dato, ref bool eliminado)
         {
             if (nodo == null) return null;
 
@@ -187,9 +177,7 @@ namespace SierraMarket.Estructuras.Arboles
             return node;
         }
 
-        /// <summary>
-        /// Recorrido In-Orden canónico (Izquierda, Raíz, Derecha).
-        /// </summary>
+        /// Recorrido In-Orden (Izquierda, Raíz, Derecha).
         public List<T> InOrden()
         {
             var resultado = new List<T>();
@@ -197,7 +185,7 @@ namespace SierraMarket.Estructuras.Arboles
             return resultado;
         }
 
-        private void InOrdenRecursivo(NodoArbol<T>? nodo, List<T> resultado)
+        private void InOrdenRecursivo(NodoArbol<T> nodo, List<T> resultado)
         {
             if (nodo == null) return;
             InOrdenRecursivo(nodo.Izquierda, resultado);
