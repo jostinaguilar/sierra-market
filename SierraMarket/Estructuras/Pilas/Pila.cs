@@ -1,14 +1,16 @@
-﻿using System;
+﻿using SierraMarket.Estructuras.Nodos;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using SierraMarket.Estructuras.Nodos;
 
 namespace SierraMarket.Estructuras.Pilas
 {
+    /// <summary>
+    /// Estructura de Datos Lineal LIFO (Last In, First Out).
+    /// </summary>
     public class Pila<T> : IEnumerable<T>
     {
-        private NodoSimple<T> tope;
+        private NodoSimple<T>? tope;
         private int count;
 
         public int Count => count;
@@ -22,158 +24,33 @@ namespace SierraMarket.Estructuras.Pilas
 
         public void Push(T dato)
         {
-            NodoSimple<T> nuevoNodo = new NodoSimple<T>(dato);
-
-            nuevoNodo.Siguiente = tope;
-            tope = nuevoNodo;
+            NodoSimple<T> nuevo = new NodoSimple<T>(dato);
+            nuevo.Siguiente = tope;
+            tope = nuevo;
             count++;
         }
 
         public T Pop()
         {
-            if (EstaVacia)
+            if (EstaVacia || tope == null)
             {
                 throw new InvalidOperationException("La pila está vacía.");
             }
 
             T dato = tope.Dato;
             tope = tope.Siguiente;
-
             count--;
             return dato;
         }
 
         public T Peek()
         {
-            if (EstaVacia)
+            if (EstaVacia || tope == null)
             {
                 throw new InvalidOperationException("La pila está vacía.");
             }
 
             return tope.Dato;
-        }
-
-        public bool TryPop(out T resultado)
-        {
-            if (EstaVacia)
-            {
-                resultado = default(T);
-                return false;
-            }
-
-            resultado = Pop();
-            return true;
-        }
-
-        public bool TryPeek(out T resultado)
-        {
-            if (EstaVacia)
-            {
-                resultado = default(T);
-                return false;
-            }
-
-            resultado = Peek();
-            return true;
-        }
-
-        public bool Contains(T dato)
-        {
-            NodoSimple<T> actual = tope;
-
-            while (actual != null)
-            {
-                if (Equals(actual.Dato, dato))
-                {
-                    return true;
-                }
-
-                actual = actual.Siguiente;
-            }
-
-            return false;
-        }
-
-        public int Search(T dato)
-        {
-            NodoSimple<T> actual = tope;
-            int posicion = 1;
-
-            while (actual != null)
-            {
-                if (Equals(actual.Dato, dato))
-                {
-                    return posicion;
-                }
-
-                actual = actual.Siguiente;
-                posicion++;
-            }
-            return -1; // No encontrado
-        }
-
-        public bool SearchAndPop(T dato)
-        {
-            int posicion = Search(dato);
-
-            if (posicion == -1)
-            {
-                return false; // No encontrado
-            }
-
-            for (int i = 0; i < posicion; i++)
-            {
-                Pop();
-            }
-
-            return true;
-        }
-
-        public int ContarOcurrencias(T dato)
-        {
-            int total = 0;
-            NodoSimple<T> actual = tope;
-
-            while (actual != null)
-            {
-                if (Equals(actual.Dato, dato))
-                {
-                    total++;
-                }
-
-                actual = actual.Siguiente;
-            }
-
-            return total;
-        }
-
-        public Pila<T> Clonar()
-        {
-            Pila<T> clon = new Pila<T>();
-            T[] elementos = AArray();
-
-            for (int i = elementos.Length - 1; i >= 0; i--)
-            {
-                clon.Push(elementos[i]);
-            }
-
-            return clon;
-        }
-
-        private T[] AArray()
-        {
-            T[] array = new T[count];
-
-            NodoSimple<T> actual = tope;
-            int index = 0;
-
-            while (actual != null)
-            {
-                array[index++] = actual.Dato;
-                actual = actual.Siguiente;
-            }
-
-            return array;
         }
 
         public void Limpiar()
@@ -184,7 +61,7 @@ namespace SierraMarket.Estructuras.Pilas
 
         public IEnumerator<T> GetEnumerator()
         {
-            NodoSimple<T> actual = tope;
+            NodoSimple<T>? actual = tope;
 
             while (actual != null)
             {

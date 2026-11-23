@@ -61,18 +61,8 @@ namespace SierraMarket.Estructuras.Grafos
             return null;
         }
 
-        public Vertice<T>? BuscarVerticePorNombre(string nombre)
-        {
-            foreach (var v in Vertices)
-            {
-                if (string.Equals(v.Nombre, nombre, StringComparison.OrdinalIgnoreCase)) return v;
-            }
-            return null;
-        }
-
         /// <summary>
         /// Algoritmo de Dijkstra para calcular la ruta más corta entre dos vértices.
-        /// Retorna la distancia mínima y la lista ordenada de vértices del recorrido.
         /// </summary>
         public ResultadoRuta<T> Dijkstra(int idOrigen, int idDestino)
         {
@@ -95,7 +85,7 @@ namespace SierraMarket.Estructuras.Grafos
 
             // Tablas de distancias, predecesores y visitados
             Dictionary<int, double> distancias = new Dictionary<int, double>();
-            Dictionary<int, Vertice<T>?> predecesores = new Dictionary<int, Vertice<T>?> ();
+            Dictionary<int, Vertice<T>?> predecesores = new Dictionary<int, Vertice<T>?>();
             HashSet<int> visitados = new HashSet<int>();
 
             foreach (var v in Vertices)
@@ -108,7 +98,6 @@ namespace SierraMarket.Estructuras.Grafos
 
             while (visitados.Count < Vertices.Count)
             {
-                // Seleccionar el vértice no visitado con menor distancia acumulada
                 Vertice<T>? actual = null;
                 double menorDistancia = double.PositiveInfinity;
 
@@ -121,7 +110,6 @@ namespace SierraMarket.Estructuras.Grafos
                     }
                 }
 
-                // Si ya no hay nodos alcanzables o llegamos al destino
                 if (actual == null || menorDistancia == double.PositiveInfinity)
                 {
                     break;
@@ -134,7 +122,7 @@ namespace SierraMarket.Estructuras.Grafos
 
                 visitados.Add(actual.Id);
 
-                // Relajación de aristas adyacentes
+                // Relajación de aristas
                 foreach (var arista in actual.Adyacentes)
                 {
                     var vecino = arista.Destino;
@@ -150,7 +138,7 @@ namespace SierraMarket.Estructuras.Grafos
                 }
             }
 
-            // Reconstruir el camino desde el destino hacia el origen usando predecesores
+            // Reconstrucción del camino óptimo
             if (distancias[destino.Id] != double.PositiveInfinity)
             {
                 resultado.ExisteRuta = true;
