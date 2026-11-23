@@ -55,7 +55,7 @@ namespace SierraMarket.UI
         {
             if (_uscInventario == null)
             {
-                _uscInventario = new UscInventario(_listaProductos);
+                _uscInventario = new UscInventario(_listaProductos, _arbolProductos);
             }
 
             CargarVista(_uscInventario);

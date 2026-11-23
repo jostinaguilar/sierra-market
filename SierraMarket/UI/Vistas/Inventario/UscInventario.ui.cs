@@ -52,7 +52,7 @@ namespace SierraMarket.UI.Vistas.Inventario
             txtBuscarProducto = new TextBox
             {
                 Dock = DockStyle.Fill,
-                PlaceholderText = "Buscar producto...",
+                PlaceholderText = "Buscar por código (Árbol BST) o descripción...",
                 BorderStyle = BorderStyle.None,
                 Font = Fuentes.GeistRegular(10F),
                 Margin = new Padding(25, 9, 25, 10)

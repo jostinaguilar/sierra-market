@@ -1,6 +1,8 @@
+using SierraMarket.Estructuras.Arboles;
 using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SierraMarket.UI.Vistas.Inventario
@@ -8,13 +10,16 @@ namespace SierraMarket.UI.Vistas.Inventario
     public partial class UscInventario : UserControl
     {
         private ListaSimple<Producto> _listaProductos;
+        private ArbolBinario<Producto> _arbolProductos;
         private Producto? _productoEnEdicion = null;
 
-        public UscInventario(ListaSimple<Producto> listaProductos)
+        public UscInventario(ListaSimple<Producto> listaProductos, ArbolBinario<Producto>? arbolProductos = null)
         {
             InitializeComponent();
 
             _listaProductos = listaProductos;
+            _arbolProductos = arbolProductos ?? new ArbolBinario<Producto>();
+
             ConstruirInterfaz();
             ActualizarInventario();
         }
@@ -124,19 +129,43 @@ namespace SierraMarket.UI.Vistas.Inventario
 
         private void TxtBuscarProducto_TextChanged(object? sender, EventArgs e)
         {
-            string filtro = txtBuscarProducto.Text.Trim().ToLower();
+            string filtro = txtBuscarProducto.Text.Trim();
             var todos = _listaProductos.ObtenerTodos();
 
             if (string.IsNullOrEmpty(filtro))
             {
                 dgvInventario.DataSource = null;
                 dgvInventario.DataSource = todos;
+                return;
+            }
+
+            // Si es un número, buscamos exactamente por Código en el Árbol Binario de Búsqueda (O(log n))
+            if (int.TryParse(filtro, out int codigoBuscado))
+            {
+                var dummy = new Producto(codigoBuscado, "", 0, 0);
+                var nodo = _arbolProductos.Buscar(dummy);
+
+                dgvInventario.DataSource = null;
+                if (nodo != null)
+                {
+                    dgvInventario.DataSource = new List<Producto> { nodo.Dato };
+                }
+                else
+                {
+                    dgvInventario.DataSource = new List<Producto>();
+                }
             }
             else
             {
-                var filtrados = todos.FindAll(p =>
-                    p.Codigo.ToString().Contains(filtro) ||
-                    p.Descripcion.ToLower().Contains(filtro));
+                // Si es texto, se busca por coincidencia en la descripción
+                var filtrados = new List<Producto>();
+                foreach (var p in todos)
+                {
+                    if (p.Descripcion.Contains(filtro, StringComparison.OrdinalIgnoreCase))
+                    {
+                        filtrados.Add(p);
+                    }
+                }
 
                 dgvInventario.DataSource = null;
                 dgvInventario.DataSource = filtrados;
@@ -145,6 +174,8 @@ namespace SierraMarket.UI.Vistas.Inventario
 
         public void ActualizarInventario()
         {
+            // Sincronizar el árbol de búsqueda balanceado con la lista actualizada
+            _arbolProductos.CargarBalanceado(_listaProductos.ObtenerTodos());
             TxtBuscarProducto_TextChanged(null, EventArgs.Empty);
         }
     }
