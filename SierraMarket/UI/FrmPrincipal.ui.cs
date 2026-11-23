@@ -125,18 +125,21 @@ namespace SierraMarket.UI
             var btnInventario = new Boton.Transparente("Inventario");
             var btnTurnos = new Boton.Transparente("Turnos");
             var btnHistorial = new Boton.Transparente("Historial");
+            var btnDelivery = new Boton.Transparente("Delivery");
 
             btnVentas.Height = 40;
             btnInventario.Height = 40;
             btnTurnos.Height = 40;
             btnHistorial.Height = 40;
+            btnDelivery.Height = 40;
 
             btnVentas.Click += BtnVentas_Click;
             btnInventario.Click += BtnInventario_Click;
             btnTurnos.Click += BtnTurnos_Click;
             btnHistorial.Click += BtnHistorial_Click;
+            btnDelivery.Click += BtnDelivery_Click;
 
-            flpMenu.Controls.AddRange(new Control[] { btnVentas, btnInventario, btnTurnos, btnHistorial });
+            flpMenu.Controls.AddRange(new Control[] { btnVentas, btnInventario, btnTurnos, btnHistorial, btnDelivery });
 
             pnlMenu.Controls.Add(flpMenu);
         }

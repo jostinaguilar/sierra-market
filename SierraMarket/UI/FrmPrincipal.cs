@@ -1,7 +1,9 @@
 ﻿using SierraMarket.Estructuras.Arboles;
 using SierraMarket.Estructuras.Colas;
+using SierraMarket.Estructuras.Grafos;
 using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
+using SierraMarket.UI.Vistas.Delivery;
 using SierraMarket.UI.Vistas.Inventario;
 using SierraMarket.UI.Vistas.Turnos;
 using SierraMarket.UI.Vistas.Venta;
@@ -27,8 +29,8 @@ namespace SierraMarket.UI
         private UscInventario _uscInventario;
         private UscVenta _uscVenta;
         private UscTurnos _uscTurnos;
-
         private UscHistorial _uscHistorial;
+        private UscDelivery _uscDelivery;
 
         public FrmPrincipal()
         {
@@ -84,6 +86,16 @@ namespace SierraMarket.UI
 
             _uscHistorial.CargarVentas();
             CargarVista(_uscHistorial);
+        }
+
+        private void BtnDelivery_Click(object sender, EventArgs e)
+        {
+            if (_uscDelivery == null)
+            {
+                _uscDelivery = new UscDelivery();
+            }
+
+            CargarVista(_uscDelivery);
         }
 
         private void CargarVista(UserControl vista)
