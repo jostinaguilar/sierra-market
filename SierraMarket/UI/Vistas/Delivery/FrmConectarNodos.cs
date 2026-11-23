@@ -55,7 +55,7 @@ namespace SierraMarket.UI.Vistas.Delivery
             var lblTitulo = new Texto.Subtitulo("Trazar Tramo Vial (Grafo No Dirigido)");
             lblTitulo.Dock = DockStyle.Fill;
 
-            var lblPuntos = new Texto.Etiqueta($"🔗 Conectar calle: {nodo1.Nombre} ↔ {nodo2.Nombre}");
+            var lblPuntos = new Texto.Etiqueta($"Conectar calle: {nodo1.Nombre} ↔ {nodo2.Nombre}");
             lblPuntos.Dock = DockStyle.Fill;
             lblPuntos.ForeColor = Color.FromArgb(37, 99, 235); // Azul
             lblPuntos.Font = Fuentes.Geist(9.5F, Peso.Semibold);

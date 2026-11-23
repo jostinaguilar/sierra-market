@@ -35,36 +35,36 @@ namespace SierraMarket.UI.Vistas.Delivery
             int cy = 260;
 
             // Nodo central: SierraMarket
-            var v0 = grafo.AgregarVertice(0, "SierraMarket (Central)", new PuntoEntrega(0, "SierraMarket Central", "Central"), cx, cy);
+            var v0 = grafo.AgregarVertice(0, "SierraMarket", new PuntoEntrega(0, "SierraMarket"), cx, cy);
 
             // Nodos periféricos distribuidos radialmente
-            var v1 = grafo.AgregarVertice(1, "Plaza Central", new PuntoEntrega(1, "Plaza Central", "Comercial"), cx - 180, cy - 130);
-            var v2 = grafo.AgregarVertice(2, "Mercado Modelo", new PuntoEntrega(2, "Mercado Modelo", "Comercial"), cx - 180, cy + 130);
-            var v3 = grafo.AgregarVertice(3, "Av. El Sol", new PuntoEntrega(3, "Av. El Sol", "Comercial"), cx, cy - 170);
-            var v4 = grafo.AgregarVertice(4, "Urb. Santa Rosa", new PuntoEntrega(4, "Urb. Santa Rosa", "Residencial"), cx, cy + 170);
-            var v5 = grafo.AgregarVertice(5, "Hospital Regional", new PuntoEntrega(5, "Hospital Regional", "Salud"), cx + 180, cy - 130);
-            var v6 = grafo.AgregarVertice(6, "Urb. Los Pinos", new PuntoEntrega(6, "Urb. Los Pinos", "Residencial"), cx + 220, cy);
-            var v7 = grafo.AgregarVertice(7, "Condominios del Sur", new PuntoEntrega(7, "Condominios del Sur", "Residencial"), cx + 180, cy + 130);
-            var v8 = grafo.AgregarVertice(8, "Residencial Norte", new PuntoEntrega(8, "Residencial Norte", "Residencial"), cx + 120, cy - 200);
+            var v1 = grafo.AgregarVertice(1, "FAST + MEDIC", new PuntoEntrega(1, "FAST + MEDIC"), cx - 180, cy - 130);
+            var v2 = grafo.AgregarVertice(2, "Consorcio Simon's Lab", new PuntoEntrega(2, "Consorcio Simon's Lab"), cx - 180, cy + 130);
+            var v3 = grafo.AgregarVertice(3, "IINCAP Jorge Basadre", new PuntoEntrega(3, "IINCAP Jorge Basadre"), cx, cy - 170);
+            var v4 = grafo.AgregarVertice(4, "Parroquia San Roque", new PuntoEntrega(4, "Parroquia San Roque"), cx, cy + 170);
+            var v5 = grafo.AgregarVertice(5, "Urban shop", new PuntoEntrega(5, "Urban shop"), cx + 180, cy - 130);
+            var v6 = grafo.AgregarVertice(6, "AUTONORT CAJAMARCA SAC", new PuntoEntrega(6, "AUTONORT CAJAMARCA SAC"), cx + 220, cy);
+            var v7 = grafo.AgregarVertice(7, "LAS PATITAS", new PuntoEntrega(7, "LAS PATITAS"), cx + 180, cy + 130);
+            var v8 = grafo.AgregarVertice(8, "Distribuidoramiguelito", new PuntoEntrega(8, "Distribuidoramiguelito"), cx + 120, cy - 200);
 
             // Aristas radiales desde el centro
-            grafo.AgregarArista(0, 1, 2.2); // Central <-> Plaza
-            grafo.AgregarArista(0, 2, 2.0); // Central <-> Mercado
-            grafo.AgregarArista(0, 3, 1.8); // Central <-> Av. El Sol
-            grafo.AgregarArista(0, 4, 1.9); // Central <-> Santa Rosa
-            grafo.AgregarArista(0, 5, 2.3); // Central <-> Hospital
-            grafo.AgregarArista(0, 6, 2.4); // Central <-> Los Pinos
-            grafo.AgregarArista(0, 7, 2.6); // Central <-> Condominios
+            grafo.AgregarArista(0, 1, 2.2); // Central <-> FAST + MEDIC
+            grafo.AgregarArista(0, 2, 2.0); // Central <-> Consorcio Simon's Lab
+            grafo.AgregarArista(0, 3, 1.8); // Central <-> IINCAP Jorge Basadre
+            grafo.AgregarArista(0, 4, 1.9); // Central <-> Parroquia San Roque
+            grafo.AgregarArista(0, 5, 2.3); // Central <-> Urban shop
+            grafo.AgregarArista(0, 6, 2.4); // Central <-> AUTONORT CAJAMARCA SAC
+            grafo.AgregarArista(0, 7, 2.6); // Central <-> LAS PATITAS
 
             // Aristas perimetrales / anillos de conexión
-            grafo.AgregarArista(1, 3, 2.1); // Plaza <-> Av. El Sol
-            grafo.AgregarArista(1, 2, 2.7); // Plaza <-> Mercado
-            grafo.AgregarArista(2, 4, 2.5); // Mercado <-> Santa Rosa
-            grafo.AgregarArista(3, 8, 1.7); // Av. El Sol <-> Residencial Norte
-            grafo.AgregarArista(8, 5, 2.0); // Residencial Norte <-> Hospital
-            grafo.AgregarArista(5, 6, 1.8); // Hospital <-> Los Pinos
-            grafo.AgregarArista(6, 7, 2.2); // Los Pinos <-> Condominios
-            grafo.AgregarArista(4, 7, 2.4); // Santa Rosa <-> Condominios
+            grafo.AgregarArista(1, 3, 2.1); // FAST + MEDIC <-> IINCAP Jorge Basadre
+            grafo.AgregarArista(1, 2, 2.7); // FAST + MEDIC <-> Consorcio Simon's Lab
+            grafo.AgregarArista(2, 4, 2.5); // Consorcio Simon's Lab <-> Parroquia San Roque
+            grafo.AgregarArista(3, 8, 1.7); // IINCAP Jorge Basadre <-> Distribuidoramiguelito
+            grafo.AgregarArista(8, 5, 2.0); // Distribuidoramiguelito <-> Urban shop
+            grafo.AgregarArista(5, 6, 1.8); // Urban shop <-> AUTONORT CAJAMARCA SAC
+            grafo.AgregarArista(6, 7, 2.2); // AUTONORT CAJAMARCA SAC <-> LAS PATITAS
+            grafo.AgregarArista(4, 7, 2.4); // Parroquia San Roque <-> LAS PATITAS
 
             return grafo;
         }
@@ -126,7 +126,7 @@ namespace SierraMarket.UI.Vistas.Delivery
                 {
                     cmbOrigen.SelectedItem = verticeClickeado;
                     _primerNodoAConectar = null;
-                    lblGuiaMapa.Text = $"📍 Origen fijado: \"{verticeClickeado.Nombre}\". Haz clic en 2 puntos para conectarlos.";
+                    lblGuiaMapa.Text = $"Origen fijado: \"{verticeClickeado.Nombre}\". Haz clic en 2 puntos para conectarlos.";
                     lblGuiaMapa.ForeColor = Color.FromArgb(71, 85, 105);
                     pnlMapa.Invalidate();
                 }
@@ -143,7 +143,7 @@ namespace SierraMarket.UI.Vistas.Delivery
                     // Primer clic: seleccionar el primer punto
                     _primerNodoAConectar = verticeClickeado;
                     cmbOrigen.SelectedItem = verticeClickeado;
-                    lblGuiaMapa.Text = $"🔗 Punto 1: \"{_primerNodoAConectar.Nombre}\" seleccionado. Haz clic en el SEGUNDO punto para conectarlos.";
+                    lblGuiaMapa.Text = $"Punto 1: \"{_primerNodoAConectar.Nombre}\" seleccionado. Haz clic en el SEGUNDO punto para conectarlos.";
                     lblGuiaMapa.ForeColor = Color.FromArgb(234, 88, 12); // Naranja
                     pnlMapa.Invalidate();
                 }
@@ -153,7 +153,7 @@ namespace SierraMarket.UI.Vistas.Delivery
                     if (_primerNodoAConectar.Id == verticeClickeado.Id)
                     {
                         _primerNodoAConectar = null;
-                        lblGuiaMapa.Text = "💡 Selección cancelada. Haz clic en 2 puntos para conectar o en espacio vacío para crear dirección.";
+                        lblGuiaMapa.Text = "Selección cancelada. Haz clic en 2 puntos para conectar o en espacio vacío para crear dirección.";
                         lblGuiaMapa.ForeColor = Color.FromArgb(71, 85, 105);
                         pnlMapa.Invalidate();
                         return;
@@ -169,12 +169,12 @@ namespace SierraMarket.UI.Vistas.Delivery
                     if (frmDistancia.ShowDialog() == DialogResult.OK)
                     {
                         _grafoUrbano.AgregarArista(nodo1.Id, nodo2.Id, frmDistancia.DistanciaKm, bidireccional: true);
-                        lblGuiaMapa.Text = $"✅ Calle conectada: \"{nodo1.Nombre}\" ↔ \"{nodo2.Nombre}\" a {frmDistancia.DistanciaKm:0.0} km.";
+                        lblGuiaMapa.Text = $"Calle conectada: \"{nodo1.Nombre}\" ↔ \"{nodo2.Nombre}\" a {frmDistancia.DistanciaKm:0.0} km.";
                         lblGuiaMapa.ForeColor = Color.FromArgb(22, 101, 52); // Verde
                     }
                     else
                     {
-                        lblGuiaMapa.Text = "💡 Conexión cancelada. Haz clic en 2 puntos para conectar o en espacio vacío para crear dirección.";
+                        lblGuiaMapa.Text = "Conexión cancelada. Haz clic en 2 puntos para conectar o en espacio vacío para crear dirección.";
                         lblGuiaMapa.ForeColor = Color.FromArgb(71, 85, 105);
                     }
 
@@ -193,7 +193,7 @@ namespace SierraMarket.UI.Vistas.Delivery
                         if (v.Id >= nuevoId) nuevoId = v.Id + 1;
                     }
 
-                    var nuevoPunto = new PuntoEntrega(nuevoId, frmNuevo.NombrePunto, "Residencial");
+                    var nuevoPunto = new PuntoEntrega(nuevoId, frmNuevo.NombrePunto);
                     var nuevoVertice = _grafoUrbano.AgregarVertice(nuevoId, frmNuevo.NombrePunto, nuevoPunto, e.X, e.Y);
 
                     CargarPuntosEnSelectores();
@@ -209,12 +209,12 @@ namespace SierraMarket.UI.Vistas.Delivery
                         if (frmDistancia.ShowDialog() == DialogResult.OK)
                         {
                             _grafoUrbano.AgregarArista(nodo1.Id, nuevoVertice.Id, frmDistancia.DistanciaKm, bidireccional: true);
-                            lblGuiaMapa.Text = $"✅ Dirección \"{nuevoVertice.Nombre}\" creada y conectada a \"{nodo1.Nombre}\" ({frmDistancia.DistanciaKm:0.0} km).";
+                            lblGuiaMapa.Text = $"Dirección \"{nuevoVertice.Nombre}\" creada y conectada a \"{nodo1.Nombre}\" ({frmDistancia.DistanciaKm:0.0} km).";
                             lblGuiaMapa.ForeColor = Color.FromArgb(22, 101, 52);
                         }
                         else
                         {
-                            lblGuiaMapa.Text = $"✅ Dirección \"{nuevoVertice.Nombre}\" creada. Haz clic en otro punto para conectarla.";
+                            lblGuiaMapa.Text = $"Dirección \"{nuevoVertice.Nombre}\" creada. Haz clic en otro punto para conectarla.";
                             lblGuiaMapa.ForeColor = Color.FromArgb(71, 85, 105);
                         }
                     }
@@ -222,7 +222,7 @@ namespace SierraMarket.UI.Vistas.Delivery
                     {
                         // Dejar el nuevo punto como primer nodo para que el siguiente clic a un vecino lo conecte de inmediato
                         _primerNodoAConectar = nuevoVertice;
-                        lblGuiaMapa.Text = $"📍 Dirección \"{nuevoVertice.Nombre}\" creada. Haz clic en otro punto para conectarla.";
+                        lblGuiaMapa.Text = $"Dirección \"{nuevoVertice.Nombre}\" creada. Haz clic en otro punto para conectarla.";
                         lblGuiaMapa.ForeColor = Color.FromArgb(234, 88, 12);
                     }
 
@@ -258,9 +258,9 @@ namespace SierraMarket.UI.Vistas.Delivery
                 double minutos = Math.Round((_distanciaRutaActual / 20.0) * 60 + 3);
                 decimal costo = 4.00m + (decimal)_distanciaRutaActual * 1.20m;
 
-                lblDistancia.Text = $"📏 Distancia Mínima: {_distanciaRutaActual:0.0} km";
-                lblTiempo.Text = $"⏱️ Tiempo Estimado: ~{minutos:0} minutos";
-                lblCostoEnvio.Text = $"💰 Costo de Envío: S/ {costo:0.00}";
+                lblDistancia.Text = $"Distancia Mínima: {_distanciaRutaActual:0.0} km";
+                lblTiempo.Text = $"Tiempo Estimado: ~{minutos:0} minutos";
+                lblCostoEnvio.Text = $"Costo de Envío: S/ {costo:0.00}";
 
                 var nombres = new List<string>();
                 foreach (var paso in _rutaActual)
@@ -283,11 +283,11 @@ namespace SierraMarket.UI.Vistas.Delivery
             _rutaActual = null;
             _distanciaRutaActual = 0;
             _primerNodoAConectar = null;
-            lblGuiaMapa.Text = "💡 Clic en 2 puntos = Conectar calle (km) | Clic en espacio vacío = Crear dirección | Clic derecho = Fijar Origen";
+            lblGuiaMapa.Text = "Clic en 2 puntos = Conectar calle (km) | Clic en espacio vacío = Crear dirección | Clic derecho = Fijar Origen";
             lblGuiaMapa.ForeColor = Color.FromArgb(71, 85, 105);
-            lblDistancia.Text = "📏 Distancia Mínima: --";
-            lblTiempo.Text = "⏱️ Tiempo Estimado: --";
-            lblCostoEnvio.Text = "💰 Costo de Envío: --";
+            lblDistancia.Text = "Distancia Mínima: --";
+            lblTiempo.Text = "Tiempo Estimado: --";
+            lblCostoEnvio.Text = "Costo de Envío: --";
             lblRutaRecorrido.Text = "Seleccione un origen y destino para trazar la ruta en el mapa.";
             btnDespachar.Enabled = false;
             pnlMapa.Invalidate();
@@ -353,7 +353,7 @@ namespace SierraMarket.UI.Vistas.Delivery
 
             foreach (var v in _grafoUrbano.Vertices)
             {
-                int radio = (v.Dato.Tipo == "Central") ? 20 : 16;
+                int radio = (v.Dato.Nombre == "Sierra Market") ? 20 : 16;
                 var rect = new Rectangle(v.X - radio, v.Y - radio, radio * 2, radio * 2);
 
                 bool esOrigen = cmbOrigen.SelectedItem == v;
@@ -378,7 +378,7 @@ namespace SierraMarket.UI.Vistas.Delivery
                 {
                     colorRelleno = Color.FromArgb(34, 197, 94); // Verde
                 }
-                else if (v.Dato.Tipo == "Central")
+                else if (v.Dato.Nombre == "Sierra Market")
                 {
                     colorRelleno = Colores.Primario;
                 }
@@ -395,7 +395,7 @@ namespace SierraMarket.UI.Vistas.Delivery
 
                 // Texto del ID en el centro
                 string textoId = v.Id.ToString();
-                Color colorTextoId = (esOrigen || esDestino || enRuta || seleccionadoConexion || v.Dato.Tipo == "Central") ? Color.White : Color.FromArgb(51, 65, 85);
+                Color colorTextoId = (esOrigen || esDestino || enRuta || seleccionadoConexion || v.Dato.Nombre == "Sierra Market") ? Color.White : Color.FromArgb(51, 65, 85);
                 using (var brushId = new SolidBrush(colorTextoId))
                 {
                     var tam = g.MeasureString(textoId, fontEtiqueta);

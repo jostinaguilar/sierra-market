@@ -50,7 +50,7 @@ namespace SierraMarket.UI.Vistas.Delivery
             lblTitulo.Dock = DockStyle.Fill;
             lblTitulo.Margin = new Padding(20, 0, 20, 0);
 
-            lblGuiaMapa = new Texto.Etiqueta("💡 Clic en 2 puntos = Conectar calle (km) | Clic en espacio vacío = Crear dirección | Clic derecho = Fijar Origen");
+            lblGuiaMapa = new Texto.Etiqueta("Clic en 2 puntos = Conectar calle (km) | Clic en espacio vacío = Crear dirección | Clic derecho = Fijar Origen");
             lblGuiaMapa.Dock = DockStyle.Fill;
             lblGuiaMapa.ForeColor = Color.FromArgb(71, 85, 105);
             lblGuiaMapa.Margin = new Padding(20, 0, 20, 0);
@@ -152,12 +152,12 @@ namespace SierraMarket.UI.Vistas.Delivery
             tlpInfo.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tlpInfo.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
-            lblDistancia = new Texto.Etiqueta("📏 Distancia Mínima: --");
-            lblTiempo = new Texto.Etiqueta("⏱️ Tiempo Estimado: --");
-            lblCostoEnvio = new Texto.Etiqueta("💰 Costo de Envío: --");
+            lblDistancia = new Texto.Etiqueta("Distancia Mínima: --");
+            lblTiempo = new Texto.Etiqueta("Tiempo Estimado: --");
+            lblCostoEnvio = new Texto.Etiqueta("Costo de Envío: --");
             lblCostoEnvio.ForeColor = Color.FromArgb(22, 101, 52); // Verde oscuro
 
-            var lblRutaTitulo = new Texto.Etiqueta("📍 Trayecto sugerido (Dijkstra):");
+            var lblRutaTitulo = new Texto.Etiqueta("Trayecto sugerido (Dijkstra):");
             lblRutaRecorrido = new Texto.Etiqueta("Seleccione un origen y destino para trazar la ruta en el mapa.");
             lblRutaRecorrido.Dock = DockStyle.Fill;
             lblRutaRecorrido.ForeColor = Color.FromArgb(71, 85, 105);
@@ -191,7 +191,6 @@ namespace SierraMarket.UI.Vistas.Delivery
             tlpDerecho.Controls.Add(lblDestino, 0, 5);
             tlpDerecho.Controls.Add(cmbDestino, 0, 6);
             tlpDerecho.Controls.Add(tlpBotones, 0, 8);
-            tlpDerecho.Controls.Add(new SeparadorHorizontal(), 0, 9);
             tlpDerecho.Controls.Add(pnlResultados, 0, 10);
             tlpDerecho.Controls.Add(btnDespachar, 0, 11);
 

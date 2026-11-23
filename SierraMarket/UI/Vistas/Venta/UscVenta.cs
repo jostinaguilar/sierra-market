@@ -67,7 +67,7 @@ namespace SierraMarket.UI.Vistas.Venta
                 {
                     if (nodoExistente.Dato.Cantidad + 1 > producto.Stock)
                     {
-                        MessageBox.Show("No puedes agregar m�s unidades que el stock disponible.", "L�mite de Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("No puedes agregar más unidades que el stock disponible.", "Límite de Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -288,7 +288,7 @@ namespace SierraMarket.UI.Vistas.Venta
                 ActualizarCarrito();
                 ActualizarColaVisual();
 
-                MessageBox.Show($"Cliente encolado como Ticket #P-{ventaPendiente.IdTicket} en espera de confirmación.\nCaja disponible para atender al siguiente.", "Venta en Espera", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Cliente encolado como Ticket #{ventaPendiente.IdTicket} en espera de confirmación.\nCaja disponible para atender al siguiente.", "Venta en Espera", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

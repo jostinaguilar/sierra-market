@@ -52,7 +52,7 @@ namespace SierraMarket.UI.Vistas.Delivery
             var lblTitulo = new Texto.Subtitulo("Nueva Dirección de Entrega");
             lblTitulo.Dock = DockStyle.Fill;
 
-            var lblCoord = new Texto.Etiqueta($"📍 Ubicación en mapa: Coordenadas ({x}, {y})");
+            var lblCoord = new Texto.Etiqueta($"Ubicación en mapa: Coordenadas ({x}, {y})");
             lblCoord.Dock = DockStyle.Fill;
             lblCoord.ForeColor = Color.FromArgb(100, 116, 139);
 

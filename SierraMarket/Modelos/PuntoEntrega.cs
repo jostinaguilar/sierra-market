@@ -4,13 +4,11 @@ namespace SierraMarket.Modelos
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public string Tipo { get; set; } // "Central", "Residencial", "Comercial", "Salud"
 
-        public PuntoEntrega(int id, string nombre, string tipo)
+        public PuntoEntrega(int id, string nombre)
         {
             Id = id;
             Nombre = nombre;
-            Tipo = tipo;
         }
 
         public override string ToString()
