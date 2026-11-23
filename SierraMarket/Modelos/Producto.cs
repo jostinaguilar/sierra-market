@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SierraMarket.Modelos
 {
-    public class Producto
+    public class Producto : IComparable<Producto>
     {
         public int Codigo { get; set; }
         public string Descripcion { get; set; }
@@ -17,6 +17,12 @@ namespace SierraMarket.Modelos
             Descripcion = descripcion;
             Precio = precio;
             Stock = stock;
+        }
+
+        public int CompareTo(Producto? other)
+        {
+            if (other == null) return 1;
+            return Codigo.CompareTo(other.Codigo);
         }
 
         public bool Vender(int cantidad)

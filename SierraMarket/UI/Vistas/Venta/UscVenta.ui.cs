@@ -11,6 +11,12 @@ namespace SierraMarket.UI.Vistas.Venta
         private DataGridView dgvCarrito;
         private Texto.Subtitulo lblTotal;
         private Boton.Primario btnCobrar;
+        private TextBox txtBuscarProducto;
+
+        // Componentes para la Cola de Espera (FIFO)
+        private ListBox lstColaPendientes;
+        private Texto.Subtitulo lblColaTitulo;
+        private Boton.Primario btnDesencolar;
 
         private void ConstruirInterfaz()
         {
@@ -28,11 +34,13 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpContenededor.Dock = DockStyle.Fill;
             tlpContenededor.Margin = new Padding(0);
             tlpContenededor.Padding = new Padding(0);
-            tlpContenededor.ColumnCount = 3;
+            tlpContenededor.ColumnCount = 5;
             tlpContenededor.RowCount = 1;
-            tlpContenededor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
-            tlpContenededor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 1F));
-            tlpContenededor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
+            tlpContenededor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Catálogo
+            tlpContenededor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 1F));  // Separador 1
+            tlpContenededor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F)); // Carrito
+            tlpContenededor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 1F));  // Separador 2
+            tlpContenededor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F)); // Cola de espera
 
             var pnlSeparador1 = new Panel();
             pnlSeparador1.Dock = DockStyle.Fill;
@@ -45,6 +53,12 @@ namespace SierraMarket.UI.Vistas.Venta
             pnlSeparador2.Margin = new Padding(0);
             pnlSeparador2.Padding = new Padding(0);
             pnlSeparador2.BackColor = Color.FromArgb(228, 228, 231);
+
+            var pnlSeparador3 = new Panel();
+            pnlSeparador3.Dock = DockStyle.Fill;
+            pnlSeparador3.Margin = new Padding(0);
+            pnlSeparador3.Padding = new Padding(0);
+            pnlSeparador3.BackColor = Color.FromArgb(228, 228, 231);
 
             var pnlFooter = new Panel();
             pnlFooter.Dock = DockStyle.Fill;
@@ -98,11 +112,51 @@ namespace SierraMarket.UI.Vistas.Venta
             btnCobrar = new Boton.Primario("Cobrar");
             btnCobrar.Click += BtnCobrar_Click;
 
+            // Panel y controles para la Cola de Espera (FIFO)
+            var pnlCola = new Panel();
+            pnlCola.Dock = DockStyle.Fill;
+            pnlCola.Margin = new Padding(0);
+            pnlCola.Padding = new Padding(15);
+            pnlCola.BackColor = Color.FromArgb(250, 250, 250);
+
+            var tlpCola = new TableLayoutPanel();
+            tlpCola.Dock = DockStyle.Fill;
+            tlpCola.RowCount = 4;
+            tlpCola.ColumnCount = 1;
+            tlpCola.Margin = new Padding(0);
+            tlpCola.Padding = new Padding(0);
+
+            tlpCola.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // 0: Titulo
+            tlpCola.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); // 1: Espacio
+            tlpCola.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));  // 2: Lista
+            tlpCola.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));  // 3: Boton Atender
+
+            lblColaTitulo = new Texto.Subtitulo("En Espera (0)");
+            lblColaTitulo.Dock = DockStyle.Fill;
+            lblColaTitulo.Margin = new Padding(0);
+
+            lstColaPendientes = new ListBox();
+            lstColaPendientes.Dock = DockStyle.Fill;
+            lstColaPendientes.Margin = new Padding(0);
+            lstColaPendientes.Font = Fuentes.GeistRegular(8.5F);
+            lstColaPendientes.BorderStyle = BorderStyle.FixedSingle;
+
+            btnDesencolar = new Boton.Primario("Atender Siguiente");
+            btnDesencolar.Dock = DockStyle.Fill;
+            btnDesencolar.Enabled = false;
+            btnDesencolar.Click += BtnDesencolar_Click;
+
+            tlpCola.Controls.Add(lblColaTitulo, 0, 0);
+            tlpCola.Controls.Add(lstColaPendientes, 0, 2);
+            tlpCola.Controls.Add(btnDesencolar, 0, 3);
+            pnlCola.Controls.Add(tlpCola);
+
             var lblCatalogo = new Texto.Subtitulo("Catálogo de Productos");
             lblCatalogo.Dock = DockStyle.Fill;
             lblCatalogo.Margin = new Padding(20, 0, 20, 0);
 
-            var txtBuscarProducto = new TextBox { Dock = DockStyle.Fill, PlaceholderText = "Buscar producto...", BorderStyle = BorderStyle.None, Font = Fuentes.GeistRegular(10F), Margin = new Padding(25, 9, 25, 10) };
+            txtBuscarProducto = new TextBox { Dock = DockStyle.Fill, PlaceholderText = "Buscar por código (Árbol BST) o nombre...", BorderStyle = BorderStyle.None, Font = Fuentes.GeistRegular(10F), Margin = new Padding(25, 9, 25, 10) };
+            txtBuscarProducto.TextChanged += TxtBuscarProducto_TextChanged;
 
             dgvCatalogo = new DataGridView();
             dgvCatalogo.Dock = DockStyle.Fill;
@@ -165,6 +219,8 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpContenededor.Controls.Add(tlpVenta, 0, 0);
             tlpContenededor.Controls.Add(pnlSeparador2, 1, 0);
             tlpContenededor.Controls.Add(pnlCarrito, 2, 0);
+            tlpContenededor.Controls.Add(pnlSeparador3, 3, 0);
+            tlpContenededor.Controls.Add(pnlCola, 4, 0);
 
             tlpPrincipal.Controls.Add(tlpContenededor, 0, 0);
             tlpPrincipal.Controls.Add(pnlSeparador1, 0, 1);

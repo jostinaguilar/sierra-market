@@ -1,7 +1,10 @@
+using SierraMarket.Estructuras.Arboles;
+using SierraMarket.Estructuras.Colas;
 using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Tema;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,17 +16,33 @@ namespace SierraMarket.UI.Vistas.Venta
         private ListaCircular<Trabajador> _listaTrabajadores;
         private ListaSimple<Modelos.Venta> _listaVentas;
         private ListaDoble<DetalleVenta> _carrito = new ListaDoble<DetalleVenta>();
+        private Cola<VentaPendiente> _colaPendientes;
+        private ArbolBinario<Producto> _arbolProductos;
+        private int _contadorTicket = 1;
 
-        public UscVenta(ListaSimple<Producto> listaProductos, ListaCircular<Trabajador> listaTrabajadores, ListaSimple<Modelos.Venta> listaVentas)
+        public UscVenta(
+            ListaSimple<Producto> listaProductos,
+            ListaCircular<Trabajador> listaTrabajadores,
+            ListaSimple<Modelos.Venta> listaVentas,
+            Cola<VentaPendiente>? colaPendientes = null,
+            ArbolBinario<Producto>? arbolProductos = null)
         {
-
             _listaProductos = listaProductos;
             _listaTrabajadores = listaTrabajadores;
             _listaVentas = listaVentas;
+            _colaPendientes = colaPendientes ?? new Cola<VentaPendiente>();
+            _arbolProductos = arbolProductos ?? new ArbolBinario<Producto>();
+
+            // Si el árbol aún no tiene elementos, cargarlo balanceado desde la lista
+            if (_arbolProductos.Count == 0 && !_listaProductos.EstaVacia)
+            {
+                _arbolProductos.CargarBalanceado(_listaProductos.ObtenerTodos());
+            }
 
             ConstruirInterfaz();
             CargarCatalogo();
             ActualizarCarrito();
+            ActualizarColaVisual();
         }
 
         private void DgvCatalogo_CellContentClick(object? sender, DataGridViewCellEventArgs e)
@@ -130,8 +149,55 @@ namespace SierraMarket.UI.Vistas.Venta
         {
             var productos = _listaProductos.ObtenerTodos();
 
+            // Sincronizamos el Árbol Binario de Búsqueda balanceado
+            _arbolProductos.CargarBalanceado(productos);
+
             dgvCatalogo.DataSource = null;
             dgvCatalogo.DataSource = productos;
+        }
+
+        private void TxtBuscarProducto_TextChanged(object? sender, EventArgs e)
+        {
+            string texto = txtBuscarProducto.Text.Trim();
+
+            if (string.IsNullOrEmpty(texto))
+            {
+                dgvCatalogo.DataSource = null;
+                dgvCatalogo.DataSource = _listaProductos.ObtenerTodos();
+                return;
+            }
+
+            // Si el texto es numérico, realizamos la búsqueda en el Árbol Binario de Búsqueda (BST) en O(log n)
+            if (int.TryParse(texto, out int codigoBuscado))
+            {
+                var dummy = new Producto(codigoBuscado, "", 0, 0);
+                var nodoEncontrado = _arbolProductos.Buscar(dummy);
+
+                if (nodoEncontrado != null)
+                {
+                    dgvCatalogo.DataSource = null;
+                    dgvCatalogo.DataSource = new List<Producto> { nodoEncontrado.Dato };
+                }
+                else
+                {
+                    dgvCatalogo.DataSource = null;
+                    dgvCatalogo.DataSource = new List<Producto>();
+                }
+            }
+            else
+            {
+                // Búsqueda por texto / descripción parcial
+                var filtrados = new List<Producto>();
+                foreach (var p in _listaProductos.ObtenerTodos())
+                {
+                    if (p.Descripcion.Contains(texto, StringComparison.OrdinalIgnoreCase))
+                    {
+                        filtrados.Add(p);
+                    }
+                }
+                dgvCatalogo.DataSource = null;
+                dgvCatalogo.DataSource = filtrados;
+            }
         }
 
         private void ActualizarCarrito()
@@ -162,8 +228,9 @@ namespace SierraMarket.UI.Vistas.Venta
             }
 
             var frmPagos = new FrmPagos(total);
+            var resultado = frmPagos.ShowDialog();
 
-            if (frmPagos.ShowDialog() == DialogResult.OK)
+            if (resultado == DialogResult.OK)
             {
                 foreach (var detalle in _carrito.ObtenerTodos())
                 {
@@ -191,7 +258,142 @@ namespace SierraMarket.UI.Vistas.Venta
                 _carrito.Limpiar();
                 ActualizarCarrito();
                 CargarCatalogo();
-                MessageBox.Show($"�Venta #{idVenta} registrada en el historial!", "�xito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"¡Venta #{idVenta} registrada en el historial!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (resultado == DialogResult.Retry && frmPagos.EncolarSolicitado)
+            {
+                // El cliente tuvo problemas con su pago digital:
+                // Se encola la venta (FIFO) con su carrito y pagos parciales ya registrados en la Pila.
+                Trabajador cajero = _listaTrabajadores.ObtenerActual();
+
+                var ventaPendiente = new VentaPendiente(
+                    _contadorTicket++,
+                    DateTime.Now,
+                    cajero,
+                    _carrito,
+                    frmPagos.PilaPagos,
+                    total
+                );
+
+                _colaPendientes.Encolar(ventaPendiente);
+
+                // Caja disponible de inmediato con un nuevo carrito para atender al siguiente cliente
+                _carrito = new ListaDoble<DetalleVenta>();
+                ActualizarCarrito();
+                ActualizarColaVisual();
+
+                MessageBox.Show($"Cliente encolado como Ticket #P-{ventaPendiente.IdTicket} en espera de confirmación.\nCaja disponible para atender al siguiente.", "Venta en Espera", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void ActualizarColaVisual()
+        {
+            lstColaPendientes.Items.Clear();
+            var listaPendientes = _colaPendientes.Listar();
+
+            foreach (var pendiente in listaPendientes)
+            {
+                lstColaPendientes.Items.Add(pendiente.ToString());
+            }
+
+            lblColaTitulo.Text = $"En Espera ({_colaPendientes.Longitud})";
+            btnDesencolar.Enabled = !_colaPendientes.EstaVacia;
+        }
+
+        private void BtnDesencolar_Click(object? sender, EventArgs e)
+        {
+            if (_colaPendientes.EstaVacia)
+            {
+                MessageBox.Show("No hay clientes en la cola de espera.", "Cola vacía", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Si hay productos en el carrito actual, advertir al cajero para no perderlos
+            if (!_carrito.EstaVacia)
+            {
+                var resp = MessageBox.Show(
+                    "El carrito actual tiene productos agregados.\n¿Desea descartar la venta actual para atender al cliente en espera?",
+                    "Carrito en uso",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (resp != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            // Desencolar: Primero en entrar, primero en salir (FIFO)
+            var ventaPendiente = _colaPendientes.Desencolar();
+            ActualizarColaVisual();
+
+            // Restauramos el carrito de esa venta
+            _carrito = ventaPendiente.Carrito;
+            ActualizarCarrito();
+
+            // Abrimos directamente el popup de pagos con los pagos parciales recuperados
+            var frmPagos = new FrmPagos(ventaPendiente.Total, ventaPendiente.PagosParciales);
+            var resultado = frmPagos.ShowDialog();
+
+            if (resultado == DialogResult.OK)
+            {
+                foreach (var detalle in _carrito.ObtenerTodos())
+                {
+                    detalle.Producto.Stock -= detalle.Cantidad;
+                }
+
+                int idVenta = _listaVentas.Count + 1;
+                Trabajador cajero = _listaTrabajadores.ObtenerActual();
+
+                var nuevaVenta = new Modelos.Venta(
+                    idVenta,
+                    DateTime.Now,
+                    cajero,
+                    _carrito,
+                    frmPagos.PilaPagos,
+                    ventaPendiente.Total,
+                    ventaPendiente.Total,
+                    0,
+                    "Completada"
+                );
+
+                _listaVentas.InsertarAlInicio(nuevaVenta);
+
+                _carrito.Limpiar();
+                ActualizarCarrito();
+                CargarCatalogo();
+                MessageBox.Show($"¡Venta #{idVenta} (Ticket #P-{ventaPendiente.IdTicket}) completada con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (resultado == DialogResult.Retry && frmPagos.EncolarSolicitado)
+            {
+                // Si vuelve a fallar la conexión, vuelve a ingresar a la cola al final
+                _colaPendientes.Encolar(ventaPendiente);
+                _carrito = new ListaDoble<DetalleVenta>();
+                ActualizarCarrito();
+                ActualizarColaVisual();
+                MessageBox.Show($"El Ticket #P-{ventaPendiente.IdTicket} volvió a ponerse en cola de espera.", "Venta Re-encolada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // Si el cajero canceló la ventana, damos opción de reencolar o cancelar
+                var decision = MessageBox.Show(
+                    "¿Desea devolver esta venta a la cola de espera?\n(Si presiona 'No', la venta se cancelará y el carrito se limpiará)",
+                    "Venta no finalizada",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (decision == DialogResult.Yes)
+                {
+                    _colaPendientes.Encolar(ventaPendiente);
+                    _carrito = new ListaDoble<DetalleVenta>();
+                    ActualizarCarrito();
+                    ActualizarColaVisual();
+                }
+                else
+                {
+                    _carrito = new ListaDoble<DetalleVenta>();
+                    ActualizarCarrito();
+                }
             }
         }
     }

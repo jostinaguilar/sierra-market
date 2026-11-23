@@ -7,14 +7,16 @@ namespace SierraMarket.UI.Vistas.Venta
 {
     public partial class FrmPagos : Form
     {
-        private Pila<Pago> _pilaPagos = new Pila<Pago>();
+        private Pila<Pago> _pilaPagos;
         private decimal _total;
 
         public Pila<Pago> PilaPagos => _pilaPagos;
+        public bool EncolarSolicitado { get; private set; } = false;
 
-        public FrmPagos(decimal total)
+        public FrmPagos(decimal total, Pila<Pago>? pagosExistentes = null)
         {
             _total = total;
+            _pilaPagos = pagosExistentes ?? new Pila<Pago>();
 
             ConfigurarVentana();
             CrearFormulario();
@@ -90,6 +92,35 @@ namespace SierraMarket.UI.Vistas.Venta
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        public void BtnEncolar_Click(object sender, EventArgs e)
+        {
+            // Validamos que se quiera encolar porque hay saldo pendiente
+            decimal totalAbonado = 0;
+            foreach (var pago in _pilaPagos)
+            {
+                totalAbonado += pago.Monto;
+            }
+
+            if (totalAbonado >= _total)
+            {
+                MessageBox.Show("La venta ya está totalmente pagada. Puede presionar 'Guardar'.", "Pago completo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var confirmacion = MessageBox.Show(
+                "¿Desea poner esta venta en la Cola de Espera (ej. reintento de billetera digital)?\nEl cliente se encolará y la caja quedará libre para el siguiente.",
+                "Poner en Espera",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmacion == DialogResult.Yes)
+            {
+                EncolarSolicitado = true;
+                this.DialogResult = DialogResult.Retry; // Indicador de que va a la cola
+                this.Close();
+            }
         }
     }
 }

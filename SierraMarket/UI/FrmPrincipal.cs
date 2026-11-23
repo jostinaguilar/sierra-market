@@ -1,4 +1,6 @@
-﻿using SierraMarket.Estructuras.Listas;
+﻿using SierraMarket.Estructuras.Arboles;
+using SierraMarket.Estructuras.Colas;
+using SierraMarket.Estructuras.Listas;
 using SierraMarket.Modelos;
 using SierraMarket.UI.Vistas.Inventario;
 using SierraMarket.UI.Vistas.Turnos;
@@ -16,6 +18,12 @@ namespace SierraMarket.UI
 
         private ListaSimple<Venta> _listaVentas = new ListaSimple<Venta>();
 
+        // Árbol Binario de Búsqueda para búsqueda rápida de productos por código (O(log n))
+        private ArbolBinario<Producto> _arbolProductos = new ArbolBinario<Producto>();
+
+        // Cola de ventas en espera (FIFO): clientes con problemas de conexión en billeteras digitales
+        private Cola<VentaPendiente> _colaPendientes = new Cola<VentaPendiente>();
+
         private UscInventario _uscInventario;
         private UscVenta _uscVenta;
         private UscTurnos _uscTurnos;
@@ -29,7 +37,7 @@ namespace SierraMarket.UI
 
             CargarTrabajadores();
             CargarProductos();
-            _uscVenta = new UscVenta(_listaProductos, _listaTrabajadores, _listaVentas);
+            _uscVenta = new UscVenta(_listaProductos, _listaTrabajadores, _listaVentas, _colaPendientes, _arbolProductos);
             CargarVista(_uscVenta);
         }
 
@@ -37,7 +45,7 @@ namespace SierraMarket.UI
         {
             if (_uscVenta == null)
             {
-                _uscVenta = new UscVenta(_listaProductos, _listaTrabajadores, _listaVentas);
+                _uscVenta = new UscVenta(_listaProductos, _listaTrabajadores, _listaVentas, _colaPendientes, _arbolProductos);
             }
 
             CargarVista(_uscVenta);
@@ -116,6 +124,10 @@ namespace SierraMarket.UI
             _listaProductos.Agregar(producto8);
             _listaProductos.Agregar(producto9);
             _listaProductos.Agregar(producto10);
+
+            // Cargar productos en el Árbol Binario de Búsqueda de forma balanceada (Divide y Vencerás)
+            var listaOrdenada = _listaProductos.ObtenerTodos();
+            _arbolProductos.CargarBalanceado(listaOrdenada);
         }
     }
 }

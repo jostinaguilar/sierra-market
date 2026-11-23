@@ -12,6 +12,7 @@ namespace SierraMarket.UI.Vistas.Venta
         private ComboBox cmbFormaPago;
         private Boton.Primario btnGuardar;
         private Boton.Secundario btnCancelar;
+        private Boton.Secundario btnEncolar;
 
         private Boton.Secundario btnPop;
         private Boton.Primario btnPush;
@@ -107,13 +108,19 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpBotones.Dock = DockStyle.Fill;
             tlpBotones.RowCount = 1;
             tlpBotones.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpBotones.ColumnCount = 3;
-            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
-            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlpBotones.ColumnCount = 5;
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10F));
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10F));
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.34F));
 
             btnCancelar = new Boton.Secundario("Cancelar");
             btnCancelar.Dock = DockStyle.Fill;
+
+            btnEncolar = new Boton.Secundario("En Espera");
+            btnEncolar.Dock = DockStyle.Fill;
+            btnEncolar.Click += BtnEncolar_Click;
 
             btnGuardar = new Boton.Primario("Guardar");
             btnGuardar.Dock = DockStyle.Fill;
@@ -134,7 +141,8 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpBotonesPila.Controls.Add(btnPush, 2, 0);
 
             tlpBotones.Controls.Add(btnCancelar, 0, 0);
-            tlpBotones.Controls.Add(btnGuardar, 2, 0);
+            tlpBotones.Controls.Add(btnEncolar, 2, 0);
+            tlpBotones.Controls.Add(btnGuardar, 4, 0);
 
             tlpFormulario.Controls.Add(lblTitulo, 0, 0);
             tlpFormulario.Controls.Add(lblTotalPagar, 0, 2);
@@ -157,7 +165,7 @@ namespace SierraMarket.UI.Vistas.Venta
 
             int altoFinal = (int)altoTotalFilas + tlpFormulario.Padding.Vertical;
 
-            this.ClientSize = new Size(400, altoFinal);
+            this.ClientSize = new Size(450, altoFinal);
             this.AcceptButton = btnGuardar;
             this.CancelButton = btnCancelar;
 

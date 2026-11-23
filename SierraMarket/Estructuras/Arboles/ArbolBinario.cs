@@ -17,6 +17,66 @@ namespace SierraMarket.Estructuras.Arboles
             Count = 0;
         }
 
+        /// <summary>
+        /// Construye un Árbol Binario de Búsqueda balanceado a partir de una lista ordenada
+        /// aplicando la estrategia divide y vencerás: tomando el elemento medio como raíz
+        /// y repartiendo recursivamente mitades a izquierda y derecha para garantizar altura O(log n).
+        /// </summary>
+        public void CargarBalanceado(List<T> elementos)
+        {
+            raiz = null;
+            Count = 0;
+
+            if (elementos == null || elementos.Count == 0)
+            {
+                return;
+            }
+
+            raiz = ConstruirBalanceadoRecursivo(elementos, 0, elementos.Count - 1);
+            Count = elementos.Count;
+        }
+
+        private NodoArbol<T> ConstruirBalanceadoRecursivo(List<T> elementos, int inicio, int fin)
+        {
+            if (inicio > fin)
+            {
+                return null;
+            }
+
+            int medio = inicio + (fin - inicio) / 2;
+            NodoArbol<T> nuevoNodo = new NodoArbol<T>(elementos[medio]);
+
+            nuevoNodo.Izquierda = ConstruirBalanceadoRecursivo(elementos, inicio, medio - 1);
+            nuevoNodo.Derecha = ConstruirBalanceadoRecursivo(elementos, medio + 1, fin);
+
+            return nuevoNodo;
+        }
+
+        /// <summary>
+        /// Realiza el recorrido In-Orden (Izquierda - Raíz - Derecha),
+        /// obteniendo todos los elementos ordenados ascendentemente.
+        /// </summary>
+        public List<T> InOrden()
+        {
+            List<T> resultado = new List<T>();
+            InOrdenRecursivo(raiz, resultado);
+            return resultado;
+        }
+
+        private void InOrdenRecursivo(NodoArbol<T> nodo, List<T> resultado)
+        {
+            if (nodo == null) return;
+            InOrdenRecursivo(nodo.Izquierda, resultado);
+            resultado.Add(nodo.Dato);
+            InOrdenRecursivo(nodo.Derecha, resultado);
+        }
+
+        public void Limpiar()
+        {
+            raiz = null;
+            Count = 0;
+        }
+
         private NodoArbol<T> InsertarRecursivo(NodoArbol<T> nodo, T dato, ref bool insertado)
         {
             // caso base: si el nodo es null, se crea un nuevo nodo con el dato y se retorna
