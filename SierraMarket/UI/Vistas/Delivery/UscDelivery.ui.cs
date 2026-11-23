@@ -19,6 +19,7 @@ namespace SierraMarket.UI.Vistas.Delivery
         private Texto.Etiqueta lblCostoEnvio;
         private Texto.Etiqueta lblRutaRecorrido;
         private Boton.Primario btnDespachar;
+        private Texto.Etiqueta lblGuiaMapa;
 
         private void ConstruirInterfaz()
         {
@@ -37,28 +38,35 @@ namespace SierraMarket.UI.Vistas.Delivery
             tlpIzquierdo.Dock = DockStyle.Fill;
             tlpIzquierdo.Margin = new Padding(0);
             tlpIzquierdo.Padding = new Padding(0, 20, 0, 20);
-            tlpIzquierdo.RowCount = 4;
+            tlpIzquierdo.RowCount = 5;
             tlpIzquierdo.ColumnCount = 1;
-            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // Titulo
-            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); // Espacio
-            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));  // Separador
-            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // Canvas Mapa
+            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // 0: Titulo
+            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Absolute, 22F)); // 1: Guia interactiva
+            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); // 2: Espacio
+            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Absolute, 1F));  // 3: Separador
+            tlpIzquierdo.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // 4: Canvas Mapa
 
             var lblTitulo = new Texto.Subtitulo("Rutas de Delivery | Red Urbana (Grafo y Dijkstra)");
             lblTitulo.Dock = DockStyle.Fill;
             lblTitulo.Margin = new Padding(20, 0, 20, 0);
 
+            lblGuiaMapa = new Texto.Etiqueta("💡 Clic en 2 puntos = Conectar calle (km) | Clic en espacio vacío = Crear dirección | Clic derecho = Fijar Origen");
+            lblGuiaMapa.Dock = DockStyle.Fill;
+            lblGuiaMapa.ForeColor = Color.FromArgb(71, 85, 105);
+            lblGuiaMapa.Margin = new Padding(20, 0, 20, 0);
+
             pnlMapa = new Panel();
             pnlMapa.Dock = DockStyle.Fill;
-            pnlMapa.Margin = new Padding(20, 15, 20, 0);
+            pnlMapa.Margin = new Padding(20, 10, 20, 0);
             pnlMapa.BackColor = Color.FromArgb(250, 250, 252);
             pnlMapa.BorderStyle = BorderStyle.FixedSingle;
             pnlMapa.Paint += PnlMapa_Paint;
             pnlMapa.MouseClick += PnlMapa_MouseClick;
 
             tlpIzquierdo.Controls.Add(lblTitulo, 0, 0);
-            tlpIzquierdo.Controls.Add(new SeparadorHorizontal(), 0, 2);
-            tlpIzquierdo.Controls.Add(pnlMapa, 0, 3);
+            tlpIzquierdo.Controls.Add(lblGuiaMapa, 0, 1);
+            tlpIzquierdo.Controls.Add(new SeparadorHorizontal(), 0, 3);
+            tlpIzquierdo.Controls.Add(pnlMapa, 0, 4);
 
             // Separador central
             var pnlSeparador = new Panel();
@@ -76,7 +84,7 @@ namespace SierraMarket.UI.Vistas.Delivery
             var tlpDerecho = new TableLayoutPanel();
             tlpDerecho.Dock = DockStyle.Fill;
             tlpDerecho.ColumnCount = 1;
-            tlpDerecho.RowCount = 15;
+            tlpDerecho.RowCount = 12;
             tlpDerecho.Margin = new Padding(0);
             tlpDerecho.Padding = new Padding(0);
 
@@ -103,15 +111,17 @@ namespace SierraMarket.UI.Vistas.Delivery
             cmbDestino = new ComboBox { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList, Font = Fuentes.GeistRegular(9.5F) };
 
             var tlpBotones = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 3, RowCount = 1, Margin = new Padding(0) };
-            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
             tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 8F));
-            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
+            tlpBotones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tlpBotones.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
             btnCalcularRuta = new Boton.Primario("Calcular Ruta");
             btnCalcularRuta.Dock = DockStyle.Fill;
             btnCalcularRuta.AutoSize = false;
             btnCalcularRuta.Padding = new Padding(0);
             btnCalcularRuta.TextAlign = ContentAlignment.MiddleCenter;
+            btnCalcularRuta.Font = Fuentes.Geist(9.5F, Peso.Bold);
             btnCalcularRuta.Click += BtnCalcularRuta_Click;
 
             btnLimpiarRuta = new Boton.Secundario("Limpiar");
@@ -119,6 +129,7 @@ namespace SierraMarket.UI.Vistas.Delivery
             btnLimpiarRuta.AutoSize = false;
             btnLimpiarRuta.Padding = new Padding(0);
             btnLimpiarRuta.TextAlign = ContentAlignment.MiddleCenter;
+            btnLimpiarRuta.Font = Fuentes.Geist(9.5F, Peso.Bold);
             btnLimpiarRuta.Click += BtnLimpiarRuta_Click;
 
             tlpBotones.Controls.Add(btnCalcularRuta, 0, 0);
@@ -163,7 +174,15 @@ namespace SierraMarket.UI.Vistas.Delivery
             btnDespachar.AutoSize = false;
             btnDespachar.Padding = new Padding(0);
             btnDespachar.TextAlign = ContentAlignment.MiddleCenter;
+            btnDespachar.Font = Fuentes.Geist(9.5F, Peso.Bold);
             btnDespachar.Enabled = false;
+            btnDespachar.BackColor = Color.FromArgb(220, 220, 225);
+            btnDespachar.ForeColor = Color.FromArgb(140, 140, 145);
+            btnDespachar.EnabledChanged += (s, e) =>
+            {
+                btnDespachar.BackColor = btnDespachar.Enabled ? Colores.Primario : Color.FromArgb(220, 220, 225);
+                btnDespachar.ForeColor = btnDespachar.Enabled ? Color.White : Color.FromArgb(140, 140, 145);
+            };
             btnDespachar.Click += BtnDespachar_Click;
 
             tlpDerecho.Controls.Add(lblControl, 0, 0);
@@ -172,6 +191,7 @@ namespace SierraMarket.UI.Vistas.Delivery
             tlpDerecho.Controls.Add(lblDestino, 0, 5);
             tlpDerecho.Controls.Add(cmbDestino, 0, 6);
             tlpDerecho.Controls.Add(tlpBotones, 0, 8);
+            tlpDerecho.Controls.Add(new SeparadorHorizontal(), 0, 9);
             tlpDerecho.Controls.Add(pnlResultados, 0, 10);
             tlpDerecho.Controls.Add(btnDespachar, 0, 11);
 

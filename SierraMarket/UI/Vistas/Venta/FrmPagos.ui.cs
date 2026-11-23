@@ -117,13 +117,25 @@ namespace SierraMarket.UI.Vistas.Venta
 
             btnCancelar = new Boton.Secundario("Cancelar");
             btnCancelar.Dock = DockStyle.Fill;
+            btnCancelar.AutoSize = false;
+            btnCancelar.Padding = new Padding(0);
+            btnCancelar.TextAlign = ContentAlignment.MiddleCenter;
+            btnCancelar.Font = Fuentes.Geist(9.5F, Peso.Bold);
 
             btnEncolar = new Boton.Secundario("En Espera");
             btnEncolar.Dock = DockStyle.Fill;
+            btnEncolar.AutoSize = false;
+            btnEncolar.Padding = new Padding(0);
+            btnEncolar.TextAlign = ContentAlignment.MiddleCenter;
+            btnEncolar.Font = Fuentes.Geist(9.5F, Peso.Bold);
             btnEncolar.Click += BtnEncolar_Click;
 
             btnGuardar = new Boton.Primario("Guardar");
             btnGuardar.Dock = DockStyle.Fill;
+            btnGuardar.AutoSize = false;
+            btnGuardar.Padding = new Padding(0);
+            btnGuardar.TextAlign = ContentAlignment.MiddleCenter;
+            btnGuardar.Font = Fuentes.Geist(9.5F, Peso.Bold);
             btnGuardar.Click += BtnGuardar_Click;
 
             btnPop = new Boton.Secundario("Deshacer");
@@ -165,7 +177,7 @@ namespace SierraMarket.UI.Vistas.Venta
 
             int altoFinal = (int)altoTotalFilas + tlpFormulario.Padding.Vertical;
 
-            this.ClientSize = new Size(450, altoFinal);
+            this.ClientSize = new Size(470, altoFinal);
             this.AcceptButton = btnGuardar;
             this.CancelButton = btnCancelar;
 

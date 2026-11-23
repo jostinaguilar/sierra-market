@@ -124,7 +124,7 @@ namespace SierraMarket.UI.Vistas.Venta
             tlpCola.RowCount = 4;
             tlpCola.ColumnCount = 1;
             tlpCola.Margin = new Padding(0);
-            tlpCola.Padding = new Padding(0);
+            tlpCola.Padding = new Padding(5);
 
             tlpCola.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // 0: Titulo
             tlpCola.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F)); // 1: Espacio
