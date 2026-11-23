@@ -19,10 +19,10 @@ namespace SierraMarket.Modelos
             Stock = stock;
         }
 
-        public int CompareTo(Producto? other)
+        public int CompareTo(Producto? otro)
         {
-            if (other == null) return 1;
-            return Codigo.CompareTo(other.Codigo);
+            if (otro == null) return 1;
+            return Codigo.CompareTo(otro.Codigo);
         }
 
         public bool Vender(int cantidad)

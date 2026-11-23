@@ -24,6 +24,16 @@ namespace SierraMarket.UI.Vistas.Turnos
         {
             if (e.RowIndex >= 0 && dgvTrabajadores.Columns[e.ColumnIndex].Name == "btnEliminar")
             {
+                if (_listaTrabajadores.Count <= 1)
+                {
+                    MessageBox.Show(
+                        "No es posible eliminar el último turno.\nEl sistema requiere como mínimo un trabajador activo para operar la caja y registrar ventas.",
+                        "Operación no permitida",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
                 var trabajador = dgvTrabajadores.Rows[e.RowIndex].DataBoundItem as Trabajador;
 
                 if (DialogResult.Yes == MessageBox.Show("¿Está seguro de que desea eliminar el turno de " + trabajador?.Nombres + "?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))

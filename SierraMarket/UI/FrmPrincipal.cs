@@ -70,7 +70,7 @@ namespace SierraMarket.UI
                 _uscTurnos = new UscTurnos(_listaTrabajadores);
                 _uscTurnos.OnTrabajadorCambiado += (trabajador) =>
                 {
-                    lblNombreUsuario.Text = trabajador.Nombres;
+                    lblNombreUsuario.Text = trabajador?.Nombres ?? "Sin cajero";
                 };
             }
 
@@ -116,26 +116,63 @@ namespace SierraMarket.UI
 
         private void CargarProductos()
         {
-            Producto producto1 = new Producto(1, "Arroz (1 kg)", 4.50m, 30);
-            Producto producto2 = new Producto(2, "Azúcar (1 kg)", 4.00m, 25);
-            Producto producto3 = new Producto(3, "Aceite vegetal (1 L)", 8.50m, 15);
-            Producto producto4 = new Producto(4, "Leche evaporada (lata)", 4.20m, 40);
-            Producto producto5 = new Producto(5, "Fideos (500 g)", 3.50m, 35);
-            Producto producto6 = new Producto(6, "Atún en conserva (lata)", 5.80m, 20);
-            Producto producto7 = new Producto(7, "Gaseosa (1.5 L)", 7.00m, 18);
-            Producto producto8 = new Producto(8, "Agua mineral (625 ml)", 2.00m, 50);
-            Producto producto9 = new Producto(9, "Galletas de chocolate (paquete)", 2.50m, 45);
-            Producto producto10 = new Producto(10, "Huevos (docena)", 8.00m, 12);
-            _listaProductos.Agregar(producto1);
-            _listaProductos.Agregar(producto2);
-            _listaProductos.Agregar(producto3);
-            _listaProductos.Agregar(producto4);
-            _listaProductos.Agregar(producto5);
-            _listaProductos.Agregar(producto6);
-            _listaProductos.Agregar(producto7);
-            _listaProductos.Agregar(producto8);
-            _listaProductos.Agregar(producto9);
-            _listaProductos.Agregar(producto10);
+            var catalogo = new (string Nombre, decimal Precio)[]
+            {
+                ("Huevos Pardos BELL'S Bandeja 30un", 17.80m),
+                ("Arroz Extra Añejo FARAON Naranja Bolsa 5kg", 24.90m),
+                ("Leche Reconstituida Entera GLORIA Lata 390g Paquete 6un", 23.10m),
+                ("Aceite Vegetal PRIMOR Premium Botella 900ml", 11.00m),
+                ("Azúcar Rubia BELL'S Bolsa 5Kg", 17.90m),
+                ("Mayonesa ALACENA Doypack 850g", 17.50m),
+                ("Filete de Atún PRIMOR en Aceite Vegetal Lata 140g", 5.70m),
+                ("Gaseosa COCA COLA sin Azúcar Botella 300ml Paquete 6un", 10.00m),
+                ("Fideos DON VITTORIO Spaghetti Bolsa 950g", 5.40m),
+                ("Lenteja Bebé BELL'S Bolsa 500g", 4.20m),
+                ("Sopa Instántanea AJINOMEN Sabor a Gallina Bolsa 80g", 2.00m),
+                ("Bebida FRUGOS DEL VALLE Durazno Caja 235ml Six Pack", 8.20m),
+                ("Leche UHT GLORIA Zero Lacto Caja 946ml Paquete 3un", 16.90m),
+                ("Aceite Vegetal BELL'S Botella 900ml", 5.70m),
+                ("Arroz Extra COSTEÑO Bolsa 5Kg", 24.50m),
+                ("Filete de Atún CAMPOMAR en Aceite Vegetal Lata 150g", 5.70m),
+                ("Mayonesa ALACENA Doypack 475g", 11.90m),
+                ("Azúcar Rubia DULFINA Bolsa 5Kg", 20.90m),
+                ("Pack Gaseosa COCA COLA + Gaseosa INCA KOLA Paquete 2un Botella 2.25L", 15.90m),
+                ("Quinua COSTEÑO Bolsa 500g", 8.50m),
+                ("Fideos Tagliatelle de Huevo LA MONTANARA Bolsa 500g", 7.70m),
+                ("Bebida FRUGOS Sabor a Durazno Caja 1.45L", 5.00m),
+                ("Sopa Instántanea AJINOMEN Sabor a Gallina Picante Bolsa 80g", 2.00m),
+                ("Palta Fuerte x kg", 11.29m),
+                ("Mantequilla GLORIA Pote 390g", 16.50m),
+                ("Yogurt Griego VAKIMU Original Pote 960g", 15.90m),
+                ("Pan de Molde Blanco XL BIMBO Extra Grande Bolsa 770g", 12.40m),
+                ("Café Instantáneo ALTOMAYO Gourmet Frasco 170g", 30.60m),
+                ("Queso Fresco BELL'S Paquete 300g", 8.50m),
+                ("Pack Hot Dog Ahumado SALCHICHERÍA SUIZA Paquete 600g", 11.90m),
+                ("Queso Parmesano Rallado LAIVE Paquete 35g", 4.60m),
+                ("Avena QUAKER Tradicional Bolsa 900g", 11.90m),
+                ("Fortificante Granulado MILO Activ - Go Doypack 350g", 17.50m),
+                ("Mermelada Fresa GLORIA Pote 310g", 6.40m),
+                ("Mandarina W MURCOTT x kg", 4.89m),
+                ("Leche Light GLORIA Lata 390g Paquete 6un", 23.30m),
+                ("Mantequilla con Sal LAIVE Barra 180g", 9.90m),
+                ("Leche Entera UHT GLORIA Caja 946ml Paquete 3un", 16.90m),
+                ("Queso Fresco sin Lactosa LAIVE x kg", 11.37m),
+                ("Café Tostado y Molido CAFETAL Selecto Bolsa 454g", 28.60m),
+                ("Yogurt Griego Descremado DANLAC Natural Frasco 900g", 18.90m),
+                ("Jamón Inglés CASA EUROPA Paquete 200g", 10.90m),
+                ("Salchicha Huachana BRAEDT Paquete 150g", 5.50m),
+                ("Chocolate para Taza SOL DE CUSCO Pasta Pura Tableta 80g", 13.70m),
+                ("Cereal UNIÓN Granola Pasas y Almendras Doypack 400g", 16.50m),
+                ("Avena BELL'S Bolsa 1Kg", 8.90m),
+                ("Tostadas BIMBO Clásicas Paquete 10un", 6.90m),
+                ("Té Canela y Clavo MC COLIN'S Caja 100un", 12.20m)
+            };
+
+            for (int i = 0; i < catalogo.Length; i++)
+            {
+                _listaProductos.Agregar(new Producto(i + 1, catalogo[i].Nombre, catalogo[i].Precio, 10));
+            }
+
 
             // Cargar productos en el Árbol Binario de Búsqueda de forma balanceada (Divide y Vencerás)
             var listaOrdenada = _listaProductos.ObtenerTodos();

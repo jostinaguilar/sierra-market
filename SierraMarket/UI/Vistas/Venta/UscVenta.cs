@@ -220,6 +220,12 @@ namespace SierraMarket.UI.Vistas.Venta
 
         private void BtnCobrar_Click(object sender, EventArgs e)
         {
+            if (_listaTrabajadores.EstaVacia || _listaTrabajadores.ObtenerActual() == null)
+            {
+                MessageBox.Show("No hay ningún cajero asignado en el turno actual. Asigne un trabajador en el módulo de turnos.", "Turno no disponible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var carrito = _carrito.ObtenerTodos();
             decimal total = 0;
             foreach (var item in carrito)
